@@ -18,7 +18,7 @@
   .glow-button { box-shadow: 0 0 20px rgba(134,78,90,0.3); }
 </style>
 </head>
-<body class="bg-background text-on-surface font-body-main min-h-screen overflow-hidden flex flex-col items-center justify-center">
+<body class="bg-background text-on-surface font-body-main min-h-screen overflow-x-hidden flex flex-col items-center justify-center py-24">
 
 <!-- Cinematic Background -->
 <div class="fixed inset-0 w-full h-full z-0 overflow-hidden">
@@ -31,31 +31,38 @@
 <div id="petal-container"></div>
 
 <!-- Header -->
-<header class="fixed top-0 left-0 w-full flex justify-between items-center px-10 pt-6 z-50">
-  <div class="font-subtitle-serif text-subtitle-serif italic text-primary drop-shadow-sm">Eternal Scrapbook</div>
+<header class="fixed top-0 left-0 w-full flex justify-between items-center px-10 pt-6 z-50 bg-gradient-to-b from-black/20 to-transparent pb-4">
+  <div class="font-subtitle-serif text-subtitle-serif italic text-primary drop-shadow-md">Eternal Scrapbook</div>
   <div class="flex gap-4">
-    <a href="music.html" class="material-symbols-outlined text-primary text-2xl hover:opacity-80">music_note</a>
-    <a href="settings.html" class="material-symbols-outlined text-primary text-2xl hover:opacity-80">palette</a>
+    <a href="music.html" class="material-symbols-outlined text-primary text-2xl hover:opacity-80 drop-shadow-md">music_note</a>
+    <a href="settings.html" class="material-symbols-outlined text-primary text-2xl hover:opacity-80 drop-shadow-md">palette</a>
   </div>
 </header>
 
 <!-- Main Ending Canvas -->
-<main class="relative z-30 flex flex-col items-center text-center px-8 max-w-4xl">
-  <div class="mb-8">
+<main class="relative z-30 flex flex-col items-center text-center px-8 max-w-4xl mt-12 mb-20">
+  <div class="mb-8 mt-4">
     <h1 class="font-script text-[80px] md:text-[120px] text-primary leading-tight drop-shadow-lg">Thank You</h1>
-    <p class="font-subtitle-serif text-subtitle-serif italic text-on-surface-variant -mt-4">For being part of this story.</p>
+    <p class="font-subtitle-serif text-subtitle-serif italic text-on-surface-variant -mt-4 drop-shadow-sm">For being part of this story.</p>
   </div>
 
   <!-- Final Card -->
-  <div class="glass-card rounded-xl p-8 md:p-12 shadow-2xl flex flex-col items-center gap-6 max-w-md w-full relative">
-    <div class="absolute -top-4 -left-6 w-24 h-8 bg-secondary-container/80 rotate-[-15deg] backdrop-blur-sm shadow-sm flex items-center justify-center">
+  <div class="glass-card rounded-xl p-8 md:p-12 shadow-2xl flex flex-col items-center gap-6 max-w-lg w-full relative">
+    <div class="absolute -top-4 -left-6 w-24 h-8 bg-secondary-container/80 rotate-[-15deg] backdrop-blur-sm shadow-sm flex items-center justify-center z-10">
       <span class="font-label-caps text-[10px] text-on-secondary-container">END CHAPTER</span>
     </div>
-    <div class="absolute -top-4 -right-6 w-24 h-8 bg-primary-container/80 rotate-[12deg] backdrop-blur-sm shadow-sm flex items-center justify-center">
+    <div class="absolute -top-4 -right-6 w-24 h-8 bg-primary-container/80 rotate-[12deg] backdrop-blur-sm shadow-sm flex items-center justify-center z-10">
       <span class="font-label-caps text-[10px] text-on-primary-container">MEMORIES</span>
     </div>
 
-    <p class="font-body-main text-on-surface leading-relaxed">
+    <!-- Video Message -->
+    <div class="relative w-full rounded-lg overflow-hidden mb-4 shadow-md border border-white/20 bg-black/20">
+      <video id="message-video" class="w-full max-h-[50vh] object-contain rounded-lg" controls playsinline>
+        <source src="assets/images/images of her/lv_0_20260721055655.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <p class="font-body-main text-on-surface leading-relaxed text-center">
       "Our paths may wander, but the moments we shared are etched in the light of this sunset. Close the book, but never the heart."
     </p>
 
@@ -109,5 +116,25 @@
 </script>
 <script src="assets/js/nav.js"></script>
 <script src="assets/js/sounds.js"></script>
+<script>
+  // Handle video message playing to pause global background music
+  document.addEventListener('DOMContentLoaded', () => {
+    const messageVideo = document.getElementById('message-video');
+    const globalAudio = document.getElementById('global-bg-audio');
+    
+    if (messageVideo && globalAudio) {
+      messageVideo.addEventListener('play', () => {
+        globalAudio.pause();
+      });
+      messageVideo.addEventListener('pause', () => {
+        globalAudio.play().catch(() => {});
+      });
+      messageVideo.addEventListener('ended', () => {
+        globalAudio.play().catch(() => {});
+      });
+    }
+  });
+</script>
 </body>
 </html>
+

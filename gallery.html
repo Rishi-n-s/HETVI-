@@ -10,7 +10,6 @@
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script src="assets/js/theme.js"></script>
 <link rel="stylesheet" href="assets/css/shared.css"/>
-<link rel="stylesheet" href="assets/css/transitions.css"/>
 <style>
   body { overflow-x: hidden; background-color: #faf9f6; }
   .polaroid-hover { transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.4s ease; }
@@ -141,40 +140,5 @@
 <script src="assets/js/nav.js"></script>
 <script src="assets/js/sounds.js"></script>
 
-<!-- Flower Transition Overlay HTML -->
-<div id="flower-transition">
-  <svg class="flower-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <path d="M50 50 C50 20 80 20 50 50 C80 80 50 80 50 50 C50 80 20 80 50 50 C20 20 50 20 50 50" fill="white" stroke="#ffb7c5" stroke-width="2"/>
-    <circle cx="50" cy="50" r="8" fill="#ffd700"/>
-  </svg>
-</div>
-
-<script>
-  // Handle Flower Transition
-  document.querySelectorAll('a[href]').forEach(link => {
-    link.addEventListener('click', function(e) {
-      // Only apply to internal links
-      const target = this.getAttribute('href');
-      if (target && !target.startsWith('http') && !target.startsWith('#')) {
-        e.preventDefault();
-        const transition = document.getElementById('flower-transition');
-        transition.classList.add('active');
-        
-        // Navigate after animation
-        setTimeout(() => {
-          window.location.href = target;
-        }, 800);
-      }
-    });
-  });
-  
-  // Fade out transition on load
-  window.addEventListener('pageshow', () => {
-    const transition = document.getElementById('flower-transition');
-    if (transition.classList.contains('active')) {
-      transition.classList.remove('active');
-    }
-  });
-</script>
 </body>
 </html>
