@@ -130,12 +130,13 @@
 
     const startAudio = () => {
       if (window.isLocalMusicPlaying) return; 
+      if (sessionStorage.getItem('musicUserPaused') === 'true') return;
       
       const currentPath = window.location.pathname.split('/').pop() || 'index.html';
       const hasStartedBefore = sessionStorage.getItem('musicStarted') === 'true';
       
       // Only start if we are on index.html, OR if it has already been started in a previous page
-      if (currentPath === 'index.html' || hasStartedBefore) {
+      if (currentPath === 'index.html' || hasStartedBefore || currentPath === '') {
         bgAudio.play().then(() => {
           sessionStorage.setItem('musicStarted', 'true');
         }).catch(() => {});
@@ -145,11 +146,60 @@
     // Aggressively attempt autoplay
     startAudio();
     
-    // Play on ANY user interaction, ALWAYS
+    // Play on ANY user interaction, ALWAYS (if not paused by user)
     document.addEventListener('click', startAudio);
     document.addEventListener('keydown', startAudio);
     document.addEventListener('touchstart', startAudio);
     document.addEventListener('scroll', startAudio, {once:true});
+
+    // Music Control Button
+    const musicBtn = document.createElement('button');
+    musicBtn.id = 'global-music-btn';
+    musicBtn.innerHTML = '🎵';
+    musicBtn.style.position = 'fixed';
+    musicBtn.style.bottom = '20px';
+    musicBtn.style.left = '20px'; // Place on left to avoid clashing with potential right-side things
+    musicBtn.style.width = '45px';
+    musicBtn.style.height = '45px';
+    musicBtn.style.borderRadius = '50%';
+    musicBtn.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+    musicBtn.style.backdropFilter = 'blur(10px)';
+    musicBtn.style.border = '1px solid rgba(0, 0, 0, 0.1)';
+    musicBtn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+    musicBtn.style.zIndex = '999999';
+    musicBtn.style.cursor = 'pointer';
+    musicBtn.style.display = 'flex';
+    musicBtn.style.alignItems = 'center';
+    musicBtn.style.justifyContent = 'center';
+    musicBtn.style.fontSize = '20px';
+    musicBtn.style.transition = 'all 0.3s ease';
+    document.body.appendChild(musicBtn);
+    
+    const updateMusicIcon = () => {
+      if (bgAudio.paused) {
+        musicBtn.innerHTML = '🔇';
+        musicBtn.style.opacity = '0.7';
+      } else {
+        musicBtn.innerHTML = '🎵';
+        musicBtn.style.opacity = '1';
+      }
+    };
+    
+    bgAudio.addEventListener('play', updateMusicIcon);
+    bgAudio.addEventListener('pause', updateMusicIcon);
+    // initial set
+    setTimeout(updateMusicIcon, 100);
+    
+    musicBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // prevent document click from triggering autoplay
+      if (bgAudio.paused) {
+        sessionStorage.setItem('musicUserPaused', 'false');
+        startAudio();
+      } else {
+        sessionStorage.setItem('musicUserPaused', 'true');
+        bgAudio.pause();
+      }
+    });
   });
 
   // Global Animation Engine

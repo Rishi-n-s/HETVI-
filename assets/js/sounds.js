@@ -1,16 +1,16 @@
 /* sounds.js — BAKUDI NI STORY UI Sound Effects */
-(function() {
+(function () {
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  
+
   function playSound(type) {
     if (localStorage.getItem('ambientSound') === 'false') return;
     if (audioCtx.state === 'suspended') audioCtx.resume();
     const osc = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
-    
+
     osc.connect(gainNode);
     gainNode.connect(audioCtx.destination);
-    
+
     if (type === 'hover') {
       // Soft short tick
       osc.type = 'sine';
@@ -37,30 +37,31 @@
   function attachSounds() {
     // Add hover sounds to all interactive elements
     const interactables = document.querySelectorAll('a, button, .cursor-pointer, .group');
-    
+
     interactables.forEach(el => {
       // Avoid re-attaching if already attached
       if (el.dataset.soundsAttached) return;
       el.dataset.soundsAttached = 'true';
-      
+
       el.addEventListener('mouseenter', () => playSound('hover'));
     });
   }
 
   // Add click sound and visual effect for every click anywhere on the site
   document.addEventListener('mousedown', (e) => {
-    // Play sweet "I love you" voice
+    // Play sweet "I love you" baby voice
     if (window.speechSynthesis) {
-      if (!window.speechSynthesis.speaking) {
-        const utterance = new SpeechSynthesisUtterance("I love you");
-        utterance.pitch = 1.4; // sweet higher pitch
-        utterance.rate = 0.85; // soft and slow
-        utterance.volume = 0.8;
-        const voices = window.speechSynthesis.getVoices();
-        const sweetVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Samantha') || v.name.includes('Zira') || v.name.includes('Google UK English Female'));
-        if (sweetVoice) utterance.voice = sweetVoice;
-        window.speechSynthesis.speak(utterance);
-      }
+      // Cancel any currently playing speech to ensure only ONE sound comes out at a time
+      window.speechSynthesis.cancel();
+      
+      const utterance = new SpeechSynthesisUtterance("I love you");
+      utterance.pitch = 2.0; // Very high pitch like a baby
+      utterance.rate = 1.2; // Slightly fast
+      utterance.volume = 1.0;
+      const voices = window.speechSynthesis.getVoices();
+      const sweetVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Samantha') || v.name.includes('Zira') || v.name.includes('Google UK English Female'));
+      if (sweetVoice) utterance.voice = sweetVoice;
+      window.speechSynthesis.speak(utterance);
     }
 
     // Create R❤H popup effect
@@ -79,16 +80,16 @@
     popup.style.opacity = '1';
     popup.style.transition = 'transform 0.8s cubic-bezier(0.2, 1, 0.3, 1), opacity 0.8s ease-out';
     popup.style.textShadow = '0 2px 10px rgba(0, 0, 0, 0.15)';
-    
+
     document.body.appendChild(popup);
-    
+
     // Force reflow for animation
     popup.getBoundingClientRect();
-    
+
     // Animate up and fade out
     popup.style.transform = 'translate(-50%, -150%) scale(1.2)';
     popup.style.opacity = '0';
-    
+
     // Remove from DOM after animation completes
     setTimeout(() => {
       popup.remove();
@@ -101,7 +102,7 @@
   } else {
     attachSounds();
   }
-  
+
   // Also observe for new elements (like the nav popup)
   const observer = new MutationObserver((mutations) => {
     attachSounds();
