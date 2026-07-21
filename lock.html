@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Love Lock | Eternal Scrapbook</title>
+<meta name="description" content="Only the key holder may enter."/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="assets/js/theme.js"></script>
+<link rel="stylesheet" href="assets/css/shared.css"/>
+<style>
+  body { overflow: hidden; background-color: #faf9f6; }
+  .glass-card { backdrop-filter: blur(16px); background: rgba(255, 249, 246, 0.6); border: 1px solid rgba(255, 255, 255, 0.4); }
+  .heart-beat { animation: heartbeat 1.5s infinite; }
+  @keyframes heartbeat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.15); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+  }
+  .input-ring:focus { outline: none; box-shadow: 0 0 0 4px rgba(209,36,80,0.2); border-color: #d12450; }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body-main relative flex items-center justify-center min-h-screen">
+
+<!-- Cinematic Background -->
+<div class="fixed inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+  <div class="w-full h-full bg-cover bg-center scale-105 transform blur-[2px]" style="background-image:url('assets/images/landing_bg_couple.png')"></div>
+  <div class="absolute inset-0 bg-black/30 z-10"></div>
+</div>
+
+<!-- Lock Box -->
+<div class="relative z-10 glass-card rounded-2xl p-10 md:p-14 shadow-2xl flex flex-col items-center max-w-md w-full text-center mx-4">
+  <span class="material-symbols-outlined text-[64px] text-primary mb-4 heart-beat" style="font-variation-settings: 'FILL' 1;">lock</span>
+  <h1 class="font-script text-[48px] text-primary leading-tight mb-2">Love Lock</h1>
+  <p class="font-subtitle-serif italic text-on-surface-variant mb-8 text-lg">Are you my bakudi? Enter the secret key to unlock our memories.</p>
+
+  <form id="lock-form" class="w-full flex flex-col items-center gap-4">
+    <input type="password" id="password" placeholder="Enter password..." class="w-full px-6 py-4 rounded-full border border-surface-variant/50 bg-white/80 font-body-main text-center text-lg input-ring transition-all placeholder:text-on-surface-variant/50" autocomplete="off" required autofocus>
+    <button type="submit" class="w-full bg-primary text-white rounded-full py-4 font-label-caps tracking-widest shadow-lg hover:scale-[1.02] active:scale-95 transition-all glow-button mt-2">UNLOCK HEART</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById('lock-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const pwd = document.getElementById('password').value;
+    
+    // Check password
+    if (pwd === 'H24R4S2007@') {
+      sessionStorage.setItem('unlocked', 'true');
+      
+      // Beautiful unlock animation
+      document.body.style.transition = "opacity 0.8s ease";
+      document.body.style.opacity = "0";
+      
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 800);
+    } else {
+      // Incorrect password -> Rejected page
+      window.location.href = 'rejected.html';
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,4 +1,12 @@
 (function() {
+  // --- Love Lock Security ---
+  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  if (currentPath !== 'lock.html' && currentPath !== 'rejected.html') {
+    if (sessionStorage.getItem('unlocked') !== 'true') {
+      window.location.href = 'lock.html';
+      return;
+    }
+  }
   const theme = localStorage.getItem('themeColor') || 'rose';
   const isDark = localStorage.getItem('darkMode') === 'true';
 
@@ -110,7 +118,16 @@
 
     const startAudio = () => {
       if (window.isLocalMusicPlaying) return; 
-      bgAudio.play().catch(() => {});
+      
+      const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+      const hasStartedBefore = sessionStorage.getItem('musicStarted') === 'true';
+      
+      // Only start if we are on index.html, OR if it has already been started in a previous page
+      if (currentPath === 'index.html' || hasStartedBefore) {
+        bgAudio.play().then(() => {
+          sessionStorage.setItem('musicStarted', 'true');
+        }).catch(() => {});
+      }
     };
     
     // Aggressively attempt autoplay
