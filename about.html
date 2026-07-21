@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Our Story | Eternal Scrapbook</title>
+<meta name="description" content="The true story of how we met and fell in love."/>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="assets/js/theme.js"></script>
+<link rel="stylesheet" href="assets/css/shared.css"/>
+<style>
+  .paper-texture { background-color: #fdfbf7; background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png"); }
+  .lined-paper { background-image: linear-gradient(rgba(209,36,80,0.1) 1px, transparent 1px); background-size: 100% 2rem; background-position: 0 40px; }
+  .marker-highlight { position: relative; display: inline-block; z-index: 1; }
+  .marker-highlight::before { content: ""; position: absolute; bottom: 2px; left: -2px; right: -2px; height: 12px; background-color: rgba(255,183,197,0.6); z-index: -1; transform: rotate(-1deg); }
+  .floating { animation: float 6s ease-in-out infinite; }
+  @keyframes float { 0% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-15px) rotate(2deg); } 100% { transform: translateY(0px) rotate(0deg); } }
+  .washi-tape-pink { background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(209,36,80,0.1) 5px, rgba(209,36,80,0.1) 10px); background-color: rgba(255,183,197,0.8); }
+  .washi-tape-blue { background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(12,103,128,0.1) 5px, rgba(12,103,128,0.1) 10px); background-color: rgba(154,225,255,0.8); }
+</style>
+</head>
+<body class="bg-background text-on-surface font-body-main relative selection:bg-primary-container selection:text-on-primary-container">
+
+<!-- Background Image -->
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+  <div class="absolute inset-0 bg-cover bg-center opacity-40 scale-105" style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBm-E1ym0M2GzHooAWb5h8l453TronsIOtuzmAhFuKfIXX2xcPVz5MX1bwj2iD7cLIy5UNmZEOvpkwM1vanzAMG448gtczHA7_nKbSerHp-scbtg23KiSayZ_j8jwGcb5R0pIvfh7x_82FYkjCrzZop95u2ANYPyZMwaJIkbxJrjrukkQEpXN0FvcUV5zWrhEb1YwpBjhQh3bpRzfsquN9uTg_Hwrn6fMPXqYhUQjHI4R8Dg5xyZ5c')"></div>
+</div>
+
+<!-- Top AppBar -->
+<header class="fixed top-0 left-0 w-full z-40 bg-white/60 backdrop-blur-md border-b border-surface-variant/30">
+  <div class="flex justify-between items-center w-full py-4 px-10">
+    <span class="font-subtitle-serif text-subtitle-serif italic text-primary">Eternal Scrapbook</span>
+    <div class="flex items-center gap-6">
+      <a href="music.html" class="text-primary hover:opacity-80"><span class="material-symbols-outlined">music_note</span></a>
+      <a href="settings.html" class="text-primary hover:opacity-80"><span class="material-symbols-outlined">palette</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- Main Canvas -->
+<main class="relative min-h-screen pt-32 pb-24 px-6 flex items-center justify-center overflow-hidden z-10">
+  <div class="absolute top-20 right-10 opacity-40 floating"><span class="material-symbols-outlined text-6xl text-primary">local_florist</span></div>
+  <div class="absolute bottom-20 left-20 opacity-30 rotate-12 floating" style="animation-delay:-2s"><span class="material-symbols-outlined text-8xl text-secondary">favorite</span></div>
+
+  <!-- Journal Page -->
+  <div class="relative w-full max-w-4xl bg-surface-container-lowest shadow-[40px_40px_80px_rgba(74,55,40,0.1)] p-12 paper-texture lined-paper transform -rotate-1 min-h-[700px]">
+    <!-- Spiral Binding -->
+    <div class="absolute -left-4 top-0 bottom-0 flex flex-col justify-around py-8 pointer-events-none">
+      <div class="w-8 h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
+      <div class="w-8 h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
+      <div class="w-8 h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
+      <div class="w-8 h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
+      <div class="w-8 h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
+      <div class="w-8 h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
+      <div class="w-8 h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
+    </div>
+
+    <div class="relative z-10">
+      <div class="mb-12 text-center md:text-left">
+        <h1 class="font-headline-xl text-[56px] text-primary mb-2 italic" style="font-family: 'Playfair Display', serif;">Our Story</h1>
+        <p class="font-handwritten text-4xl text-on-surface-variant italic">How we became forever...</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+        <!-- Text Body -->
+        <div class="md:col-span-7 space-y-10">
+          
+          <section>
+            <h2 class="font-subtitle-serif text-2xl text-secondary mb-2 flex items-center gap-2">
+              <span class="material-symbols-outlined">cake</span> The Very Beginning
+            </h2>
+            <p class="font-body-main leading-relaxed text-on-surface-variant/90 text-lg">
+              We first met in primary school back in the 6th standard. It was <span class="marker-highlight">April 24, 2018</span>—her birthday. We were only 11 years old back then, completely unaware that our paths were meant to cross for a lifetime.
+            </p>
+          </section>
+
+          <section>
+            <h2 class="font-subtitle-serif text-2xl text-secondary mb-2 flex items-center gap-2">
+              <span class="material-symbols-outlined">hourglass_empty</span> The Distance
+            </h2>
+            <p class="font-body-main leading-relaxed text-on-surface-variant/90 text-lg">
+              We lost connection during the Covid era, and I ended up changing schools. But fate was just taking a pause. 
+            </p>
+          </section>
+
+          <section>
+            <h2 class="font-subtitle-serif text-2xl text-secondary mb-2 flex items-center gap-2">
+              <span class="material-symbols-outlined">smartphone</span> Reconnecting
+            </h2>
+            <p class="font-body-main leading-relaxed text-on-surface-variant/90 text-lg">
+              During 12th standard boards in 2024, we reconnected online on Instagram. At the time, she had no idea how badly I wanted her. In fact, she actually <span class="marker-highlight">ignored me</span> the first time we talked! But I kept trying, and we continued talking into 2025 during my first year of BCA. By the 2nd semester, we became really close friends, and I got hopelessly attached.
+            </p>
+          </section>
+
+          <!-- Note Card -->
+          <div class="relative p-6 bg-secondary-container/20 rounded-lg border-l-4 border-secondary rotate-1 shadow-md hover:rotate-0 transition-transform duration-300 my-8">
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 washi-tape-blue rotate-2"></div>
+            <h3 class="font-handwritten text-3xl text-secondary mb-2">The Hackathon</h3>
+            <p class="font-body-small text-[15px] italic text-on-surface-variant">In March 2026, we finally met again in person. Seeing her didn't feel like meeting a stranger; it felt like meeting the one made for me. At the hackathon, she was the first girl I ever hugged. And in that lift... I got my first kiss on my right cheek. A moment I will cherish forever.</p>
+          </div>
+
+          <section>
+            <h2 class="font-subtitle-serif text-2xl text-secondary mb-2 flex items-center gap-2">
+              <span class="material-symbols-outlined">diamond</span> Forever Mine
+            </h2>
+            <p class="font-body-main leading-relaxed text-on-surface-variant/90 text-lg">
+              After that, we got a chance to meet twice more—first at her home, then at mine. That’s when she found out I loved her. She didn't love me back yet 😢, but after all the hard work and tough times, I didn't give up. I got the opportunity to make her mine.
+            </p>
+            <p class="mt-4 font-body-main leading-relaxed text-on-surface-variant/90 text-lg">
+              Now, she is not just my girlfriend, she is my <span class="marker-highlight font-bold text-primary">fiancé</span>. I love her so much, and the best part is... she started loving me back just as deeply.
+            </p>
+          </section>
+
+        </div>
+
+        <!-- Side Collage -->
+        <div class="md:col-span-5 flex flex-col gap-12 items-center mt-10">
+          <div class="relative group rotate-3 hover:rotate-0 transition-all duration-500 cursor-pointer">
+            <div class="absolute -top-4 -right-4 w-20 h-8 washi-tape-pink -rotate-12 z-20"></div>
+            <div class="bg-white p-3 pb-10 shadow-xl border border-outline-variant/30">
+              <div class="w-48 bg-primary/10">
+                <img class="w-full h-auto block" src="./assets/images/images of her/IMG-20260323-WA0008.jpg" alt="Our Memories" onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuB5M_CF_AefJbvoWdwXKkYCcMJshNc4omW3bX33OvAKt7Gz8FykGUqYL4BApQQrtUqjCPZW93H-HpsTpJI7EqwER0QV2TEXMJnliatnLMGD4670hzb5f_90FLW5xwDmdR2MRaKDzfvnLmE7jA-aVr5CgBTw_pUDEHUF8FC9czvpIIph0TW4hSdKvA9SRc50r1W8GMOANzOXjOQiSxRsBCssQg1zyKIdaxACh3wQFppmecBIlcYzKHQv'"/>
+              </div>
+              <p class="font-handwritten text-center mt-4 text-3xl text-primary">Forever</p>
+            </div>
+          </div>
+
+          <div class="relative group -rotate-6 hover:rotate-0 transition-all duration-500 cursor-pointer">
+            <div class="absolute -top-2 left-4 z-20"><span class="material-symbols-outlined text-4xl text-stone-400 rotate-45">attachment</span></div>
+            <div class="bg-white p-3 pb-10 shadow-xl border border-outline-variant/30">
+              <div class="w-48 bg-secondary/10">
+                <img class="w-full h-auto block" src="./assets/images/images of her/IMG_20260624_175440_574.jpg" alt="Her" onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuAYcuJZF22NTrFdDMu2_erXqC0b-CG7F7T_C9U44hTvou5WH72_rmwOLODw2B1XTABkHN2NlQ5Jn7V0_Uqtl0jEdqwSlish6uXe7I2t9gNpoQPMWnxUWC5ZR4IrIWFKMiF_z33peGvff4L0fMQnXEIAU4H9KKmpV3Ayt3DhTymCVbolnb6cxlcDDbLL1-7Cj422TANYOMhECd2R45ajv3YDiByHKvFdo2C-efBqtVoBh4rdJF'"/>
+              </div>
+              <p class="font-handwritten text-center mt-4 text-3xl text-secondary">My Fiancé</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- Bottom Nav -->
+<div class="fixed bottom-6 right-10 z-50 flex items-center gap-4">
+  <a href="index.html" class="w-12 h-12 bg-white/70 backdrop-blur-md rounded-full shadow-md border border-white/50 flex items-center justify-center text-primary hover:bg-white hover:scale-105 transition-all"><span class="material-symbols-outlined">home</span></a>
+</div>
+
+<script src="assets/js/nav.js"></script>
+<script src="assets/js/sounds.js"></script>
+</body>
+</html>

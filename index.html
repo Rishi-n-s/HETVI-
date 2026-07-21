@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Eternal Scrapbook | Our Story</title>
+<!-- Modern Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="assets/js/theme.js"></script>
+<link rel="stylesheet" href="assets/css/transitions.css"/>
+<style>
+  body { margin: 0; overflow: hidden; }
+  
+  /* Ultra-premium glassmorphism */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  @keyframes fadeInUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .delay-1 { animation-delay: 0.2s; }
+  .delay-2 { animation-delay: 0.4s; }
+</style>
+</head>
+<body class="font-sans antialiased relative w-screen h-screen bg-black">
+
+  <!-- Intro Video Overlay -->
+  <div id="enter-overlay" class="fixed inset-0 z-[10000] bg-black flex flex-col items-center justify-center transition-opacity duration-1000 overflow-hidden">
+    <!-- Intro Video -->
+    <video id="intro-video" autoplay muted playsinline onloadedmetadata="this.playbackRate = 2.0;" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
+      <source src="assets/images/animation.mp4" type="video/mp4">
+    </video>
+  </div>
+  
+  <script>
+    const introVideo = document.getElementById('intro-video');
+    const enterOverlay = document.getElementById('enter-overlay');
+    
+    // Automatically enter site when video ends
+    introVideo.addEventListener('ended', function() {
+      enterOverlay.style.opacity = '0';
+      setTimeout(() => enterOverlay.style.display = 'none', 1000);
+    });
+
+    // Skip video if user clicks
+    enterOverlay.addEventListener('click', function() {
+      this.style.opacity = '0';
+      setTimeout(() => this.style.display = 'none', 1000);
+    });
+  </script>
+
+  <!-- Background Image: Full bleed, perfectly centered/bottom to show the couple -->
+  <div class="absolute inset-0 z-0">
+    <img src="assets/images/landing_bg_couple.png" class="w-full h-full object-cover object-[center_80%] opacity-100" alt="Background"/>
+    <!-- Lighter gradient that doesn't darken the couple at the bottom -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent h-1/2"></div>
+  </div>
+
+  <!-- Content moved to top so it doesn't block the couple -->
+  <main class="relative z-10 w-full h-full flex flex-col items-center justify-start pt-16 md:pt-24 px-6">
+    <div class="rounded-3xl p-10 md:p-16 flex flex-col items-center text-center max-w-2xl w-full fade-in-up">
+      <span class="material-symbols-outlined text-white/80 text-4xl mb-4" style="font-variation-settings:'FILL' 1">favorite</span>
+      
+      <h1 class="font-serif text-5xl md:text-7xl text-white font-semibold tracking-tight mb-4 drop-shadow-md delay-1 fade-in-up">
+        Our Story
+      </h1>
+      
+      <p class="text-white/90 text-lg md:text-xl font-light max-w-md mb-10 leading-relaxed delay-2 fade-in-up">
+        A thousand little moments, woven together into one beautiful story.
+      </p>
+      
+      <a href="gallery.html" class="group relative px-8 py-4 bg-white/20 hover:bg-white/30 border border-white/40 text-white rounded-full transition-all duration-300 ease-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] flex items-center gap-3 backdrop-blur-md delay-2 fade-in-up no-underline">
+        <span class="font-medium tracking-wide uppercase text-sm">Open Memories</span>
+        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">east</span>
+      </a>
+    </div>
+  </main>
+
+<script src="assets/js/sounds.js"></script>
+<script src="assets/js/nav.js"></script>
+
+<!-- Flower Transition Overlay HTML -->
+<div id="flower-transition">
+  <svg class="flower-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 50 C50 20 80 20 50 50 C80 80 50 80 50 50 C50 80 20 80 50 50 C20 20 50 20 50 50" fill="white" stroke="#ffb7c5" stroke-width="2"/>
+    <circle cx="50" cy="50" r="8" fill="#ffd700"/>
+  </svg>
+</div>
+
+<script>
+  // Handle Flower Transition
+  document.querySelectorAll('a[href]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      // Only apply to internal links
+      const target = this.getAttribute('href');
+      if (target && !target.startsWith('http') && !target.startsWith('#')) {
+        e.preventDefault();
+        const transition = document.getElementById('flower-transition');
+        transition.classList.add('active');
+        
+        // Navigate after animation
+        setTimeout(() => {
+          window.location.href = target;
+        }, 800); // 800ms matches the CSS transition time
+      }
+    });
+  });
+  
+  // Fade out transition on load (if returning back)
+  window.addEventListener('pageshow', () => {
+    const transition = document.getElementById('flower-transition');
+    if (transition.classList.contains('active')) {
+      transition.classList.remove('active');
+    }
+  });
+</script>
+</body>
+</html>
