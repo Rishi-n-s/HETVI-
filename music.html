@@ -25,14 +25,11 @@
 </div>
 
 <!-- Top AppBar -->
-<header class="flex justify-between items-center w-full px-6 pt-6 z-[60] relative">
-  <span class="font-subtitle-serif text-subtitle-serif italic text-primary">Eternal Scrapbook</span>
-  <div class="flex items-center gap-6">
-    <button class="text-primary hover:opacity-80"><span class="material-symbols-outlined" id="music-toggle-icon">music_note</span></button>
-    <a href="settings.html" class="text-primary hover:opacity-80"><span class="material-symbols-outlined">palette</span></a>
-    <div class="w-10 h-10 rounded-full border-2 border-white overflow-hidden shadow-sm">
-      <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOdclrImZ4ELd8GZs4Rwx720y-ZEWmy1DFQ5dYzG0F-83ml3XQ4u204-Gbzg3vGK9Lj-0ivUE_4cCDyu27yagFjMYMbUTWu9iftJtPpPtoj60JskeUmUApCnYK9GlHJhThJTPVL20KvRfJnhXU7WhGIS7X4v8DaiSx1YQ6PE1HWoyn7ITR_iN4HIRD50tlVpGHQijInabClbD7lcYqpsQz7kRbIKeQ_YhTQx7cHwNMpTI29zfOiI6t" alt="Profile"/>
-    </div>
+<header class="flex justify-between items-center w-full px-6 pt-6 fixed top-0 z-50 bg-transparent pointer-events-none">
+  <span class="font-subtitle-serif text-subtitle-serif italic text-primary drop-shadow-md pointer-events-auto">Eternal Scrapbook</span>
+  <div class="flex items-center gap-6 pointer-events-auto">
+    <a href="music.html" class="text-primary hover:opacity-80 drop-shadow-md"><span class="material-symbols-outlined">music_note</span></a>
+    <a href="settings.html" class="text-primary hover:opacity-80 drop-shadow-md"><span class="material-symbols-outlined">palette</span></a>
   </div>
 </header>
 
@@ -218,4 +215,5 @@
 <script src="assets/js/sounds.js"></script>
 </body>
 </html>
+
 
