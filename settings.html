@@ -19,6 +19,108 @@
   .toggle.on::after { transform:translateX(20px); }
   .color-swatch { width:32px; height:32px; border-radius:50%; cursor:pointer; border:3px solid transparent; transition:border-color 0.2s; }
   .color-swatch.selected { border-color:#864e5a; }
+
+  /* Comic Theme Picker Styles */
+  .comic-theme-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem 0;
+    overflow: hidden;
+  }
+  .comic-panel {
+    background: #ffffff;
+    border: 4px solid #000;
+    padding: 1.2rem;
+    border-radius: 8px;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
+  }
+  .container-items {
+    display: flex;
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+  }
+  .item-color {
+    position: relative;
+    flex-shrink: 0;
+    width: 40px;
+    height: 48px;
+    border: none;
+    outline: none;
+    margin: -4px;
+    background-color: transparent;
+    transition: 300ms ease-out;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .item-color::after {
+    position: absolute;
+    content: "";
+    inset: 0;
+    width: 40px;
+    height: 40px;
+    background-color: var(--color);
+    border-radius: 6px;
+    border: 3px solid #000;
+    box-shadow: 4px 4px 0 0 #000;
+    pointer-events: none;
+    transition: 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .item-color::before {
+    position: absolute;
+    content: attr(aria-color);
+    left: 50%;
+    bottom: 60px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    line-height: 1;
+    padding: 6px 10px;
+    background-color: #fef3c7;
+    color: #000;
+    border: 3px solid #000;
+    border-radius: 6px;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transform-origin: bottom center;
+    transition:
+      all 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      opacity 300ms ease-out,
+      visibility 300ms ease-out;
+    transform: translateX(-50%) scale(0.5) translateY(10px);
+    white-space: nowrap;
+    z-index: 999999;
+  }
+  .item-color:hover {
+    transform: scale(1.5) translateY(-5px);
+    z-index: 99999;
+  }
+  .item-color:hover::before {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1) translateY(0);
+  }
+  .item-color:active::after {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 0 #000;
+  }
+  .item-color:hover + * {
+    transform: scale(1.3) translateY(-3px);
+    z-index: 9999;
+  }
+  .item-color:hover + * + * {
+    transform: scale(1.15);
+    z-index: 999;
+  }
+  .item-color:has(+ *:hover) {
+    transform: scale(1.3) translateY(-3px);
+    z-index: 9999;
+  }
+  .item-color:has(+ * + *:hover) {
+    transform: scale(1.15);
+    z-index: 999;
+  }
 </style>
 </head>
 <body class="bg-background text-on-surface font-body-main min-h-screen">
@@ -59,16 +161,27 @@
         <h2 class="font-headline-lg text-[20px] text-on-surface">Appearance</h2>
       </div>
       <!-- Theme Color -->
-      <div class="setting-row px-6 py-5 flex items-center justify-between">
+      <div class="setting-row px-6 py-5 flex flex-col gap-4">
         <div>
           <p class="font-body-main font-semibold">Theme Color</p>
           <p class="font-body-small text-on-surface-variant">Choose your scrapbook's main palette</p>
         </div>
-        <div class="flex gap-2">
-          <div class="color-swatch" data-theme="rose" style="background:#d12450;" onclick="selectColor(this, 'rose')" title="Rose (Default)"></div>
-          <div class="color-swatch" data-theme="ocean" style="background:#0c6780;" onclick="selectColor(this, 'ocean')" title="Ocean Blue"></div>
-          <div class="color-swatch" data-theme="lavender" style="background:#5e4a8a;" onclick="selectColor(this, 'lavender')" title="Lavender"></div>
-          <div class="color-swatch" data-theme="amber" style="background:#7a5a28;" onclick="selectColor(this, 'amber')" title="Amber"></div>
+        
+        <div class="comic-theme-wrapper">
+          <div class="comic-panel">
+            <div class="container-items">
+              <button class="item-color" style="--color: #e11d48" aria-color="#e11d48" onclick="selectColor(this, '#e11d48')"></button>
+              <button class="item-color" style="--color: #f472b6" aria-color="#f472b6" onclick="selectColor(this, '#f472b6')"></button>
+              <button class="item-color" style="--color: #fb923c" aria-color="#fb923c" onclick="selectColor(this, '#fb923c')"></button>
+              <button class="item-color" style="--color: #facc15" aria-color="#facc15" onclick="selectColor(this, '#facc15')"></button>
+              <button class="item-color" style="--color: #84cc16" aria-color="#84cc16" onclick="selectColor(this, '#84cc16')"></button>
+              <button class="item-color" style="--color: #10b981" aria-color="#10b981" onclick="selectColor(this, '#10b981')"></button>
+              <button class="item-color" style="--color: #0ea5e9" aria-color="#0ea5e9" onclick="selectColor(this, '#0ea5e9')"></button>
+              <button class="item-color" style="--color: #3b82f6" aria-color="#3b82f6" onclick="selectColor(this, '#3b82f6')"></button>
+              <button class="item-color" style="--color: #8b5cf6" aria-color="#8b5cf6" onclick="selectColor(this, '#8b5cf6')"></button>
+              <button class="item-color" style="--color: #a78bfa" aria-color="#a78bfa" onclick="selectColor(this, '#a78bfa')"></button>
+            </div>
+          </div>
         </div>
       </div>
       <!-- Dark Mode -->
@@ -192,7 +305,7 @@
   });
 
   function selectColor(el, themeName) {
-    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+    document.querySelectorAll('.item-color').forEach(s => s.classList.remove('selected'));
     el.classList.add('selected');
     localStorage.setItem('themeColor', themeName);
     // Reload page to apply Tailwind config instantly

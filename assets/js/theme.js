@@ -24,7 +24,19 @@
     'amber': { primary:"#7a5a28", "primary-container":"#ffdea3", "on-primary-container":"#5a3f0f", secondary:"#5e4a8a", "secondary-container":"#e0d4ff", tertiary:"#d12450", "tertiary-container":"#ffb7c5" }
   };
   
-  const colors = palettes[theme];
+  let colors = palettes[theme];
+  if (!colors) {
+    // Treat as custom hex color
+    colors = {
+      primary: theme,
+      "primary-container": theme + '40', // 25% opacity roughly
+      "on-primary-container": theme,
+      secondary: theme,
+      "secondary-container": theme + '40',
+      tertiary: theme,
+      "tertiary-container": theme + '40'
+    };
+  }
 
   // Smart dark mode by replacing base surface colors
   const baseColors = isDark ? {
@@ -200,8 +212,8 @@
     // 4. Enhance buttons and interactive elements with hover physics
     const interactiveElements = document.querySelectorAll('a, button, .rounded-3xl, .rounded-2xl');
     interactiveElements.forEach(el => {
-      // Don't enhance the nav trigger or overlay children to prevent breaking them
-      if (el.closest('#es-nav-trigger') || el.closest('#es-launchpad')) return;
+      // Don't enhance the nav trigger, overlay children, or custom color pickers to prevent breaking them
+      if (el.closest('#es-nav-trigger') || el.closest('#es-launchpad') || el.classList.contains('item-color')) return;
       el.classList.add('es-hover-enhance');
     });
   });

@@ -36,6 +36,33 @@
   
   .delay-1 { animation-delay: 0.2s; }
   .delay-2 { animation-delay: 0.4s; }
+
+  /* Swiper Button CSS */
+  .swp-container { background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); display: flex; width: 460px; height: 120px; position: relative; border-radius: 6px; transition: 0.3s ease-in-out; margin-top: 2rem; cursor: pointer; transform-origin: center top;}
+  .swp-container:hover { transform: scale(1.03); width: 220px; }
+  .swp-container:hover .swp-left-side { width: 100%; }
+  .swp-left-side { background-color: #ffb7c5; width: 130px; height: 120px; border-radius: 4px; position: relative; display: flex; justify-content: center; align-items: center; transition: 0.3s; flex-shrink: 0; overflow: hidden; }
+  .swp-right-side { width: calc(100% - 130px); display: flex; align-items: center; overflow: hidden; justify-content: space-between; white-space: nowrap; transition: 0.3s; }
+  .swp-right-side:hover { background-color: rgba(255,255,255,0.05); }
+  .swp-arrow { width: 20px; height: 20px; margin-right: 20px; }
+  .swp-new { font-size: 23px; font-family: "Inter", sans-serif; margin-left: 20px; color: white; font-weight: 500; }
+  .swp-card { width: 70px; height: 46px; background-color: #ffdae0; border-radius: 6px; position: absolute; display: flex; z-index: 10; flex-direction: column; align-items: center; box-shadow: 9px 9px 9px -2px rgba(255, 183, 197, 0.72); }
+  .swp-card-line { width: 65px; height: 13px; background-color: #ff758c; border-radius: 2px; margin-top: 7px; }
+  @media only screen and (max-width: 480px) { .swp-container { transform: scale(0.65); margin-top: 0rem; } .swp-container:hover { transform: scale(0.7); } .swp-new { font-size: 18px; } }
+  .swp-buttons { width: 8px; height: 8px; background-color: #d12450; box-shadow: 0 -10px 0 0 #ff4d4d, 0 10px 0 0 #ff4d4d; border-radius: 50%; transform: rotate(90deg); margin: 10px 0 0 -30px; }
+  .swp-container:hover .swp-card { animation: slide-top 1.2s cubic-bezier(0.645, 0.045, 0.355, 1) both; }
+  .swp-container:hover .swp-post { animation: slide-post 1s cubic-bezier(0.165, 0.84, 0.44, 1) both; }
+  @keyframes slide-top { 0% { transform: translateY(0); } 50% { transform: translateY(-70px) rotate(90deg); } 60% { transform: translateY(-70px) rotate(90deg); } 100% { transform: translateY(-8px) rotate(90deg); } }
+  .swp-post { width: 63px; height: 75px; background-color: #dddde0; position: absolute; z-index: 11; bottom: 10px; top: 120px; border-radius: 6px; overflow: hidden; }
+  .swp-post-line { width: 47px; height: 9px; background-color: #545354; position: absolute; border-radius: 0px 0px 3px 3px; right: 8px; top: 8px; }
+  .swp-post-line:before { content: ""; position: absolute; width: 47px; height: 9px; background-color: #757375; top: -8px; }
+  .swp-screen { width: 47px; height: 23px; background-color: #ffffff; position: absolute; top: 22px; right: 8px; border-radius: 3px; }
+  .swp-numbers { width: 12px; height: 12px; background-color: #838183; box-shadow: 0 -18px 0 0 #838183, 0 18px 0 0 #838183; border-radius: 2px; position: absolute; transform: rotate(90deg); left: 25px; top: 52px; }
+  .swp-numbers-line2 { width: 12px; height: 12px; background-color: #aaa9ab; box-shadow: 0 -18px 0 0 #aaa9ab, 0 18px 0 0 #aaa9ab; border-radius: 2px; position: absolute; transform: rotate(90deg); left: 25px; top: 68px; }
+  @keyframes slide-post { 50% { transform: translateY(0); } 100% { transform: translateY(-70px); } }
+  .swp-dollar { position: absolute; font-size: 16px; font-family: "Inter", sans-serif; width: 100%; left: 0; top: 0; color: #d12450; text-align: center; }
+  .swp-container:hover .swp-dollar { animation: fade-in-fwd 0.3s 1s backwards; }
+  @keyframes fade-in-fwd { 0% { opacity: 0; transform: translateY(-5px); } 100% { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body class="font-sans antialiased relative w-screen min-h-[100dvh] bg-black">
@@ -65,12 +92,75 @@
         <span class="font-medium tracking-wide uppercase text-sm">Open Memories</span>
         <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">east</span>
       </a>
+
+      <!-- Show 100 I LOVE YOU Swipe Button -->
+      <div class="swp-container delay-2 fade-in-up" onclick="show100ILoveYou()">
+       <div class="swp-left-side">
+        <div class="swp-card">
+         <div class="swp-card-line"></div>
+         <div class="swp-buttons"></div>
+        </div>
+        <div class="swp-post">
+         <div class="swp-post-line"></div>
+         <div class="swp-screen">
+          <div class="swp-dollar">❤</div>
+         </div>
+         <div class="swp-numbers"></div>
+         <div class="swp-numbers-line2"></div>
+        </div>
+       </div>
+       <div class="swp-right-side">
+        <div class="swp-new">Show 100 Flowers</div>
+         <svg viewBox="0 0 451.846 451.847" height="512" width="512" xmlns="http://www.w3.org/2000/svg" class="swp-arrow"><path fill="#ffffff" data-old_color="#000000" class="active-path" data-original="#000000" d="M345.441 248.292L151.154 442.573c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744L278.318 225.92 106.409 54.017c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.287 194.284c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373z"></path></svg>
+       </div>
+      </div>
     </div>
   </main>
 
 <script src="assets/js/sounds.js"></script>
 <script src="assets/js/nav.js"></script>
+<script>
+function show100ILoveYou() {
+  const flowers = [
+    { char: '🌻', filter: 'none' }, // Sunflower
+    { char: '🌷', filter: 'none' }, // Tulip
+    { char: '🪷', filter: 'none' }, // Lily / Lotus
+    { char: '🌹', filter: 'none' }, // Red Rose
+    { char: '🌹', filter: 'hue-rotate(220deg)' } // Blue Rose (Hue shifted red rose)
+  ];
 
+  for(let i=0; i<100; i++) {
+    const el = document.createElement('div');
+    const flower = flowers[Math.floor(Math.random() * flowers.length)];
+    
+    el.textContent = flower.char;
+    el.style.position = 'fixed';
+    el.style.left = (Math.random() * 90 + 5) + 'vw';
+    el.style.top = (Math.random() * 90 + 5) + 'vh';
+    el.style.filter = flower.filter;
+    el.style.fontSize = (Math.random() * 2 + 1.5) + 'rem';
+    el.style.pointerEvents = 'none';
+    el.style.zIndex = '999999';
+    el.style.opacity = '0';
+    el.style.transform = `translateY(40px) scale(0.5) rotate(${Math.random()*360}deg)`;
+    el.style.transition = 'all 1.5s cubic-bezier(0.16, 1, 0.3, 1)';
+    el.style.textShadow = '0 2px 10px rgba(0,0,0,0.2)';
+    
+    document.body.appendChild(el);
+    
+    setTimeout(() => {
+      el.style.opacity = '1';
+      el.style.transform = `translateY(-${Math.random()*150 + 50}px) scale(1) rotate(${Math.random()*360}deg)`;
+    }, 50 + Math.random() * 600);
+    
+    setTimeout(() => {
+      el.style.opacity = '0';
+      el.style.transform = `translateY(-${Math.random()*250 + 150}px) scale(1.2) rotate(${Math.random()*360}deg)`;
+      setTimeout(() => el.remove(), 1500);
+    }, 1500 + Math.random() * 1000);
+  }
+}
+</script>
 </body>
 </html>
 
