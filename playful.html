@@ -85,6 +85,23 @@
       </div>
     </div>
 
+    <!-- Heart Catcher -->
+    <div class="floating-card relative bg-surface-container-lowest paper-texture p-6 rounded-xl rotate-[2deg] shadow-xl border-8 border-surface-bright flex flex-col gap-4">
+      <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-24 h-8 bg-tertiary-fixed washi-tape -rotate-2 z-10"></div>
+      <div class="w-full aspect-video bg-tertiary-container/30 rounded-lg flex items-center justify-center overflow-hidden relative">
+        <span class="material-symbols-outlined text-6xl text-tertiary animate-bounce">favorite</span>
+      </div>
+      <div class="space-y-2">
+        <h3 class="font-headline-lg text-headline-lg text-on-surface">Heart Catcher</h3>
+        <p class="font-body-main text-on-surface-variant">Catch falling hearts and spell out our names in the basket!</p>
+      </div>
+      <div class="mt-auto flex justify-end">
+        <button class="wax-seal-btn w-12 h-12 rounded-full flex items-center justify-center text-white active:scale-95 transition-all" onclick="startGame('catcher')">
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">play_arrow</span>
+        </button>
+      </div>
+    </div>
+
     <!-- Chroma Garden / Doodle -->
     <div class="floating-card relative bg-surface-container-lowest paper-texture p-6 rounded-xl rotate-[1.5deg] shadow-xl border-8 border-surface-bright flex flex-col gap-4">
       <div class="absolute top-1/2 -right-6 -translate-y-1/2 w-8 h-20 bg-primary-container washi-tape -rotate-3 z-10"></div>
@@ -157,6 +174,48 @@
     </div>
   </div>
 
+  <!-- Catcher Game Container (Hidden initially) -->
+  <div id="catcher-game-container" class="hidden flex-col items-center w-full max-w-2xl bg-surface-container-lowest paper-texture p-6 rounded-2xl shadow-[10px_10px_30px_rgba(74,55,40,0.15)] border border-surface-variant/40 mt-2 mb-auto">
+    <div class="flex justify-between items-center w-full mb-4 border-b border-surface-variant/30 pb-3">
+      <button onclick="exitGame()" class="text-primary font-subtitle-serif italic text-xl flex items-center gap-1 hover:opacity-80 transition-opacity">
+        <span class="material-symbols-outlined text-xl">arrow_back</span> Back
+      </button>
+      <div class="flex gap-6 items-center">
+        <div id="catcher-score" class="font-headline-lg text-primary text-xl drop-shadow-sm flex items-center gap-2">
+           <span class="material-symbols-outlined text-red-500 fill-current text-2xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
+           <span id="heart-count">0</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Collected Letters UI -->
+    <div class="w-full mb-4 bg-surface-container/50 rounded-lg p-3 text-center border border-primary/20">
+       <p class="font-label-caps text-xs text-on-surface-variant mb-2">COLLECT THESE LETTERS:</p>
+       <div id="collected-letters-display" class="flex flex-wrap justify-center gap-2 font-headline-lg text-2xl text-primary font-bold">
+           <!-- Letters inserted by JS -->
+       </div>
+    </div>
+
+    <!-- Play Area -->
+    <div class="w-full relative bg-secondary-container/10 border-2 border-dashed border-primary/30 rounded-xl aspect-[3/4] md:aspect-[4/3] overflow-hidden cursor-crosshair" id="catcher-play-area">
+      <!-- Falling items -->
+      <div id="falling-items-container" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+      
+      <!-- Basket -->
+      <div id="basket" class="absolute bottom-4 left-0 w-24 h-16 pointer-events-none z-20 flex items-end justify-center transition-transform duration-75 ease-out">
+        <div class="w-full h-3/4 bg-amber-700/80 rounded-b-xl border-2 border-amber-900 flex items-center justify-center shadow-lg relative overflow-hidden backdrop-blur-sm">
+          <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-50 mix-blend-multiply"></div>
+          <div class="w-full h-2 bg-amber-900 absolute top-0"></div>
+          <div class="w-full h-1 bg-amber-600 absolute top-2 opacity-50"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="w-full text-center mt-4 text-sm font-body-main text-on-surface-variant">
+      Drag the basket to catch hearts and letters!
+    </div>
+  </div>
+
 </main>
 
 <!-- Footer -->
@@ -184,6 +243,10 @@
       document.getElementById('doodle-game-container').classList.remove('hidden');
       document.getElementById('doodle-game-container').classList.add('flex');
       initDoodleGame();
+    } else if (type === 'catcher') {
+      document.getElementById('catcher-game-container').classList.remove('hidden');
+      document.getElementById('catcher-game-container').classList.add('flex');
+      initCatcherGame();
     }
   }
 
@@ -192,6 +255,15 @@
     document.getElementById('memory-game-container').classList.remove('flex');
     document.getElementById('doodle-game-container').classList.add('hidden');
     document.getElementById('doodle-game-container').classList.remove('flex');
+    
+    let catcherContainer = document.getElementById('catcher-game-container');
+    if(catcherContainer) {
+      catcherContainer.classList.add('hidden');
+      catcherContainer.classList.remove('flex');
+    }
+    if (typeof catcherInterval !== 'undefined') clearInterval(catcherInterval);
+    if (typeof itemInterval !== 'undefined') clearInterval(itemInterval);
+
     document.getElementById('game-menu').classList.remove('hidden');
     document.getElementById('header-text').classList.remove('hidden');
   }
@@ -437,6 +509,178 @@
   canvas.addEventListener('touchstart', startDrawing, {passive: false});
   canvas.addEventListener('touchmove', draw, {passive: false});
   canvas.addEventListener('touchend', stopDrawing);
+
+  // --- HEART CATCHER LOGIC ---
+  const catcherPlayArea = document.getElementById('catcher-play-area');
+  const catcherBasket = document.getElementById('basket');
+  const catcherItemsContainer = document.getElementById('falling-items-container');
+  const targetPhrase = "RISHI❤HETVI";
+  let targetLettersNeeded = [];
+  let currentHeartCount = 0;
+  let catcherInterval, itemInterval;
+  let basketX = 0;
+  
+  function initCatcherGame() {
+    targetLettersNeeded = targetPhrase.split('');
+    currentHeartCount = 0;
+    document.getElementById('heart-count').innerText = currentHeartCount;
+    catcherItemsContainer.innerHTML = '';
+    basketX = catcherPlayArea.clientWidth / 2;
+    updateBasketPosition();
+    updateCollectedUI();
+    
+    if (catcherInterval) clearInterval(catcherInterval);
+    if (itemInterval) clearInterval(itemInterval);
+    
+    catcherInterval = setInterval(gameLoop, 1000/60); 
+    itemInterval = setInterval(spawnItem, 800); 
+    
+    catcherPlayArea.addEventListener('mousemove', moveBasket);
+    catcherPlayArea.addEventListener('touchmove', moveBasket, {passive: false});
+  }
+  
+  function updateCollectedUI() {
+     const display = document.getElementById('collected-letters-display');
+     display.innerHTML = '';
+     
+     let tempNeeded = [...targetLettersNeeded];
+     const phraseChars = targetPhrase.split('');
+     
+     phraseChars.forEach(char => {
+        const span = document.createElement('span');
+        const indexInNeeded = tempNeeded.indexOf(char);
+        if (indexInNeeded > -1) {
+           span.innerText = "_";
+           span.className = "text-surface-variant mx-[2px] opacity-50";
+           tempNeeded.splice(indexInNeeded, 1);
+        } else {
+           span.innerText = char;
+           span.className = "text-primary mx-[2px] drop-shadow-sm";
+        }
+        display.appendChild(span);
+     });
+  }
+  
+  function moveBasket(e) {
+     if (e.cancelable && e.type === 'touchmove') e.preventDefault();
+     const rect = catcherPlayArea.getBoundingClientRect();
+     let clientX = (e.touches && e.touches.length > 0) ? e.touches[0].clientX : e.clientX;
+     if (clientX === undefined) return;
+     
+     basketX = clientX - rect.left;
+     const bw = catcherBasket.offsetWidth;
+     if (basketX < bw/2) basketX = bw/2;
+     if (basketX > rect.width - bw/2) basketX = rect.width - bw/2;
+     
+     updateBasketPosition();
+  }
+  
+  function updateBasketPosition() {
+     const bw = catcherBasket.offsetWidth || 96;
+     catcherBasket.style.transform = `translateX(${basketX - bw/2}px)`;
+  }
+  
+  function spawnItem() {
+     const item = document.createElement('div');
+     item.className = "absolute text-2xl font-bold font-headline-lg flex items-center justify-center transition-opacity";
+     item.style.left = Math.random() * (catcherPlayArea.clientWidth - 40) + 'px';
+     item.style.top = '-40px';
+     
+     const isHeart = Math.random() > 0.4;
+     let charVal = '';
+     if (isHeart) {
+         item.innerHTML = `<span class="material-symbols-outlined text-red-500 fill-current text-3xl drop-shadow-md" style="font-variation-settings: 'FILL' 1;">favorite</span>`;
+         item.dataset.type = 'heart';
+     } else {
+         if (targetLettersNeeded.length > 0 && Math.random() > 0.25) {
+             charVal = targetLettersNeeded[Math.floor(Math.random() * targetLettersNeeded.length)];
+         } else {
+             const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ❤";
+             charVal = randomChars[Math.floor(Math.random() * randomChars.length)];
+         }
+         item.innerText = charVal;
+         item.className += " text-secondary drop-shadow-md bg-white/90 w-10 h-10 rounded-full border-2 border-secondary/20 shadow-sm";
+         item.dataset.type = 'letter';
+         item.dataset.value = charVal;
+     }
+     
+     item.dataset.speed = 2.5 + Math.random() * 3.5;
+     catcherItemsContainer.appendChild(item);
+  }
+  
+  function gameLoop() {
+      const items = catcherItemsContainer.children;
+      const basketRect = catcherBasket.getBoundingClientRect();
+      const playAreaRect = catcherPlayArea.getBoundingClientRect();
+      
+      for (let i = 0; i < items.length; i++) {
+          const item = items[i];
+          let top = parseFloat(item.style.top) || 0;
+          top += parseFloat(item.dataset.speed);
+          item.style.top = top + 'px';
+          
+          const itemRect = item.getBoundingClientRect();
+          
+          if (
+              itemRect.bottom > basketRect.top &&
+              itemRect.top < basketRect.bottom &&
+              itemRect.right > basketRect.left &&
+              itemRect.left < basketRect.right
+          ) {
+              catchItem(item);
+              item.remove();
+              i--;
+          } else if (top > playAreaRect.height) {
+              item.remove();
+              i--;
+          }
+      }
+  }
+  
+  function catchItem(item) {
+      if (item.dataset.type === 'heart') {
+          currentHeartCount++;
+          document.getElementById('heart-count').innerText = currentHeartCount;
+      } else if (item.dataset.type === 'letter') {
+          const val = item.dataset.value;
+          const index = targetLettersNeeded.indexOf(val);
+          if (index > -1) {
+              targetLettersNeeded.splice(index, 1);
+              updateCollectedUI();
+              checkWinCondition();
+          }
+      }
+  }
+  
+  function checkWinCondition() {
+      if (targetLettersNeeded.length === 0) {
+          clearInterval(catcherInterval);
+          clearInterval(itemInterval);
+          
+          setTimeout(() => {
+              const el = document.createElement('div');
+              el.className = 'fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md transition-all p-4';
+              el.innerHTML = `
+                <div class="bg-surface-container-lowest p-8 md:p-12 rounded-3xl shadow-2xl text-center border-4 border-primary max-w-xl w-full transform animate-[scale-in_0.5s_ease-out]">
+                  <div class="flex justify-center mb-6">
+                    <span class="material-symbols-outlined text-7xl text-primary animate-bounce fill-current" style="font-variation-settings: 'FILL' 1;">favorite</span>
+                  </div>
+                  <h2 class="font-handwritten text-5xl md:text-6xl text-primary leading-tight mb-4">You Won!</h2>
+                  <div class="space-y-4 mb-10 bg-primary-container/40 p-6 rounded-2xl border border-primary/20">
+                    <p class="font-headline-lg text-2xl text-on-surface">Number of hearts collected: <span class="font-bold text-primary text-3xl">${currentHeartCount}</span></p>
+                    <p class="font-subtitle-serif text-2xl text-on-surface-variant italic leading-relaxed">Rishi's love is <br/><span class="font-bold text-secondary text-4xl">${currentHeartCount}</span><br/>times stronger!</p>
+                  </div>
+                  <button class="bg-primary text-white font-label-caps px-10 py-4 rounded-full shadow-lg hover:bg-primary-container hover:text-on-primary-container hover:scale-105 transition-all w-full text-lg tracking-widest" onclick="this.parentElement.parentElement.remove(); exitGame();">Play Again</button>
+                </div>
+              `;
+              const style = document.createElement('style');
+              style.innerHTML = '@keyframes scale-in { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }';
+              el.appendChild(style);
+              
+              document.body.appendChild(el);
+          }, 400);
+      }
+  }
 </script>
 <script src="assets/js/nav.js"></script>
 <script src="assets/js/sounds.js"></script>
