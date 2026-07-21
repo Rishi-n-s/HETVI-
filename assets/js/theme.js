@@ -88,50 +88,39 @@
     }
 
     // Background Music
-    if(localStorage.getItem('ambientSound') !== 'false') {
-      const bgAudio = document.createElement('audio');
-      bgAudio.id = 'global-bg-audio';
-      bgAudio.src = 'assets/music/Bairan - Banjaare_MP3.mp3.m4a';
-      bgAudio.loop = true;
-      bgAudio.volume = 1.0; // Loud background volume
-      document.body.appendChild(bgAudio);
+    const bgAudio = document.createElement('audio');
+    bgAudio.id = 'global-bg-audio';
+    bgAudio.src = 'assets/music/Bairan - Banjaare.mp3';
+    bgAudio.loop = true;
+    bgAudio.volume = 1.0;
+    document.body.appendChild(bgAudio);
 
-      // Restore timestamp from session
-      const savedTime = sessionStorage.getItem('bgMusicTime');
-      if (savedTime) {
-        bgAudio.currentTime = parseFloat(savedTime);
-      }
-
-      // Sync timestamp to session
-      setInterval(() => {
-        if (!bgAudio.paused) {
-          sessionStorage.setItem('bgMusicTime', bgAudio.currentTime);
-        }
-      }, 500);
-
-      const startAudio = () => {
-        // Prevent background music if local music.html player is active
-        if (window.isLocalMusicPlaying) return; 
-        bgAudio.play().catch(() => {});
-        document.removeEventListener('click', startAudio);
-        document.removeEventListener('keydown', startAudio);
-      };
-      
-      const wasPlaying = sessionStorage.getItem('bgMusicPlaying') !== 'false';
-      if (wasPlaying) {
-          bgAudio.play().catch(() => {
-              // Wait for interaction if autoplay fails
-              document.addEventListener('click', startAudio, {once:true});
-              document.addEventListener('keydown', startAudio, {once:true});
-          });
-      } else {
-          document.addEventListener('click', startAudio, {once:true});
-          document.addEventListener('keydown', startAudio, {once:true});
-      }
-
-      bgAudio.addEventListener('play', () => sessionStorage.setItem('bgMusicPlaying', 'true'));
-      bgAudio.addEventListener('pause', () => sessionStorage.setItem('bgMusicPlaying', 'false'));
+    // Restore timestamp from session
+    const savedTime = sessionStorage.getItem('bgMusicTime');
+    if (savedTime) {
+      bgAudio.currentTime = parseFloat(savedTime);
     }
+
+    // Sync timestamp to session
+    setInterval(() => {
+      if (!bgAudio.paused) {
+        sessionStorage.setItem('bgMusicTime', bgAudio.currentTime);
+      }
+    }, 500);
+
+    const startAudio = () => {
+      if (window.isLocalMusicPlaying) return; 
+      bgAudio.play().catch(() => {});
+    };
+    
+    // Aggressively attempt autoplay
+    startAudio();
+    
+    // Play on ANY user interaction, ALWAYS
+    document.addEventListener('click', startAudio);
+    document.addEventListener('keydown', startAudio);
+    document.addEventListener('touchstart', startAudio);
+    document.addEventListener('scroll', startAudio, {once:true});
   });
 
   // Global Animation Engine

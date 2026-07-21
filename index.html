@@ -41,30 +41,6 @@
 </head>
 <body class="font-sans antialiased relative w-screen h-screen bg-black">
 
-  <!-- Intro Video Overlay -->
-  <div id="enter-overlay" class="fixed inset-0 z-[10000] bg-black flex flex-col items-center justify-center transition-opacity duration-1000 overflow-hidden">
-    <!-- Intro Video -->
-    <video id="intro-video" autoplay muted playsinline onloadedmetadata="this.playbackRate = 2.0;" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
-      <source src="assets/images/animation.mp4" type="video/mp4">
-    </video>
-  </div>
-  
-  <script>
-    const introVideo = document.getElementById('intro-video');
-    const enterOverlay = document.getElementById('enter-overlay');
-    
-    // Automatically enter site when video ends
-    introVideo.addEventListener('ended', function() {
-      enterOverlay.style.opacity = '0';
-      setTimeout(() => enterOverlay.style.display = 'none', 1000);
-    });
-
-    // Skip video if user clicks
-    enterOverlay.addEventListener('click', function() {
-      this.style.opacity = '0';
-      setTimeout(() => this.style.display = 'none', 1000);
-    });
-  </script>
 
   <!-- Background Image: Full bleed, perfectly centered/bottom to show the couple -->
   <div class="absolute inset-0 z-0">

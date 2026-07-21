@@ -86,19 +86,16 @@
       </header>
       <ul class="space-y-4 pl-4 relative" id="playlist">
         <li class="flex items-center justify-between group cursor-pointer text-primary transition-colors" onclick="setTrack(0,this)">
-          <div class="flex items-center gap-3"><span class="material-symbols-outlined text-sm" id="play-icon-0" style="font-variation-settings:'FILL' 1">play_arrow</span><span class="font-subtitle-serif font-bold">Apna Bana Le</span></div>
+          <div class="flex items-center gap-3"><span class="material-symbols-outlined text-sm" id="play-icon-0" style="font-variation-settings:'FILL' 1">play_arrow</span><span class="font-subtitle-serif font-bold">Bairan - Banjaare</span></div>
         </li>
         <li class="flex items-center justify-between group cursor-pointer hover:text-primary transition-colors" onclick="setTrack(1,this)">
-          <div class="flex items-center gap-3"><span class="font-label-caps text-primary/40" id="play-icon-1">02</span><span class="font-subtitle-serif text-slate-800 group-hover:text-primary transition-colors">Bairan - Banjaare</span></div>
+          <div class="flex items-center gap-3"><span class="font-label-caps text-primary/40" id="play-icon-1">02</span><span class="font-subtitle-serif text-slate-800 group-hover:text-primary transition-colors">Pal Pal Dil Ke Paas</span></div>
         </li>
         <li class="flex items-center justify-between group cursor-pointer hover:text-primary transition-colors" onclick="setTrack(2,this)">
-          <div class="flex items-center gap-3"><span class="font-label-caps text-primary/40" id="play-icon-2">03</span><span class="font-subtitle-serif text-slate-800 group-hover:text-primary transition-colors">Pal Pal Dil Ke Paas</span></div>
+          <div class="flex items-center gap-3"><span class="font-label-caps text-primary/40" id="play-icon-2">03</span><span class="font-subtitle-serif text-slate-800 group-hover:text-primary transition-colors">Tum Ho Toh</span></div>
         </li>
         <li class="flex items-center justify-between group cursor-pointer hover:text-primary transition-colors" onclick="setTrack(3,this)">
-          <div class="flex items-center gap-3"><span class="font-label-caps text-primary/40" id="play-icon-3">04</span><span class="font-subtitle-serif text-slate-800 group-hover:text-primary transition-colors">Tum Ho Toh</span></div>
-        </li>
-        <li class="flex items-center justify-between group cursor-pointer hover:text-primary transition-colors" onclick="setTrack(4,this)">
-          <div class="flex items-center gap-3"><span class="font-label-caps text-primary/40" id="play-icon-4">05</span><span class="font-subtitle-serif text-slate-800 group-hover:text-primary transition-colors">Raataan Lambiyan</span></div>
+          <div class="flex items-center gap-3"><span class="font-label-caps text-primary/40" id="play-icon-3">04</span><span class="font-subtitle-serif text-slate-800 group-hover:text-primary transition-colors">Raataan Lambiyan</span></div>
         </li>
       </ul>
       <div class="mt-8 flex justify-end">
@@ -144,11 +141,10 @@
   window.isLocalMusicPlaying = false;
   
   const tracks = [
-    "assets/music/Apna Bana Le - Arijit Singh  Varun Dhawan & Kriti Sanon  Sachin-Jigar  Bhediya  Full Audio_MP3.mp3.m4a",
-    "assets/music/Bairan - Banjaare_MP3.mp3.m4a",
-    "assets/music/Blackmail - Pal Pal Dil Ke Paas Tum Rehti Ho - Kishore Kumar_MP3.mp3 (1).m4a",
-    "assets/music/Lyrical  Tum Ho Toh Song  Saiyaara  Ahaan, Aneet  Vishal Mishra, Hansika Pareek  Raj Shekhar_MP3.mp3.m4a",
-    "assets/music/Raataan Lambiyan – Official Video  Shershaah  Sidharth – Kiara  Tanishk B Jubin Nautiyal  Asees_MP3.mp3.m4a"
+    "assets/music/Bairan - Banjaare.mp3",
+    "assets/music/Blackmail - Pal Pal Dil Ke Paas Tum Rehti Ho - Kishore Kumar_MP3.mp3",
+    "assets/music/Lyrical  Tum Ho Toh Song  Saiyaara  Ahaan, Aneet  Vishal Mishra, Hansika Pareek  Raj Shekhar_MP3.mp3",
+    "assets/music/Raataan Lambiyan - Lyric Video  Shershaah  Sidharth, Kiara  Tanishk B.  Jubin  Asees_MP3.mp3"
   ];
 
   let isPlaying = false;
