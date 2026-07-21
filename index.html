@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Eternal Scrapbook | Our Story</title>
+<title>BAKUDI NI STORY | Our Story</title>
 <!-- Modern Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -13,7 +13,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="assets/js/theme.js"></script>
 <style>
-  body { margin: 0; overflow: hidden; }
+  body { margin: 0; overflow-x: hidden; }
   
   /* Ultra-premium glassmorphism */
   .glass-card {
@@ -38,11 +38,11 @@
   .delay-2 { animation-delay: 0.4s; }
 </style>
 </head>
-<body class="font-sans antialiased relative w-screen h-screen bg-black">
+<body class="font-sans antialiased relative w-screen min-h-[100dvh] bg-black">
 
 
   <!-- Background Image: Full bleed, perfectly centered/bottom to show the couple -->
-  <div class="absolute inset-0 z-0">
+  <div class="fixed inset-0 z-0">
     <img src="assets/images/landing_bg_couple.png" class="w-full h-full object-cover object-[center_80%] opacity-100" alt="Background"/>
     <!-- Lighter gradient that doesn't darken the couple at the bottom -->
     <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent h-1/2"></div>

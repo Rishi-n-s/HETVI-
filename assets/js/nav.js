@@ -1,4 +1,4 @@
-/* nav.js — Eternal Scrapbook · macOS-style Launchpad Navigation
+/* nav.js — BAKUDI NI STORY · macOS-style Launchpad Navigation
    Self-contained: injects a FIXED floating button that works on every page */
 (function () {
 
@@ -269,7 +269,7 @@
     /* Title */
     const title = document.createElement('p');
     title.id = 'es-launchpad-title';
-    title.textContent = 'Eternal Scrapbook';
+    title.textContent = 'BAKUDI NI STORY';
     overlay.appendChild(title);
 
     /* Grid */

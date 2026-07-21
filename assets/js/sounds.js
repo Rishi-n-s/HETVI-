@@ -1,4 +1,4 @@
-/* sounds.js — Eternal Scrapbook UI Sound Effects */
+/* sounds.js — BAKUDI NI STORY UI Sound Effects */
 (function() {
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   
