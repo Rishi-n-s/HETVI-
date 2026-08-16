@@ -1,4 +1,9 @@
 (function() {
+  // --- PWA Service Worker Registration ---
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+
   // --- Love Lock Security ---
   const currentPath = window.location.pathname.split('/').pop() || 'index.html';
   if (currentPath !== 'lock.html' && currentPath !== 'rejected.html') {
