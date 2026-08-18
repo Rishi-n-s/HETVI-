@@ -3,17 +3,23 @@
 // Pure Peer-to-Peer Media Streams + Cloud Firestore Signaling (Offer/Answer/ICE)
 // ==========================================================
 
-import { 
-    doc, 
-    setDoc, 
-    updateDoc, 
-    onSnapshot, 
-    collection, 
-    addDoc, 
-    serverTimestamp, 
-    query, 
-    where 
+import {
+    doc,
+    setDoc,
+    updateDoc,
+    onSnapshot,
+    collection,
+    addDoc,
+    serverTimestamp,
+    query,
+    where
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+import { sendLocalNotification } from "./notifications.js";
+import { 
+    initWatchTogether, 
+    connectWatchTogetherToCall, 
+    cleanupWatchTogether 
+} from "./watch-together.js";
 
 // STUN Configuration (Google High-Availability Public STUN Servers)
 const RTC_CONFIG = {
@@ -99,6 +105,9 @@ export function initWebRTC(user, profile, firestoreDb, showToast) {
     bindEventHandlers();
     listenForIncomingCalls();
 
+    // Initialize Watch Together Engine
+    initWatchTogether(currentUser, currentProfile, db, showToastFn);
+
     console.log("[WebRTC] Initialized successfully for user:", currentUser.email);
 }
 
@@ -150,19 +159,19 @@ function listenForIncomingCalls() {
     if (!currentUser || !db) return;
     if (unsubscribeIncomingCalls) unsubscribeIncomingCalls();
 
-    const partnerEmail = currentUser.email.toLowerCase().includes("rishi") ? 
-                         "hetvidodiya2447@gmail.com" : "rishisolanki7319@gmail.com";
+    const partnerEmail = currentUser.email.toLowerCase().includes("rishi") ?
+        "hetvidodiya2447@gmail.com" : "rishisolanki7319@gmail.com";
 
     const cleanCalleeEmail = (currentUser.email || "").toLowerCase().trim();
     const callsCol = collection(db, "calls");
     const q = query(
-        callsCol, 
-        where("callee.email", "==", cleanCalleeEmail), 
+        callsCol,
+        where("callee.email", "==", cleanCalleeEmail),
         where("status", "==", "calling")
     );
 
     unsubscribeIncomingCalls = onSnapshot(
-        q, 
+        q,
         (snapshot) => {
             if (snapshot.empty) {
                 if (incomingCallModal && !incomingCallModal.classList.contains("hidden")) {
@@ -317,7 +326,7 @@ export async function startCall(type = "video") {
 
         // 6. Listen for Remote Answer & Status Updates
         unsubscribeCallDoc = onSnapshot(
-            currentCallDocRef, 
+            currentCallDocRef,
             (docSnap) => {
                 const data = docSnap.data();
                 if (!data) return;
@@ -334,6 +343,7 @@ export async function startCall(type = "video") {
                         console.log("[WebRTC] Remote Answer description set successfully.");
                         startCallDurationTimer();
                         if (activeCallStatusLabel) activeCallStatusLabel.textContent = "Connected";
+                        connectWatchTogetherToCall(currentCallId, remoteStream);
                     }).catch(console.error);
                 }
             },
@@ -342,7 +352,7 @@ export async function startCall(type = "video") {
 
         // 7. Listen for Callee ICE Candidates
         unsubscribeCalleeCandidates = onSnapshot(
-            calleeCandidatesCol, 
+            calleeCandidatesCol,
             (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === "added") {
@@ -437,10 +447,11 @@ async function acceptIncomingCall() {
         // 5. Update UI
         showActiveCallUI(caller ? caller.name : "Your Love", "Connected");
         startCallDurationTimer();
+        connectWatchTogetherToCall(currentCallId, remoteStream);
 
         // 6. Listen for Caller Candidates
         unsubscribeCallerCandidates = onSnapshot(
-            callerCandidatesCol, 
+            callerCandidatesCol,
             (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === "added") {
@@ -454,7 +465,7 @@ async function acceptIncomingCall() {
 
         // 7. Listen for Call Status (Hangup by caller)
         unsubscribeCallDoc = onSnapshot(
-            currentCallDocRef, 
+            currentCallDocRef,
             (docSnap) => {
                 const data = docSnap.data();
                 if (data && data.status === "ended") {
@@ -494,12 +505,15 @@ async function rejectIncomingCall() {
 export async function endActiveCall(shouldUpdateFirestore = true) {
     console.log("[WebRTC] Ending active call and cleaning up resources...");
 
+    // 0. Cleanup Watch Together if active
+    cleanupWatchTogether();
+
     // 1. Update Firestore status if initiated by user
     if (shouldUpdateFirestore && currentCallDocRef) {
         try {
-            await updateDoc(currentCallDocRef, { 
+            await updateDoc(currentCallDocRef, {
                 status: "ended",
-                endedAt: serverTimestamp() 
+                endedAt: serverTimestamp()
             });
         } catch (e) {
             console.warn("Could not update call ended status in Firestore:", e);
@@ -597,7 +611,7 @@ async function switchCameraDevice() {
     if (!localStream || activeCallType !== "video") return;
 
     currentFacingMode = currentFacingMode === "user" ? "environment" : "user";
-    
+
     try {
         const newStream = await navigator.mediaDevices.getUserMedia({
             audio: false,
@@ -703,7 +717,7 @@ function stopRingingSound() {
     clearInterval(ringOscillatorInterval);
     ringOscillatorInterval = null;
     if (ringAudioCtx && ringAudioCtx.state !== 'closed') {
-        ringAudioCtx.close().catch(() => {});
+        ringAudioCtx.close().catch(() => { });
         ringAudioCtx = null;
     }
 }
@@ -720,6 +734,6 @@ function resumeBackgroundMusic() {
     window.isLocalMusicPlaying = false;
     const bgAudio = document.getElementById("global-bg-audio");
     if (bgAudio && sessionStorage.getItem('musicUserPaused') !== 'true') {
-        bgAudio.play().catch(() => {});
+        bgAudio.play().catch(() => { });
     }
 }

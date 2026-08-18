@@ -114,6 +114,16 @@ service cloud.firestore {
       match /calleeCandidates/{candidateId} {
         allow read, write, update, delete: if isAllowedUser();
       }
+
+      // Watch Together Real-time Video Synchronization State
+      match /watch_together/{docId} {
+        allow read, write, update, delete: if isAllowedUser();
+      }
+    }
+
+    // FCM Push Notification Tokens Collection
+    match /fcm_tokens/{userId} {
+      allow read, write, update, delete: if isAllowedUser() && request.auth.uid == userId;
     }
 
     // Deny all other database access
