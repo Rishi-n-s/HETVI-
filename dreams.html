@@ -52,21 +52,22 @@
   </div>
 
   <!-- Top AppBar -->
-  <header class="flex justify-between items-center w-full px-6 pt-6 fixed top-0 z-50 bg-transparent">
-    <span class="font-subtitle-serif text-subtitle-serif italic text-primary">BAKUDI NI STORY</span>
-    <div class="flex items-center gap-6">
-      <a href="music.html" class="text-primary hover:opacity-80"><span
-          class="material-symbols-outlined">music_note</span></a>
-      <a href="settings.html" class="text-primary hover:opacity-80"><span
-          class="material-symbols-outlined">palette</span></a>
+  <header
+    class="flex justify-between items-center w-full px-4 sm:px-8 pt-4 sm:pt-6 fixed top-0 z-40 bg-transparent pointer-events-none">
+    <a href="index.html" class="no-underline pointer-events-auto font-subtitle-serif text-sm sm:text-base italic text-primary drop-shadow-md hover:opacity-80 transition-opacity">BAKUDI NI STORY</a>
+    <div class="flex items-center gap-4 sm:gap-6 pointer-events-auto">
+      <a href="music.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
+          class="material-symbols-outlined text-xl sm:text-2xl">music_note</span></a>
+      <a href="settings.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
+          class="material-symbols-outlined text-xl sm:text-2xl">palette</span></a>
     </div>
   </header>
 
   <!-- Main -->
-  <main class="relative z-10 pt-32 pb-32 px-6 md:px-10 min-h-screen">
-    <div class="text-center mb-12 max-w-2xl mx-auto">
-      <h1 class="font-headline-xl text-headline-xl text-primary mb-2">Future Dreams</h1>
-      <p class="font-subtitle-serif text-subtitle-serif italic text-on-surface-variant/80">Where we're headed
+  <main class="relative z-10 pt-20 sm:pt-28 md:pt-32 pb-32 sm:pb-40 px-4 sm:px-6 md:px-10 min-h-screen">
+    <div class="text-center mb-8 sm:mb-12 max-w-2xl mx-auto">
+      <h1 class="font-headline-xl text-3xl sm:text-4xl md:text-headline-xl text-primary mb-1 sm:mb-2 leading-tight">Future Dreams</h1>
+      <p class="font-subtitle-serif text-lg sm:text-subtitle-serif italic text-on-surface-variant/80">Where we're headed
         together...</p>
     </div>
 
@@ -74,47 +75,47 @@
     <div class="max-w-3xl mx-auto">
       <!-- Consolidated Bucket List -->
       <div
-        class="dream-card bg-surface-container-lowest p-6 md:p-10 rounded-2xl shadow-xl border border-outline-variant/20 rotate-[-1deg]">
-        <div class="w-16 h-16 bg-primary-container rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm">
-          <span class="material-symbols-outlined text-on-primary-container text-4xl">favorite</span>
+        class="dream-card bg-surface-container-lowest p-5 sm:p-8 md:p-10 rounded-2xl shadow-xl border border-outline-variant/20 sm:rotate-[-1deg]">
+        <div class="w-12 sm:w-16 h-12 sm:h-16 bg-primary-container rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-sm">
+          <span class="material-symbols-outlined text-on-primary-container text-2xl sm:text-4xl">favorite</span>
         </div>
-        <h3 class="font-headline-lg text-3xl text-primary mb-8 text-center">Our Bucket List</h3>
-        <ul class="space-y-4 max-w-xl mx-auto" id="bucket-list">
+        <h3 class="font-headline-lg text-2xl sm:text-3xl text-primary mb-6 sm:mb-8 text-center">Our Bucket List</h3>
+        <ul class="space-y-3 sm:space-y-4 max-w-xl mx-auto" id="bucket-list">
           <!-- The Main 3 Wishes -->
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+          <li class="flex items-center gap-3 sm:gap-4 cursor-pointer group" onclick="checkItem(this)">
             <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-2xl text-primary font-bold">Have marriage with each other</span>
+              class="w-5 sm:w-6 h-5 sm:h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[14px] sm:text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-lg sm:text-2xl text-primary font-bold leading-snug">Have marriage with each other</span>
           </li>
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+          <li class="flex items-center gap-3 sm:gap-4 cursor-pointer group" onclick="checkItem(this)">
             <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-2xl text-primary font-bold">Have a great, wonderful, rich, and happy
+              class="w-5 sm:w-6 h-5 sm:h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[14px] sm:text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-lg sm:text-2xl text-primary font-bold leading-snug">Have a great, wonderful, rich, and happy
               family</span>
           </li>
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+          <li class="flex items-center gap-3 sm:gap-4 cursor-pointer group" onclick="checkItem(this)">
             <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-2xl text-primary font-bold">The whole khandan would see our beautiful
+              class="w-5 sm:w-6 h-5 sm:h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[14px] sm:text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-lg sm:text-2xl text-primary font-bold leading-snug">The whole khandan would see our beautiful
               lovestory and say "Pyaar kare toh Rishi aur Hetvi ki tarah kare, baki na kare"</span>
           </li>
 
           <!-- Travel Dreams -->
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+          <li class="flex items-center gap-3 sm:gap-4 cursor-pointer group" onclick="checkItem(this)">
             <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
-              <span class="material-symbols-outlined text-[16px] text-primary hidden">check</span>
+              class="w-5 sm:w-6 h-5 sm:h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
+              <span class="material-symbols-outlined text-[14px] sm:text-[16px] text-primary hidden">check</span>
             </span>
-            <span class="font-handwritten text-2xl text-on-surface">Kyoto in cherry blossom season</span>
+            <span class="font-handwritten text-lg sm:text-2xl text-on-surface leading-snug">Kyoto in cherry blossom season</span>
           </li>
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+          <li class="flex items-center gap-3 sm:gap-4 cursor-pointer group" onclick="checkItem(this)">
             <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-2xl text-on-surface">Northern Lights in Iceland</span>
+              class="w-5 sm:w-6 h-5 sm:h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[14px] sm:text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-lg sm:text-2xl text-on-surface leading-snug">Northern Lights in Iceland</span>
           </li>
           <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
             <span

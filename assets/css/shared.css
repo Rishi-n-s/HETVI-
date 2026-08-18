@@ -2,31 +2,60 @@
 
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+  /* Support mobile notch/safe areas */
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
 }
 
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   vertical-align: middle;
+  user-select: none;
+}
+
+/* Responsive Touch & Scroll Optimizations */
+.touch-pan-x {
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+}
+
+.touch-pan-y {
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.03);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #864e5a;
+  background: rgba(134, 78, 90, 0.35);
   border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(134, 78, 90, 0.6);
 }
 
 /* Custom Animations */

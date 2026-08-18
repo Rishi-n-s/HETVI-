@@ -225,15 +225,42 @@
     }
 
     /* ── Responsive ── */
+    @media (max-width: 768px) {
+      #es-launchpad-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px 14px;
+        padding: 30px 28px;
+        max-width: 520px;
+      }
+    }
     @media (max-width: 480px) {
-      #es-nav-trigger { font-size: 12px; padding: 8px 14px 8px 12px; top: 12px; }
+      #es-nav-trigger { font-size: 12px; padding: 7px 14px 7px 12px; top: 12px; }
+      #es-launchpad {
+        padding: 40px 12px;
+        overflow-y: auto;
+      }
       #es-launchpad-grid {
         grid-template-columns: repeat(3, 1fr);
-        gap: 16px 14px;
-        padding: 28px 24px;
+        gap: 14px 10px;
+        padding: 24px 16px;
+        max-height: 80vh;
+        overflow-y: auto;
       }
-      .es-app-icon-wrap { width: 60px; height: 60px; border-radius: 14px; }
-      .es-app-icon-wrap .material-symbols-outlined { font-size: 28px; }
+      .es-app-icon-wrap { width: 56px; height: 56px; border-radius: 14px; }
+      .es-app-icon-wrap .material-symbols-outlined { font-size: 26px; }
+      .es-app-label { font-size: 10.5px; max-width: 58px; }
+    }
+    @media (max-height: 520px) {
+      #es-launchpad { padding: 12px; }
+      #es-launchpad-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px 8px;
+        padding: 16px;
+        max-height: 90vh;
+      }
+      .es-app-icon-wrap { width: 44px; height: 44px; border-radius: 10px; }
+      .es-app-icon-wrap .material-symbols-outlined { font-size: 20px; }
+      .es-app-label { font-size: 9.5px; }
     }
   `;
   document.head.appendChild(style);

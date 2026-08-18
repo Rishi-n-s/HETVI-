@@ -94,61 +94,47 @@
 
   <!-- Top AppBar -->
   <header
-    class="flex justify-between items-center w-full px-6 pt-6 fixed top-0 z-50 bg-transparent pointer-events-none">
-    <span class="font-subtitle-serif text-subtitle-serif italic text-primary drop-shadow-md pointer-events-auto">BAKUDI
-      NI STORY</span>
-    <div class="flex items-center gap-6 pointer-events-auto">
+    class="flex justify-between items-center w-full px-4 sm:px-8 pt-4 sm:pt-6 fixed top-0 z-40 bg-transparent pointer-events-none">
+    <span class="font-subtitle-serif text-sm sm:text-base italic text-primary drop-shadow-md pointer-events-auto">BAKUDI NI STORY</span>
+    <div class="flex items-center gap-4 sm:gap-6 pointer-events-auto">
       <a href="music.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
-          class="material-symbols-outlined">music_note</span></a>
+          class="material-symbols-outlined text-xl sm:text-2xl">music_note</span></a>
       <a href="settings.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
-          class="material-symbols-outlined">palette</span></a>
-    </div>
-  </header>
-
-  <!-- Top AppBar -->
-  <header class="fixed top-0 left-0 w-full z-40 bg-white/60 backdrop-blur-md border-b border-surface-variant/30">
-    <div class="flex justify-between items-center w-full py-4 px-10">
-      <span class="font-subtitle-serif text-subtitle-serif italic text-primary">BAKUDI NI STORY</span>
-      <div class="flex items-center gap-6">
-        <a href="music.html" class="text-primary hover:opacity-80"><span
-            class="material-symbols-outlined">music_note</span></a>
-        <a href="settings.html" class="text-primary hover:opacity-80"><span
-            class="material-symbols-outlined">palette</span></a>
-      </div>
+          class="material-symbols-outlined text-xl sm:text-2xl">palette</span></a>
     </div>
   </header>
 
   <!-- Main Canvas -->
-  <main class="relative min-h-screen pt-32 pb-24 px-6 flex items-center justify-center overflow-hidden z-10">
-    <div class="absolute top-20 right-10 opacity-40 floating"><span
-        class="material-symbols-outlined text-6xl text-primary">local_florist</span></div>
-    <div class="absolute bottom-20 left-20 opacity-30 rotate-12 floating" style="animation-delay:-2s"><span
-        class="material-symbols-outlined text-8xl text-secondary">favorite</span></div>
+  <main class="relative min-h-screen pt-20 sm:pt-28 md:pt-32 pb-20 sm:pb-24 px-3 sm:px-6 flex items-center justify-center overflow-hidden z-10">
+    <div class="absolute top-16 sm:top-20 right-4 sm:right-10 opacity-30 sm:opacity-40 floating"><span
+        class="material-symbols-outlined text-4xl sm:text-6xl text-primary">local_florist</span></div>
+    <div class="absolute bottom-16 sm:bottom-20 left-4 sm:left-20 opacity-20 sm:opacity-30 rotate-12 floating" style="animation-delay:-2s"><span
+        class="material-symbols-outlined text-5xl sm:text-8xl text-secondary">favorite</span></div>
 
     <!-- Journal Page -->
     <div
-      class="relative w-full max-w-4xl bg-surface-container-lowest shadow-[40px_40px_80px_rgba(74,55,40,0.1)] p-12 paper-texture lined-paper transform -rotate-1 min-h-[700px]">
+      class="relative w-full max-w-4xl bg-surface-container-lowest shadow-[20px_20px_60px_rgba(74,55,40,0.1)] p-5 sm:p-8 md:p-12 paper-texture lined-paper transform sm:-rotate-1 min-h-[500px] sm:min-h-[700px] rounded-2xl">
       <!-- Spiral Binding -->
-      <div class="absolute -left-4 top-0 bottom-0 flex flex-col justify-around py-8 pointer-events-none">
-        <div class="w-8 h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
-        <div class="w-8 h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
-        <div class="w-8 h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
-        <div class="w-8 h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
-        <div class="w-8 h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
-        <div class="w-8 h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
-        <div class="w-8 h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
+      <div class="absolute -left-2 sm:-left-4 top-0 bottom-0 flex flex-col justify-around py-6 sm:py-8 pointer-events-none">
+        <div class="w-5 sm:w-8 h-2.5 sm:h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
+        <div class="w-5 sm:w-8 h-2.5 sm:h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
+        <div class="w-5 sm:w-8 h-2.5 sm:h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
+        <div class="w-5 sm:w-8 h-2.5 sm:h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
+        <div class="w-5 sm:w-8 h-2.5 sm:h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
+        <div class="w-5 sm:w-8 h-2.5 sm:h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
+        <div class="w-5 sm:w-8 h-2.5 sm:h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
       </div>
 
-      <div class="relative z-10">
-        <div class="mb-12 text-center md:text-left">
-          <h1 class="font-headline-xl text-[56px] text-primary mb-2 italic"
+      <div class="relative z-10 pl-2 sm:pl-4 md:pl-0">
+        <div class="mb-6 sm:mb-12 text-center md:text-left">
+          <h1 class="font-headline-xl text-3xl sm:text-4xl md:text-[56px] text-primary mb-1 sm:mb-2 italic leading-tight"
             style="font-family: 'Playfair Display', serif;">Our Story</h1>
-          <p class="font-handwritten text-4xl text-on-surface-variant italic">How we became forever...</p>
+          <p class="font-handwritten text-2xl sm:text-4xl text-on-surface-variant italic">How we became forever...</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8">
           <!-- Text Body -->
-          <div class="md:col-span-7 space-y-10">
+          <div class="md:col-span-7 space-y-6 sm:space-y-10">
 
             <section>
               <h2 class="font-subtitle-serif text-2xl text-secondary mb-2 flex items-center gap-2">

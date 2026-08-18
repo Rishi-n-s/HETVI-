@@ -365,29 +365,28 @@
 
   <!-- Top AppBar -->
   <header
-    class="flex justify-between items-center w-full px-6 pt-6 fixed top-0 z-50 bg-transparent pointer-events-none">
-    <span class="font-subtitle-serif text-subtitle-serif italic text-primary drop-shadow-md pointer-events-auto">BAKUDI
-      NI STORY</span>
-    <div class="flex items-center gap-6 pointer-events-auto">
+    class="flex justify-between items-center w-full px-4 sm:px-8 pt-4 sm:pt-6 fixed top-0 z-40 bg-transparent pointer-events-none">
+    <a href="index.html" class="no-underline pointer-events-auto font-subtitle-serif text-sm sm:text-base italic text-primary drop-shadow-md hover:opacity-80 transition-opacity">BAKUDI NI STORY</a>
+    <div class="flex items-center gap-4 sm:gap-6 pointer-events-auto">
       <a href="music.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
-          class="material-symbols-outlined">music_note</span></a>
+          class="material-symbols-outlined text-xl sm:text-2xl">music_note</span></a>
       <a href="settings.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
-          class="material-symbols-outlined">palette</span></a>
+          class="material-symbols-outlined text-xl sm:text-2xl">palette</span></a>
     </div>
   </header>
 
   <!-- Main -->
-  <main class="relative z-10 pt-28 pb-40 px-6 md:px-10 min-h-screen w-full max-w-7xl mx-auto">
-    <div id="gallery-header" class="mb-14 text-center opacity-0 transition-opacity duration-1000">
-      <h1 class="font-headline-xl text-[64px] text-primary drop-shadow-sm mb-4 mt-6"
+  <main class="relative z-10 pt-20 sm:pt-28 pb-32 sm:pb-40 px-4 sm:px-6 md:px-10 min-h-screen w-full max-w-7xl mx-auto">
+    <div id="gallery-header" class="mb-8 sm:mb-14 text-center opacity-0 transition-opacity duration-1000">
+      <h1 class="font-headline-xl text-3xl sm:text-5xl md:text-[64px] text-primary drop-shadow-sm mb-2 sm:mb-4 mt-4 sm:mt-6 leading-tight"
         style="font-family:'Playfair Display',serif;font-style:italic;">All Her Memories</h1>
-      <p class="font-handwritten text-3xl text-on-surface-variant/80 max-w-xl mx-auto">A thousand little moments,
+      <p class="font-handwritten text-xl sm:text-2xl md:text-3xl text-on-surface-variant/80 max-w-xl mx-auto">A thousand little moments,
         beautifully captured.</p>
     </div>
 
     <!-- Dynamic Gallery Grid -->
     <div id="gallery-grid"
-      class="columns-2 md:columns-3 lg:columns-4 gap-10 md:gap-14 space-y-14 md:space-y-20 w-full pb-32 opacity-0 transition-opacity duration-1000">
+      class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6 sm:gap-8 md:gap-12 space-y-6 sm:space-y-10 md:space-y-16 w-full pb-20 sm:pb-32 opacity-0 transition-opacity duration-1000">
       <!-- Media will be injected here by JavaScript -->
     </div>
   </main>

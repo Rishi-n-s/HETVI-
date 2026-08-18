@@ -201,14 +201,15 @@
   </div>
 
   <!-- Top AppBar -->
-  <header class="flex justify-between items-center w-full px-6 pt-6 fixed top-0 z-50 bg-transparent">
-    <span class="font-subtitle-serif text-subtitle-serif italic text-primary">BAKUDI NI STORY</span>
-    <div class="flex items-center gap-6">
-      <a href="music.html" class="text-primary hover:opacity-80"><span
-          class="material-symbols-outlined">music_note</span></a>
-      <div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+  <header
+    class="flex justify-between items-center w-full px-4 sm:px-8 pt-4 sm:pt-6 fixed top-0 z-40 bg-transparent pointer-events-none">
+    <a href="index.html" class="no-underline pointer-events-auto font-subtitle-serif text-sm sm:text-base italic text-primary drop-shadow-md hover:opacity-80 transition-opacity">BAKUDI NI STORY</a>
+    <div class="flex items-center gap-4 sm:gap-6 pointer-events-auto">
+      <a href="music.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
+          class="material-symbols-outlined text-xl sm:text-2xl">music_note</span></a>
+      <div class="w-8 sm:w-10 h-8 sm:h-10 rounded-full border-2 border-primary overflow-hidden shadow-xs">
         <img class="w-full h-full object-cover" src="./assets/images/images of her/IMG-20260715-WA0004.jpg"
-          alt="Profile" />
+          onerror="this.src='assets/images/main.jpeg'" alt="Profile" />
       </div>
     </div>
   </header>
@@ -217,20 +218,20 @@
   <!-- Side nav removed � using macOS popup nav.js -->
 
   <!-- Main -->
-  <main class="relative z-10 pt-32 pb-40 px-6 md:pl-40 min-h-screen max-w-3xl mx-auto">
-    <div class="mb-10">
-      <h1 class="font-headline-xl text-headline-xl text-primary mb-2">Preferences</h1>
-      <p class="font-subtitle-serif text-subtitle-serif italic text-on-surface-variant/80">Make this scrapbook truly
+  <main class="relative z-10 pt-20 sm:pt-28 md:pt-32 pb-32 sm:pb-40 px-4 sm:px-6 min-h-screen max-w-3xl mx-auto">
+    <div class="mb-6 sm:mb-10 text-center sm:text-left">
+      <h1 class="font-headline-xl text-3xl sm:text-4xl md:text-headline-xl text-primary mb-1 sm:mb-2 leading-tight">Preferences</h1>
+      <p class="font-subtitle-serif text-lg sm:text-subtitle-serif italic text-on-surface-variant/80">Make this scrapbook truly
         yours.</p>
     </div>
 
     <!-- Settings Cards -->
-    <div class="space-y-6">
+    <div class="space-y-4 sm:space-y-6">
       <!-- Appearance -->
       <div class="bg-surface-container-lowest rounded-2xl shadow-lg border border-outline-variant/20 overflow-hidden">
-        <div class="px-6 py-4 border-b border-outline-variant/10 flex items-center gap-3">
+        <div class="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-outline-variant/10 flex items-center gap-3">
           <span class="material-symbols-outlined text-primary">palette</span>
-          <h2 class="font-headline-lg text-[20px] text-on-surface">Appearance</h2>
+          <h2 class="font-headline-lg text-lg sm:text-[20px] text-on-surface">Appearance</h2>
         </div>
         <!-- Theme Color -->
         <div class="setting-row px-6 py-5 flex flex-col gap-4">
