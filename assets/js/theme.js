@@ -158,35 +158,24 @@
     document.addEventListener('scroll', startAudio, { once: true });
 
     // Music Control Button
-    const musicBtn = document.createElement('button');
-    musicBtn.id = 'global-music-btn';
-    musicBtn.innerHTML = '🎵';
-    musicBtn.style.position = 'fixed';
-    musicBtn.style.bottom = '20px';
-    musicBtn.style.left = '20px'; // Place on left to avoid clashing with potential right-side things
-    musicBtn.style.width = '45px';
-    musicBtn.style.height = '45px';
-    musicBtn.style.borderRadius = '50%';
-    musicBtn.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
-    musicBtn.style.backdropFilter = 'blur(10px)';
-    musicBtn.style.border = '1px solid rgba(0, 0, 0, 0.1)';
-    musicBtn.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
-    musicBtn.style.zIndex = '999999';
-    musicBtn.style.cursor = 'pointer';
-    musicBtn.style.display = 'flex';
-    musicBtn.style.alignItems = 'center';
-    musicBtn.style.justifyContent = 'center';
-    musicBtn.style.fontSize = '20px';
-    musicBtn.style.transition = 'all 0.3s ease';
-    document.body.appendChild(musicBtn);
+    let musicBtn = document.getElementById('global-music-btn');
+    if (!musicBtn) {
+      musicBtn = document.createElement('button');
+      musicBtn.id = 'global-music-btn';
+      musicBtn.setAttribute('type', 'button');
+      musicBtn.setAttribute('title', 'Toggle Music');
+      musicBtn.setAttribute('aria-label', 'Toggle background music');
+      musicBtn.innerHTML = '🎵';
+      document.body.appendChild(musicBtn);
+    }
 
     const updateMusicIcon = () => {
       if (bgAudio.paused) {
         musicBtn.innerHTML = '🔇';
-        musicBtn.style.opacity = '0.7';
+        musicBtn.classList.add('is-muted');
       } else {
         musicBtn.innerHTML = '🎵';
-        musicBtn.style.opacity = '1';
+        musicBtn.classList.remove('is-muted');
       }
     };
 

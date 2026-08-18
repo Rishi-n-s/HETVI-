@@ -10,32 +10,103 @@ service cloud.firestore {
       );
     }
 
-    // Helper: Validate incoming message payload (Text, Image, Video)
-    function isValidMessage() {
-      let data = request.resource.data;
+    // Common Base Authentication & Identity Check for any newly created document
+    function hasValidUserIdentity(data) {
       return data.uid == request.auth.uid
         && data.email == request.auth.token.email
         && data.displayName is string
-        && data.displayName.size() > 0
-        && (
-          // Text message validation
-          (!('mediaUrl' in data) && data.message is string && data.message.size() >= 1 && data.message.size() <= 2000)
-          ||
-          // Media (Image or Video) message validation
-          ('mediaUrl' in data && data.mediaUrl is string && data.mediaUrl.size() > 0 && data.mediaType in ['image', 'video'])
-        );
+        && data.displayName.size() > 0;
+    }
+
+    // 1. Plain Text Message Schema Validation
+    function isTextMsg(data) {
+      return (!('mediaType' in data) || data.mediaType == null)
+        && (!('mediaUrl' in data))
+        && data.message is string
+        && data.message.size() >= 1
+        && data.message.size() <= 2000;
+    }
+
+    // 2. Photo / Image Message Schema Validation
+    function isImageMsg(data) {
+      return data.mediaType == 'image'
+        && data.mediaUrl is string
+        && data.mediaUrl.size() > 0
+        && (!('message' in data) || (data.message is string && data.message.size() <= 2000));
+    }
+
+    // 3. Video Message Schema Validation
+    function isVideoMsg(data) {
+      return data.mediaType == 'video'
+        && data.mediaUrl is string
+        && data.mediaUrl.size() > 0
+        && (!('message' in data) || (data.message is string && data.message.size() <= 2000));
+    }
+
+    // 4. Voice Note / Audio Message Schema Validation (Supports audioUrl, duration, fileSize)
+    function isAudioMsg(data) {
+      return data.mediaType == 'audio'
+        && data.mediaUrl is string
+        && data.mediaUrl.size() > 0;
+    }
+
+    // 5. Interactive Love Poll Schema Validation (Supports question, options 2-6, votes map)
+    function isPollMsg(data) {
+      return data.mediaType == 'poll'
+        && data.question is string
+        && data.question.size() >= 1
+        && data.question.size() <= 500
+        && data.options is list
+        && data.options.size() >= 2
+        && data.options.size() <= 6;
+    }
+
+    // Master Message Validator for creating new messages
+    function isValidMessage() {
+      let data = request.resource.data;
+      return hasValidUserIdentity(data) && (
+        isTextMsg(data) ||
+        isImageMsg(data) ||
+        isVideoMsg(data) ||
+        isAudioMsg(data) ||
+        isPollMsg(data)
+      );
+    }
+
+    // Poll Vote Update Validator (Allows updating votes map on poll messages)
+    function isValidPollUpdate() {
+      return resource.data.mediaType == 'poll';
     }
 
     // Protect /our_story_room collection
     match /our_story_room/{messageId} {
       allow read: if isAllowedUser();
       allow create: if isAllowedUser() && isValidMessage();
-      allow update, delete: if false;
+      allow update: if isAllowedUser() && isValidPollUpdate();
+      allow delete: if isAllowedUser();
+    }
+
+    // Support /test testing room
+    match /test/{messageId} {
+      allow read, write, delete: if isAllowedUser();
     }
 
     // Real-time typing status tracking
     match /typing_status/{userId} {
       allow read, write: if isAllowedUser();
+    }
+
+    // WebRTC 1-to-1 Audio & Video Call Signaling Engine
+    match /calls/{callId} {
+      allow read, write, update, delete: if isAllowedUser();
+
+      match /callerCandidates/{candidateId} {
+        allow read, write, update, delete: if isAllowedUser();
+      }
+
+      match /calleeCandidates/{candidateId} {
+        allow read, write, update, delete: if isAllowedUser();
+      }
     }
 
     // Deny all other database access

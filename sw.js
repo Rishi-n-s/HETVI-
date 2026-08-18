@@ -1,13 +1,14 @@
 // BAKUDI NI STORY — Service Worker
 // Cache-first strategy for offline support
 
-const CACHE_NAME = 'bakudi-v1';
+const CACHE_NAME = 'bakudi-v3';
 
 // Core assets to pre-cache on install
 const PRECACHE_ASSETS = [
   './',
   './lock.html',
   './index.html',
+  './chat.html',
   './gallery.html',
   './timeline.html',
   './letters.html',
@@ -23,6 +24,10 @@ const PRECACHE_ASSETS = [
   './assets/js/theme.js',
   './assets/js/nav.js',
   './assets/js/sounds.js',
+  './assets/js/chat.js',
+  './assets/js/webrtc.js',
+  './assets/js/firebase.js',
+  './assets/js/supabase.js',
   './assets/js/media-data.js',
   './assets/js/letters-data.js',
   './assets/images/main.jpeg',
