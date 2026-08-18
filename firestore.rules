@@ -5,15 +5,15 @@ service cloud.firestore {
     // Helper: Verify user is authenticated as one of the two exact allowed emails
     function isAllowedUser() {
       return request.auth != null && (
-        request.auth.token.email == 'rishisolanki7319@gmail.com' ||
-        request.auth.token.email == 'hetvidodiya2447@gmail.com'
+        request.auth.token.email.lower() == 'rishisolanki7319@gmail.com' ||
+        request.auth.token.email.lower() == 'hetvidodiya2447@gmail.com'
       );
     }
 
     // Common Base Authentication & Identity Check for any newly created document
     function hasValidUserIdentity(data) {
       return data.uid == request.auth.uid
-        && data.email == request.auth.token.email
+        && data.email.lower() == request.auth.token.email.lower()
         && data.displayName is string
         && data.displayName.size() > 0;
     }
@@ -98,12 +98,19 @@ service cloud.firestore {
 
     // WebRTC 1-to-1 Audio & Video Call Signaling Engine
     match /calls/{callId} {
-      allow read, write, update, delete: if isAllowedUser();
+      // Authorized read, create, answer/status update, and cleanup
+      allow read: if isAllowedUser();
+      allow create: if isAllowedUser() 
+        && request.resource.data.caller.email.lower() == request.auth.token.email.lower();
+      allow update: if isAllowedUser();
+      allow delete: if isAllowedUser();
 
+      // Caller ICE Candidates signaling stream
       match /callerCandidates/{candidateId} {
         allow read, write, update, delete: if isAllowedUser();
       }
 
+      // Callee ICE Candidates signaling stream
       match /calleeCandidates/{candidateId} {
         allow read, write, update, delete: if isAllowedUser();
       }

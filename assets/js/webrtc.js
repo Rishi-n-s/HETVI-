@@ -153,31 +153,38 @@ function listenForIncomingCalls() {
     const partnerEmail = currentUser.email.toLowerCase().includes("rishi") ? 
                          "hetvidodiya2447@gmail.com" : "rishisolanki7319@gmail.com";
 
+    const cleanCalleeEmail = (currentUser.email || "").toLowerCase().trim();
     const callsCol = collection(db, "calls");
     const q = query(
         callsCol, 
-        where("callee.email", "==", currentUser.email), 
+        where("callee.email", "==", cleanCalleeEmail), 
         where("status", "==", "calling")
     );
 
-    unsubscribeIncomingCalls = onSnapshot(q, (snapshot) => {
-        if (snapshot.empty) {
-            if (incomingCallModal && !incomingCallModal.classList.contains("hidden")) {
-                hideIncomingCallModal();
+    unsubscribeIncomingCalls = onSnapshot(
+        q, 
+        (snapshot) => {
+            if (snapshot.empty) {
+                if (incomingCallModal && !incomingCallModal.classList.contains("hidden")) {
+                    hideIncomingCallModal();
+                }
+                return;
             }
-            return;
-        }
 
-        // Handle active incoming call document
-        snapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            // Verify call is fresh (within last 45 seconds)
-            const createdAt = data.createdAt ? (data.createdAt.toMillis ? data.createdAt.toMillis() : data.createdAt) : Date.now();
-            if (Date.now() - createdAt < 45000 && data.status === "calling" && !currentCallId) {
-                showIncomingCallModal(docSnap.id, data);
-            }
-        });
-    });
+            // Handle active incoming call document
+            snapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                // Verify call is fresh (within last 45 seconds)
+                const createdAt = data.createdAt ? (data.createdAt.toMillis ? data.createdAt.toMillis() : data.createdAt) : Date.now();
+                if (Date.now() - createdAt < 45000 && data.status === "calling" && !currentCallId) {
+                    showIncomingCallModal(docSnap.id, data);
+                }
+            });
+        },
+        (error) => {
+            console.warn("[WebRTC] Incoming call listener notice:", error.message);
+        }
+    );
 }
 
 function showIncomingCallModal(callId, data) {
@@ -309,35 +316,43 @@ export async function startCall(type = "video") {
         showActiveCallUI(partnerName, "Calling...");
 
         // 6. Listen for Remote Answer & Status Updates
-        unsubscribeCallDoc = onSnapshot(currentCallDocRef, (docSnap) => {
-            const data = docSnap.data();
-            if (!data) return;
+        unsubscribeCallDoc = onSnapshot(
+            currentCallDocRef, 
+            (docSnap) => {
+                const data = docSnap.data();
+                if (!data) return;
 
-            if (data.status === "rejected") {
-                showToastFn(`${partnerName} declined the call.`, "info");
-                endActiveCall(false);
-            } else if (data.status === "ended") {
-                showToastFn("Call ended.", "info");
-                endActiveCall(false);
-            } else if (data.status === "connected" && data.answer && !peerConnection.currentRemoteDescription) {
-                const answerDesc = new RTCSessionDescription(data.answer);
-                peerConnection.setRemoteDescription(answerDesc).then(() => {
-                    console.log("[WebRTC] Remote Answer description set successfully.");
-                    startCallDurationTimer();
-                    if (activeCallStatusLabel) activeCallStatusLabel.textContent = "Connected";
-                }).catch(console.error);
-            }
-        });
+                if (data.status === "rejected") {
+                    showToastFn(`${partnerName} declined the call.`, "info");
+                    endActiveCall(false);
+                } else if (data.status === "ended") {
+                    showToastFn("Call ended.", "info");
+                    endActiveCall(false);
+                } else if (data.status === "connected" && data.answer && !peerConnection.currentRemoteDescription) {
+                    const answerDesc = new RTCSessionDescription(data.answer);
+                    peerConnection.setRemoteDescription(answerDesc).then(() => {
+                        console.log("[WebRTC] Remote Answer description set successfully.");
+                        startCallDurationTimer();
+                        if (activeCallStatusLabel) activeCallStatusLabel.textContent = "Connected";
+                    }).catch(console.error);
+                }
+            },
+            (err) => console.warn("[WebRTC] Call doc listener notice:", err.message)
+        );
 
         // 7. Listen for Callee ICE Candidates
-        unsubscribeCalleeCandidates = onSnapshot(calleeCandidatesCol, (snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === "added") {
-                    const candidateData = change.doc.data();
-                    peerConnection.addIceCandidate(new RTCIceCandidate(candidateData)).catch(console.warn);
-                }
-            });
-        });
+        unsubscribeCalleeCandidates = onSnapshot(
+            calleeCandidatesCol, 
+            (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        const candidateData = change.doc.data();
+                        peerConnection.addIceCandidate(new RTCIceCandidate(candidateData)).catch(console.warn);
+                    }
+                });
+            },
+            (err) => console.warn("[WebRTC] Callee candidates notice:", err.message)
+        );
 
     } catch (err) {
         console.error("[WebRTC] Start Call Error:", err);
@@ -424,23 +439,31 @@ async function acceptIncomingCall() {
         startCallDurationTimer();
 
         // 6. Listen for Caller Candidates
-        unsubscribeCallerCandidates = onSnapshot(callerCandidatesCol, (snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === "added") {
-                    const candidateData = change.doc.data();
-                    peerConnection.addIceCandidate(new RTCIceCandidate(candidateData)).catch(console.warn);
-                }
-            });
-        });
+        unsubscribeCallerCandidates = onSnapshot(
+            callerCandidatesCol, 
+            (snapshot) => {
+                snapshot.docChanges().forEach((change) => {
+                    if (change.type === "added") {
+                        const candidateData = change.doc.data();
+                        peerConnection.addIceCandidate(new RTCIceCandidate(candidateData)).catch(console.warn);
+                    }
+                });
+            },
+            (err) => console.warn("[WebRTC] Caller candidates notice:", err.message)
+        );
 
         // 7. Listen for Call Status (Hangup by caller)
-        unsubscribeCallDoc = onSnapshot(currentCallDocRef, (docSnap) => {
-            const data = docSnap.data();
-            if (data && data.status === "ended") {
-                showToastFn("Call ended.", "info");
-                endActiveCall(false);
-            }
-        });
+        unsubscribeCallDoc = onSnapshot(
+            currentCallDocRef, 
+            (docSnap) => {
+                const data = docSnap.data();
+                if (data && data.status === "ended") {
+                    showToastFn("Call ended.", "info");
+                    endActiveCall(false);
+                }
+            },
+            (err) => console.warn("[WebRTC] Callee call doc notice:", err.message)
+        );
 
     } catch (err) {
         console.error("[WebRTC] Accept Call Error:", err);

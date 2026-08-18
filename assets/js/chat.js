@@ -3,24 +3,24 @@
 // Features: Text, Images, Videos, Voice Notes (Record/Pause/Speed/Waveform), Love Polls (Live Voting)
 // ==========================================================
 
-import { 
-    auth, 
-    db, 
+import {
+    auth,
+    db,
     doc,
     setDoc,
     deleteDoc,
-    requireAuth, 
-    logoutUser, 
-    getUserProfile 
+    requireAuth,
+    logoutUser,
+    getUserProfile
 } from "./firebase.js";
-import { 
-    collection, 
-    addDoc, 
-    query, 
-    orderBy, 
+import {
+    collection,
+    addDoc,
+    query,
+    orderBy,
     limitToLast,
-    onSnapshot, 
-    serverTimestamp 
+    onSnapshot,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 import { uploadMediaToSupabase, deleteMediaFromSupabase } from "./supabase.js";
 import { initWebRTC, startCall } from "./webrtc.js";
@@ -240,38 +240,44 @@ function listenToPartnerTyping() {
     if (unsubscribeTyping) unsubscribeTyping();
 
     const typingCol = collection(db, "typing_status");
-    unsubscribeTyping = onSnapshot(typingCol, (snapshot) => {
-        let partnerIsTyping = false;
-        let partnerName = "Partner";
+    unsubscribeTyping = onSnapshot(
+        typingCol,
+        (snapshot) => {
+            let partnerIsTyping = false;
+            let partnerName = "Partner";
 
-        snapshot.forEach((docSnap) => {
-            const data = docSnap.data();
-            if (currentAuthUser && docSnap.id !== currentAuthUser.uid && data.isTyping) {
-                const now = new Date().getTime();
-                if (now - (data.updatedAt || 0) < 6000) {
-                    partnerIsTyping = true;
-                    partnerName = data.name || "Partner";
+            snapshot.forEach((docSnap) => {
+                const data = docSnap.data();
+                if (currentAuthUser && docSnap.id !== currentAuthUser.uid && data.isTyping) {
+                    const now = new Date().getTime();
+                    if (now - (data.updatedAt || 0) < 6000) {
+                        partnerIsTyping = true;
+                        partnerName = data.name || "Partner";
+                    }
                 }
-            }
-        });
+            });
 
-        if (partnerIsTyping) {
-            if (chatHeaderSubtitle) chatHeaderSubtitle.classList.add("hidden");
-            if (typingIndicator) {
-                typingIndicator.classList.remove("hidden");
-                if (typingText) typingText.textContent = `${partnerName} is typing...`;
+            if (partnerIsTyping) {
+                if (chatHeaderSubtitle) chatHeaderSubtitle.classList.add("hidden");
+                if (typingIndicator) {
+                    typingIndicator.classList.remove("hidden");
+                    if (typingText) typingText.textContent = `${partnerName} is typing...`;
+                }
+            } else {
+                if (typingIndicator) typingIndicator.classList.add("hidden");
+                if (chatHeaderSubtitle) chatHeaderSubtitle.classList.remove("hidden");
             }
-        } else {
-            if (typingIndicator) typingIndicator.classList.add("hidden");
-            if (chatHeaderSubtitle) chatHeaderSubtitle.classList.remove("hidden");
+        },
+        (error) => {
+            console.warn("[Typing Status] Snapshot notice:", error.message);
         }
-    });
+    );
 }
 
 // ==========================================================
 // 4. Fullscreen Media Lightbox Modal
 // ==========================================================
-window.openMediaLightbox = function(mediaUrl, mediaType, fileName = "media") {
+window.openMediaLightbox = function (mediaUrl, mediaType, fileName = "media") {
     if (!mediaLightbox || !lightboxContent) return;
 
     if (lightboxDownloadBtn) {
@@ -387,7 +393,7 @@ async function startVoiceRecording() {
 
     try {
         audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        
+
         // Find best supported audio MIME type across Chrome, Safari, Firefox, Edge
         let mimeType = 'audio/webm';
         if (typeof MediaRecorder !== 'undefined' && typeof MediaRecorder.isTypeSupported === 'function') {
@@ -538,7 +544,7 @@ function resetRecordingUI() {
         audioStream = null;
     }
     if (audioCtx && audioCtx.state !== 'closed') {
-        audioCtx.close().catch(() => {});
+        audioCtx.close().catch(() => { });
         audioCtx = null;
     }
     mediaRecorder = null;
@@ -577,7 +583,7 @@ async function stopAndSendVoiceRecording() {
 
     try {
         mediaRecorder.requestData();
-    } catch (e) {}
+    } catch (e) { }
     mediaRecorder.stop();
 }
 
@@ -636,7 +642,7 @@ if (recordSendBtn) recordSendBtn.addEventListener("click", stopAndSendVoiceRecor
 // ==========================================================
 // 7. Global Audio Message Player Controller
 // ==========================================================
-window.toggleAudioMessagePlayback = function(btnEl, audioUrl) {
+window.toggleAudioMessagePlayback = function (btnEl, audioUrl) {
     const bubble = btnEl.closest(".voice-bubble");
     if (!bubble) return;
 
@@ -685,7 +691,7 @@ window.toggleAudioMessagePlayback = function(btnEl, audioUrl) {
     audio.playbackRate = currentSpeed;
 
     btnEl.innerHTML = `<span class="material-symbols-outlined text-xl">pause</span>`;
-    
+
     audio.play().catch(err => {
         console.error("Audio play error:", err);
         btnEl.innerHTML = `<span class="material-symbols-outlined text-xl">play_arrow</span>`;
@@ -716,11 +722,11 @@ window.toggleAudioMessagePlayback = function(btnEl, audioUrl) {
     });
 };
 
-window.handleAudioSeek = function(e, progressBarEl, audioUrl) {
+window.handleAudioSeek = function (e, progressBarEl, audioUrl) {
     const bubble = progressBarEl.closest(".voice-bubble");
     if (!bubble) return;
     const playBtn = bubble.querySelector("button[onclick*='toggleAudioMessagePlayback']");
-    
+
     if (!activeAudioElement || (activeAudioElement.src !== audioUrl && !activeAudioElement.src.endsWith(encodeURI(audioUrl)))) {
         if (playBtn) window.toggleAudioMessagePlayback(playBtn, audioUrl);
     }
@@ -736,7 +742,7 @@ window.handleAudioSeek = function(e, progressBarEl, audioUrl) {
     }
 };
 
-window.cycleAudioSpeed = function(speedBtn) {
+window.cycleAudioSpeed = function (speedBtn) {
     const speeds = [1, 1.5, 2];
     const currentSpeed = parseFloat(speedBtn.getAttribute("data-speed") || "1");
     const nextIndex = (speeds.indexOf(currentSpeed) + 1) % speeds.length;
@@ -899,7 +905,7 @@ if (pollForm) {
 }
 
 // Voting on Poll Handler
-window.handlePollVote = async function(docId, optionIndex) {
+window.handlePollVote = async function (docId, optionIndex) {
     if (!currentAuthUser) {
         showToast("Please sign in to vote.", "error");
         return;
@@ -927,7 +933,7 @@ window.handlePollVote = async function(docId, optionIndex) {
 // ==========================================================
 function formatMessageTime(timestamp) {
     if (!timestamp) return "Just now";
-    
+
     let date;
     if (timestamp.toDate) {
         date = timestamp.toDate();
@@ -949,9 +955,9 @@ function createMessageElement(docId, data) {
     if (!currentAuthUser) return document.createElement("div");
 
     // Sent vs Received detection
-    const isSentByMe = (data.uid && data.uid === currentAuthUser.uid) || 
-                       (data.email && data.email.toLowerCase() === currentAuthUser.email.toLowerCase()) ||
-                       ((data.sender || data.displayName || "").trim().toLowerCase() === currentProfile.name.trim().toLowerCase());
+    const isSentByMe = (data.uid && data.uid === currentAuthUser.uid) ||
+        (data.email && data.email.toLowerCase() === currentAuthUser.email.toLowerCase()) ||
+        ((data.sender || data.displayName || "").trim().toLowerCase() === currentProfile.name.trim().toLowerCase());
 
     const senderDisplayName = data.displayName || data.sender || data.name || "Special Someone";
     const timeFormatted = formatMessageTime(data.createdAt);
@@ -1194,7 +1200,7 @@ if (messagesContainer) {
     messagesContainer.addEventListener("scroll", () => {
         const threshold = 120;
         const distanceFromBottom = messagesContainer.scrollHeight - messagesContainer.scrollTop - messagesContainer.clientHeight;
-        
+
         if (distanceFromBottom > threshold) {
             isUserScrolledUp = true;
             if (scrollBottomBtn) scrollBottomBtn.classList.add("visible");
@@ -1232,7 +1238,7 @@ function connectToChat(chatId) {
         messagesQuery,
         (snapshot) => {
             console.log(`[Firestore Real-Time] Snapshot event with ${snapshot.docChanges().length} changes (Total: ${snapshot.size})`);
-            
+
             if (snapshot.empty) {
                 messagesContainer.innerHTML = "";
                 if (emptyState) {
@@ -1261,7 +1267,7 @@ function connectToChat(chatId) {
                     if (data.mediaType === "audio") lastMessageText = "🎙️ Voice Note";
                     else if (data.mediaType === "poll") lastMessageText = `📊 Poll: ${data.question || ''}`;
                     else lastMessageText = data.mediaType ? `[${data.mediaType.toUpperCase()}] ${data.message || ''}` : (data.message || data.text || "");
-                    
+
                     lastMessageTime = formatMessageTime(data.createdAt);
                 });
                 isInitialBatchLoaded = true;
@@ -1306,7 +1312,7 @@ function connectToChat(chatId) {
                     if (data.mediaType === "audio") lastMessageText = "🎙️ Voice Note";
                     else if (data.mediaType === "poll") lastMessageText = `📊 Poll: ${data.question || ''}`;
                     else lastMessageText = data.mediaType ? `[${data.mediaType.toUpperCase()}] ${data.message || ''}` : (data.message || data.text || "");
-                    
+
                     lastMessageTime = formatMessageTime(data.createdAt);
                 });
             }
@@ -1541,7 +1547,7 @@ async function executeSupabaseMediaUpload(rawFile, caption) {
     const isVideo = rawFile.type.startsWith("video");
     const isAudio = rawFile.type.startsWith("audio");
     const mediaType = isVideo ? "video" : isAudio ? "audio" : "image";
-    
+
     // Compress image if applicable
     const file = (isVideo || isAudio) ? rawFile : await compressImageIfNeeded(rawFile);
 
