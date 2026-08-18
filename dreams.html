@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Dreams | BAKUDI NI STORY</title>
-  <meta name="description" content="Future dreams, travel bucket lists, and shared goals." />
+  <title>Future Dreams & Bucket List | BAKUDI NI STORY</title>
+  <meta name="description" content="Future dreams, travel bucket lists, and shared goals forever saved in real-time." />
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
@@ -15,7 +15,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
   <link
-    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600;700&family=Caveat:wght@400;700&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
     rel="stylesheet" />
@@ -23,233 +23,429 @@
   <script src="assets/js/theme.js"></script>
   <link rel="stylesheet" href="assets/css/shared.css" />
   <style>
+    body {
+      overflow-x: hidden;
+      background-color: #faf9f6;
+      font-family: 'Quicksand', sans-serif;
+    }
+
     .star-bg {
       background: radial-gradient(ellipse at 50% 0%, rgba(255, 183, 197, 0.3) 0%, transparent 60%), radial-gradient(ellipse at 80% 100%, rgba(186, 234, 255, 0.2) 0%, transparent 50%);
     }
 
     .dream-card {
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
     }
 
     .dream-card:hover {
-      transform: translateY(-6px) scale(1.02) !important;
+      transform: translateY(-4px) scale(1.01) !important;
+      box-shadow: 0 20px 40px rgba(134, 78, 90, 0.12) !important;
     }
 
-    .checked {
+    .checked-text {
       text-decoration: line-through;
-      opacity: 0.5;
+      opacity: 0.6;
+    }
+
+    .tag-hetvi {
+      background: linear-gradient(135deg, rgba(255, 183, 197, 0.45), rgba(255, 117, 140, 0.25));
+      border: 1px solid rgba(209, 36, 80, 0.3);
+      color: #b01f43;
+    }
+
+    .tag-rishi {
+      background: linear-gradient(135deg, rgba(186, 234, 255, 0.5), rgba(12, 103, 128, 0.2));
+      border: 1px solid rgba(12, 103, 128, 0.3);
+      color: #0b556b;
+    }
+
+    .washi-tape-dream {
+      background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, 0.3) 5px, rgba(255, 255, 255, 0.3) 10px);
     }
   </style>
 </head>
 
-<body class="bg-background text-on-surface font-body-main min-h-screen overflow-x-hidden star-bg flex flex-col">
+<body class="bg-[#faf9f6] text-[#2c1d22] min-h-screen overflow-x-hidden star-bg flex flex-col relative">
 
-  <!-- Cinematic Background -->
-  <div class="fixed inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
-    <div class="w-full h-full bg-cover bg-center scale-105 transform"
+  <!-- Background Ambient Tint -->
+  <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+    <div class="absolute inset-0 bg-cover bg-center opacity-30 scale-105"
       style="background-image:url('assets/images/landing_bg_couple.png')"></div>
-    <div class="absolute inset-0 bg-background/70 backdrop-blur-sm z-10"></div>
+    <div class="absolute inset-0 bg-background/70 backdrop-blur-[2px] z-10"></div>
   </div>
 
   <!-- Top AppBar -->
   <header
     class="flex justify-between items-center w-full px-4 sm:px-8 pt-4 sm:pt-6 fixed top-0 z-40 bg-transparent pointer-events-none">
-    <a href="index.html" class="no-underline pointer-events-auto font-subtitle-serif text-sm sm:text-base italic text-primary drop-shadow-md hover:opacity-80 transition-opacity">BAKUDI NI STORY</a>
-    <div class="flex items-center gap-4 sm:gap-6 pointer-events-auto">
-      <a href="music.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
-          class="material-symbols-outlined text-xl sm:text-2xl">music_note</span></a>
-      <a href="settings.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
-          class="material-symbols-outlined text-xl sm:text-2xl">palette</span></a>
+    <a href="index.html" class="no-underline pointer-events-auto font-serif text-sm sm:text-base italic text-[#864e5a] font-semibold drop-shadow-sm hover:opacity-80 transition-opacity">
+      BAKUDI NI STORY
+    </a>
+    <div class="flex items-center gap-3 sm:gap-4 pointer-events-auto">
+      <!-- Live Sync Indicator -->
+      <div id="sync-status" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 backdrop-blur-md border border-[#864e5a]/15 text-[11px] text-[#864e5a] font-medium shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span id="sync-text">Real-time Connected</span>
+      </div>
+      <a href="music.html" class="w-8 h-8 rounded-full bg-white/70 backdrop-blur-md border border-[#864e5a]/15 text-[#864e5a] flex items-center justify-center hover:scale-105 transition-all shadow-sm">
+        <span class="material-symbols-outlined text-lg">music_note</span>
+      </a>
     </div>
   </header>
 
   <!-- Main -->
   <main class="relative z-10 pt-20 sm:pt-28 md:pt-32 pb-32 sm:pb-40 px-4 sm:px-6 md:px-10 min-h-screen">
+    
+    <!-- Header -->
     <div class="text-center mb-8 sm:mb-12 max-w-2xl mx-auto">
-      <h1 class="font-headline-xl text-3xl sm:text-4xl md:text-headline-xl text-primary mb-1 sm:mb-2 leading-tight">Future Dreams</h1>
-      <p class="font-subtitle-serif text-lg sm:text-subtitle-serif italic text-on-surface-variant/80">Where we're headed
-        together...</p>
-    </div>
-
-    <!-- Dream Board -->
-    <div class="max-w-3xl mx-auto">
-      <!-- Consolidated Bucket List -->
-      <div
-        class="dream-card bg-surface-container-lowest p-5 sm:p-8 md:p-10 rounded-2xl shadow-xl border border-outline-variant/20 sm:rotate-[-1deg]">
-        <div class="w-12 sm:w-16 h-12 sm:h-16 bg-primary-container rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 shadow-sm">
-          <span class="material-symbols-outlined text-on-primary-container text-2xl sm:text-4xl">favorite</span>
-        </div>
-        <h3 class="font-headline-lg text-2xl sm:text-3xl text-primary mb-6 sm:mb-8 text-center">Our Bucket List</h3>
-        <ul class="space-y-3 sm:space-y-4 max-w-xl mx-auto" id="bucket-list">
-          <!-- The Main 3 Wishes -->
-          <li class="flex items-center gap-3 sm:gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-5 sm:w-6 h-5 sm:h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[14px] sm:text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-lg sm:text-2xl text-primary font-bold leading-snug">Have marriage with each other</span>
-          </li>
-          <li class="flex items-center gap-3 sm:gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-5 sm:w-6 h-5 sm:h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[14px] sm:text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-lg sm:text-2xl text-primary font-bold leading-snug">Have a great, wonderful, rich, and happy
-              family</span>
-          </li>
-          <li class="flex items-center gap-3 sm:gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-5 sm:w-6 h-5 sm:h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[14px] sm:text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-lg sm:text-2xl text-primary font-bold leading-snug">The whole khandan would see our beautiful
-              lovestory and say "Pyaar kare toh Rishi aur Hetvi ki tarah kare, baki na kare"</span>
-          </li>
-
-          <!-- Travel Dreams -->
-          <li class="flex items-center gap-3 sm:gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-5 sm:w-6 h-5 sm:h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
-              <span class="material-symbols-outlined text-[14px] sm:text-[16px] text-primary hidden">check</span>
-            </span>
-            <span class="font-handwritten text-lg sm:text-2xl text-on-surface leading-snug">Kyoto in cherry blossom season</span>
-          </li>
-          <li class="flex items-center gap-3 sm:gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-5 sm:w-6 h-5 sm:h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[14px] sm:text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-lg sm:text-2xl text-on-surface leading-snug">Northern Lights in Iceland</span>
-          </li>
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-2xl text-on-surface">Santorini at sunset</span>
-          </li>
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-2xl text-on-surface">A tiny café in Paris</span>
-          </li>
-
-          <!-- Experiences -->
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-2xl text-on-surface">Dance in the rain together</span>
-          </li>
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-2xl text-on-surface">Read the same book at the same time</span>
-          </li>
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-2xl text-on-surface">Cook a 3-hour meal from scratch</span>
-          </li>
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-2xl text-on-surface">Watch every Ghibli film</span>
-          </li>
-
-          <!-- Big Dreams -->
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-2xl text-on-surface">A home with a garden</span>
-          </li>
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-2xl text-on-surface">Adopt a rescue cat</span>
-          </li>
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-2xl text-on-surface">Write a book together</span>
-          </li>
-          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-            <span
-              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
-                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-            <span class="font-handwritten text-2xl text-on-surface">Grow old together gracefully</span>
-          </li>
-        </ul>
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ffb7c5]/30 border border-[#ffb7c5]/60 text-[#864e5a] text-xs font-semibold tracking-wider uppercase mb-3">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#d12450]"></span>
+        <span>Real-Time Shared Dreams</span>
       </div>
+      <h1 class="text-4xl sm:text-5xl md:text-[60px] text-[#864e5a] drop-shadow-sm mb-2 leading-tight"
+        style="font-family:'Playfair Display',serif; font-style: italic; font-weight: 600;">
+        Our Bucket List
+      </h1>
+      <p class="font-handwritten text-2xl sm:text-3xl text-[#864e5a]/80 max-w-xl mx-auto" style="font-family:'Caveat', cursive;">
+        Every dream we write here is saved together forever.
+      </p>
     </div>
 
-    <!-- Add Dream Input -->
-    <div
-      class="max-w-2xl mx-auto mt-12 bg-surface-container-low/60 backdrop-blur-md rounded-2xl p-6 border border-outline-variant/20 shadow-lg relative z-20">
-      <p class="font-label-caps text-primary mb-3">ADD A NEW DREAM</p>
-      <div class="flex gap-4">
-        <input type="text" id="new-dream" placeholder="Write your dream here..."
-          class="flex-1 bg-surface-container-lowest rounded-full px-6 py-3 border border-outline-variant/30 font-handwritten text-xl focus:outline-none focus:border-primary" />
-        <button onclick="addDream()"
-          class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg">
-          <span class="material-symbols-outlined">add</span>
+    <!-- Add Dream Interactive Card -->
+    <div class="max-w-2xl mx-auto mb-10 bg-white/90 backdrop-blur-md rounded-3xl p-5 sm:p-7 border border-[#864e5a]/15 shadow-xl relative z-20">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+        <span class="text-xs font-bold uppercase tracking-wider text-[#864e5a]">Add a Shared Dream</span>
+        
+        <!-- Author Selector Toggle -->
+        <div class="flex items-center gap-1.5 bg-[#faf4f2] p-1 rounded-full border border-[#864e5a]/15">
+          <span class="text-[11px] text-[#864e5a]/70 font-semibold pl-2 pr-1">Adding as:</span>
+          <button type="button" id="author-rishi-btn" onclick="setAuthor('Rishi')"
+            class="px-3 py-1 rounded-full text-xs font-bold transition-all bg-[#baeaff] text-[#0b556b] shadow-sm">
+            Rishi 💙
+          </button>
+          <button type="button" id="author-hetvi-btn" onclick="setAuthor('Hetvi')"
+            class="px-3 py-1 rounded-full text-xs font-bold transition-all text-[#864e5a] hover:bg-white/80">
+            Hetvi 🌸
+          </button>
+        </div>
+      </div>
+
+      <div class="flex gap-2.5 sm:gap-3">
+        <input type="text" id="new-dream-input" placeholder="e.g. Build our dream home with a garden..."
+          class="flex-1 bg-[#fdfbf8] rounded-2xl px-4 sm:px-6 py-3.5 border border-[#864e5a]/20 font-sans text-sm sm:text-base text-[#2c1d22] focus:outline-none focus:border-[#d12450] focus:ring-2 focus:ring-[#ffb7c5]/50 transition-all placeholder:text-[#864e5a]/40"
+          onkeydown="if(event.key==='Enter') addDream()" />
+        
+        <button onclick="addDream()" id="add-dream-btn"
+          class="bg-gradient-to-r from-[#d12450] to-[#ff758c] text-white px-5 sm:px-7 rounded-2xl flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all shadow-md font-semibold text-sm">
+          <span>Add</span>
+          <span class="material-symbols-outlined text-lg">add</span>
         </button>
       </div>
     </div>
+
+    <!-- Bucket List Container -->
+    <div class="max-w-3xl mx-auto">
+      <div class="dream-card bg-white/90 backdrop-blur-md p-5 sm:p-8 md:p-10 rounded-3xl shadow-xl border border-[#864e5a]/15 relative">
+        
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-28 h-6 bg-[#ffb7c5]/80 washi-tape-dream rotate-1 z-20 shadow-sm rounded-sm"></div>
+
+        <div class="flex items-center justify-between border-b border-[#864e5a]/10 pb-4 mb-6">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[#d12450]">favorite</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-[#864e5a]">Dreams &amp; Wishes</span>
+          </div>
+          <span id="dream-counter" class="text-xs font-semibold text-[#864e5a]/70">Loading dreams...</span>
+        </div>
+
+        <ul class="space-y-3 sm:space-y-4" id="bucket-list">
+          <!-- Dynamically loaded in real-time -->
+        </ul>
+
+      </div>
+    </div>
+
   </main>
 
   <!-- Footer -->
   <footer class="flex flex-col items-center justify-center py-10 w-full opacity-60 z-30 mt-auto">
-    <p class="font-label-caps text-primary mb-2">Hand-crafted with love &amp; nostalgia</p>
-    <div class="flex gap-6">
-      <a class="font-label-caps text-on-surface-variant/60 hover:text-primary" href="settings.html">Privacy</a>
-      <a class="font-label-caps text-on-surface-variant/60 hover:text-primary" href="about.html">Our Story</a>
+    <p class="text-xs font-semibold uppercase tracking-wider text-[#864e5a] mb-1">Hand-crafted with love &amp; nostalgia</p>
+    <div class="flex gap-4 text-xs text-[#864e5a]">
+      <a href="about.html" class="hover:underline">Our Story</a>
+      <span>·</span>
+      <a href="final.html" class="hover:underline">The Finale</a>
     </div>
   </footer>
 
-  <!-- Bottom Nav -->
-  <div class="fixed bottom-6 right-10 z-50 flex items-center gap-4">
-    <a href="index.html"
-      class="w-12 h-12 bg-white/70 backdrop-blur-md rounded-full shadow-md border border-white/50 flex items-center justify-center text-primary hover:bg-white hover:scale-105 transition-all"><span
-        class="material-symbols-outlined">home</span></a>
-  </div>
+  <!-- Firebase & Real-time Synchronization Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+    import { 
+      getFirestore, 
+      collection, 
+      doc, 
+      setDoc, 
+      addDoc, 
+      updateDoc, 
+      deleteDoc, 
+      onSnapshot, 
+      query, 
+      orderBy, 
+      serverTimestamp 
+    } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
-  <script>
-    function checkItem(li) {
-      const span = li.querySelector('span:last-child');
-      const icon = li.querySelector('.material-symbols-outlined');
-      const circle = li.querySelector('span:first-child');
-      span.classList.toggle('checked');
-      if (span.classList.contains('checked')) {
-        circle.style.background = '#864e5a';
-        icon.classList.remove('hidden');
-        icon.style.color = 'white';
+    const firebaseConfig = {
+      apiKey: "AIzaSyBjebEXh_lAuQbHxJSHHU4IyfnQOMoXdEA",
+      authDomain: "bakudi-c11bb.firebaseapp.com",
+      projectId: "bakudi-c11bb",
+      storageBucket: "bakudi-c11bb.firebasestorage.app",
+      messagingSenderId: "362499672150",
+      appId: "1:362499672150:web:efcf2f2d03a22f9c6a53f7",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Current selected author ('Rishi' or 'Hetvi')
+    let currentAuthor = localStorage.getItem('bucket_list_author') || 'Rishi';
+
+    window.setAuthor = function(name) {
+      currentAuthor = name;
+      localStorage.setItem('bucket_list_author', name);
+      updateAuthorButtons();
+    };
+
+    function updateAuthorButtons() {
+      const rishiBtn = document.getElementById('author-rishi-btn');
+      const hetviBtn = document.getElementById('author-hetvi-btn');
+      if (currentAuthor === 'Rishi') {
+        rishiBtn.className = "px-3 py-1 rounded-full text-xs font-bold transition-all bg-[#baeaff] text-[#0b556b] shadow-sm";
+        hetviBtn.className = "px-3 py-1 rounded-full text-xs font-bold transition-all text-[#864e5a] hover:bg-white/80";
       } else {
-        circle.style.background = '';
-        icon.classList.add('hidden');
+        hetviBtn.className = "px-3 py-1 rounded-full text-xs font-bold transition-all bg-[#ffb7c5] text-[#b01f43] shadow-sm";
+        rishiBtn.className = "px-3 py-1 rounded-full text-xs font-bold transition-all text-[#864e5a] hover:bg-white/80";
+      }
+    }
+    updateAuthorButtons();
+
+    // Auto-detect logged in user email
+    onAuthStateChanged(auth, (user) => {
+      if (user && user.email) {
+        if (user.email.toLowerCase().includes('hetvi') || user.email.toLowerCase().includes('bakudi')) {
+          setAuthor('Hetvi');
+        } else if (user.email.toLowerCase().includes('rishi')) {
+          setAuthor('Rishi');
+        }
+      }
+    });
+
+    // Default Seed Dreams
+    const DEFAULT_DREAMS = [
+      { id: 'seed-1', text: 'Have marriage with each other', author: 'Rishi', isCompleted: false, isCore: true },
+      { id: 'seed-2', text: 'Have a great, wonderful, rich, and happy family', author: 'Hetvi', isCompleted: false, isCore: true },
+      { id: 'seed-3', text: 'The whole khandan would see our beautiful lovestory and say "Pyaar kare toh Rishi aur Hetvi ki tarah kare, baki na kare"', author: 'Rishi', isCompleted: false, isCore: true },
+      { id: 'seed-4', text: 'Kyoto in cherry blossom season', author: 'Hetvi', isCompleted: false },
+      { id: 'seed-5', text: 'Northern Lights in Iceland', author: 'Rishi', isCompleted: false },
+      { id: 'seed-6', text: 'Santorini at sunset', author: 'Hetvi', isCompleted: false },
+      { id: 'seed-7', text: 'A tiny café in Paris holding hands', author: 'Rishi', isCompleted: false },
+      { id: 'seed-8', text: 'Dance in the rain together', author: 'Hetvi', isCompleted: false },
+      { id: 'seed-9', text: 'Cook a 3-hour meal from scratch', author: 'Rishi', isCompleted: false },
+      { id: 'seed-10', text: 'Grow old together gracefully forever', author: 'Hetvi', isCompleted: false }
+    ];
+
+    let cachedDreams = JSON.parse(localStorage.getItem('cached_bucket_list') || 'null') || DEFAULT_DREAMS;
+    renderDreams(cachedDreams);
+
+    // Real-time Firestore Listener
+    try {
+      const bucketCol = collection(db, 'bucket_list');
+      const q = query(bucketCol, orderBy('createdAt', 'asc'));
+
+      onSnapshot(q, (snapshot) => {
+        if (snapshot.empty) {
+          // Initialize default seed dreams in firestore if collection is fresh
+          seedInitialDreams();
+          renderDreams(DEFAULT_DREAMS);
+        } else {
+          const dreams = [];
+          snapshot.forEach((docSnap) => {
+            dreams.push({ id: docSnap.id, ...docSnap.data() });
+          });
+          cachedDreams = dreams;
+          localStorage.setItem('cached_bucket_list', JSON.stringify(dreams));
+          renderDreams(dreams);
+        }
+        document.getElementById('sync-text').innerText = 'Live Synced';
+      }, (error) => {
+        console.warn("Firestore snapshot offline/fallback to local:", error);
+        document.getElementById('sync-text').innerText = 'Offline Mode';
+        renderDreams(cachedDreams);
+      });
+    } catch (e) {
+      console.warn("Firestore error:", e);
+      renderDreams(cachedDreams);
+    }
+
+    async function seedInitialDreams() {
+      try {
+        for (const dream of DEFAULT_DREAMS) {
+          await setDoc(doc(db, 'bucket_list', dream.id), {
+            text: dream.text,
+            author: dream.author,
+            isCompleted: dream.isCompleted || false,
+            createdAt: serverTimestamp()
+          });
+        }
+      } catch (err) {
+        console.log("Seeding local only:", err);
       }
     }
 
-    function addDream() {
-      const input = document.getElementById('new-dream');
-      if (!input.value.trim()) return;
-      const li = document.createElement('li');
-      li.className = 'flex items-center gap-4 cursor-pointer group';
-      li.setAttribute('onclick', 'checkItem(this)');
-      li.innerHTML = `
-      <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
-        <span class="material-symbols-outlined text-[16px] text-primary hidden">check</span>
-      </span>
-      <span class="font-handwritten text-2xl text-on-surface">${input.value}</span>
-    `;
-      // Changed this to append to the new bucket-list id
-      document.getElementById('bucket-list').appendChild(li);
+    // Render Dreams List
+    function renderDreams(dreams) {
+      const list = document.getElementById('bucket-list');
+      list.innerHTML = '';
+
+      let completedCount = 0;
+
+      dreams.forEach((dream) => {
+        if (dream.isCompleted) completedCount++;
+
+        const isHetvi = (dream.author || '').toLowerCase().includes('hetvi') || (dream.author || '').toLowerCase().includes('bakudi');
+        const tagClass = isHetvi ? 'tag-hetvi' : 'tag-rishi';
+        const tagLabel = isHetvi ? 'Hetvi 🌸' : 'Rishi 💙';
+        const checkedClass = dream.isCompleted ? 'checked-text' : '';
+        const circleBg = dream.isCompleted ? (isHetvi ? 'background:#d12450;border-color:#d12450;' : 'background:#0c6780;border-color:#0c6780;') : '';
+        const checkIconHidden = dream.isCompleted ? '' : 'hidden';
+
+        const li = document.createElement('li');
+        li.className = 'flex items-start justify-between gap-3 p-3.5 rounded-2xl hover:bg-black/[0.02] transition-colors group cursor-pointer border border-transparent hover:border-[#864e5a]/10';
+        li.onclick = (e) => {
+          if (e.target.closest('.delete-btn')) return;
+          toggleDream(dream.id, !dream.isCompleted);
+        };
+
+        li.innerHTML = `
+          <div class="flex items-start gap-3.5 flex-1 min-w-0">
+            <!-- Checkbox Circle -->
+            <span class="w-6 h-6 rounded-full border-2 border-[#864e5a]/40 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all group-hover:border-[#d12450]" style="${circleBg}">
+              <span class="material-symbols-outlined text-[15px] text-white ${checkIconHidden}">check</span>
+            </span>
+
+            <!-- Dream Content & Tag -->
+            <div class="flex-1 min-w-0">
+              <p class="font-handwritten text-xl sm:text-2xl text-[#2c1d22] leading-snug break-words ${checkedClass}" style="font-family:'Caveat', cursive;">
+                ${escapeHtml(dream.text)}
+              </p>
+              <div class="mt-1 flex items-center gap-2">
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase ${tagClass}">
+                  <span>Added by</span>
+                  <span>${tagLabel}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delete Action -->
+          <button class="delete-btn opacity-0 group-hover:opacity-100 text-[#864e5a]/40 hover:text-red-500 p-1 transition-all" onclick="deleteDream('${dream.id}')" title="Delete dream">
+            <span class="material-symbols-outlined text-lg">delete</span>
+          </button>
+        `;
+
+        list.appendChild(li);
+      });
+
+      document.getElementById('dream-counter').innerText = `${completedCount} of ${dreams.length} dreams accomplished ❤️`;
+    }
+
+    // Toggle Dream Checked Status
+    window.toggleDream = async function(id, newState) {
+      if (typeof playSound === 'function') {
+        try { playSound('pop'); } catch (e) {}
+      }
+
+      // Optimistic local update
+      const dream = cachedDreams.find(d => d.id === id);
+      if (dream) {
+        dream.isCompleted = newState;
+        localStorage.setItem('cached_bucket_list', JSON.stringify(cachedDreams));
+        renderDreams(cachedDreams);
+      }
+
+      // Firestore sync
+      try {
+        const dreamRef = doc(db, 'bucket_list', id);
+        await updateDoc(dreamRef, { isCompleted: newState });
+      } catch (err) {
+        console.warn("Firestore update error:", err);
+      }
+    };
+
+    // Add New Dream
+    window.addDream = async function() {
+      const input = document.getElementById('new-dream-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const author = currentAuthor;
       input.value = '';
-      input.focus();
+
+      if (typeof playSound === 'function') {
+        try { playSound('pop'); } catch (e) {}
+      }
+
+      const tempId = 'dream-' + Date.now();
+      const newDreamObj = {
+        id: tempId,
+        text: text,
+        author: author,
+        isCompleted: false,
+        createdAt: new Date().toISOString()
+      };
+
+      // Optimistic update
+      cachedDreams.unshift(newDreamObj);
+      localStorage.setItem('cached_bucket_list', JSON.stringify(cachedDreams));
+      renderDreams(cachedDreams);
+
+      // Firestore sync
+      try {
+        const docRef = await addDoc(collection(db, 'bucket_list'), {
+          text: text,
+          author: author,
+          isCompleted: false,
+          createdAt: serverTimestamp()
+        });
+        // Replace tempId with docRef.id
+        newDreamObj.id = docRef.id;
+      } catch (err) {
+        console.warn("Firestore add error (persisted locally):", err);
+      }
+    };
+
+    // Delete Dream
+    window.deleteDream = async function(id) {
+      if (!confirm("Are you sure you want to remove this dream?")) return;
+
+      cachedDreams = cachedDreams.filter(d => d.id !== id);
+      localStorage.setItem('cached_bucket_list', JSON.stringify(cachedDreams));
+      renderDreams(cachedDreams);
+
+      try {
+        await deleteDoc(doc(db, 'bucket_list', id));
+      } catch (err) {
+        console.warn("Firestore delete error:", err);
+      }
+    };
+
+    function escapeHtml(str) {
+      return (str || '').replace(/[&<>"']/g, function(m) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+      });
     }
   </script>
+
   <script src="assets/js/nav.js"></script>
   <script src="assets/js/sounds.js"></script>
 </body>

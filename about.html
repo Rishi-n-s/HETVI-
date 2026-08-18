@@ -105,7 +105,7 @@
   </header>
 
   <!-- Main Canvas -->
-  <main class="relative min-h-screen pt-20 sm:pt-28 md:pt-32 pb-20 sm:pb-24 px-3 sm:px-6 flex items-center justify-center overflow-hidden z-10">
+  <main class="relative min-h-screen pt-20 sm:pt-28 md:pt-32 pb-20 sm:pb-24 px-3 sm:px-6 flex flex-col items-center justify-start overflow-hidden z-10">
     <div class="absolute top-16 sm:top-20 right-4 sm:right-10 opacity-30 sm:opacity-40 floating"><span
         class="material-symbols-outlined text-4xl sm:text-6xl text-primary">local_florist</span></div>
     <div class="absolute bottom-16 sm:bottom-20 left-4 sm:left-20 opacity-20 sm:opacity-30 rotate-12 floating" style="animation-delay:-2s"><span
@@ -113,7 +113,7 @@
 
     <!-- Journal Page -->
     <div
-      class="relative w-full max-w-4xl bg-surface-container-lowest shadow-[20px_20px_60px_rgba(74,55,40,0.1)] p-5 sm:p-8 md:p-12 paper-texture lined-paper transform sm:-rotate-1 min-h-[500px] sm:min-h-[700px] rounded-2xl">
+      class="relative w-full max-w-4xl mx-auto bg-surface-container-lowest shadow-[20px_20px_60px_rgba(74,55,40,0.1)] p-5 sm:p-8 md:p-12 paper-texture lined-paper transform sm:-rotate-1 min-h-[500px] sm:min-h-[700px] rounded-2xl">
       <!-- Spiral Binding -->
       <div class="absolute -left-2 sm:-left-4 top-0 bottom-0 flex flex-col justify-around py-6 sm:py-8 pointer-events-none">
         <div class="w-5 sm:w-8 h-2.5 sm:h-3 bg-gradient-to-r from-stone-400 to-stone-200 rounded-full shadow-inner"></div>
@@ -126,7 +126,12 @@
       </div>
 
       <div class="relative z-10 pl-2 sm:pl-4 md:pl-0">
-        <div class="mb-6 sm:mb-12 text-center md:text-left">
+        <div class="mb-6 sm:mb-12 text-center mx-auto max-w-xl">
+          <!-- Chapter Badge -->
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ffb7c5]/30 border border-[#ffb7c5]/60 text-[#864e5a] text-xs font-semibold tracking-wider uppercase mb-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#d12450]"></span>
+            <span>Chapter 1 · Our Beginning</span>
+          </div>
           <h1 class="font-headline-xl text-3xl sm:text-4xl md:text-[56px] text-primary mb-1 sm:mb-2 italic leading-tight"
             style="font-family: 'Playfair Display', serif;">Our Story</h1>
           <p class="font-handwritten text-2xl sm:text-4xl text-on-surface-variant italic">How we became forever...</p>
@@ -229,6 +234,28 @@
 
       </div>
     </div>
+
+    <!-- Chapter Continuity Footer Ribbon (Moved down with generous breathing space) -->
+    <div class="mt-24 sm:mt-36 mb-16 sm:mb-20 w-full max-w-4xl mx-auto pt-6">
+      <a href="timeline.html"
+        class="chapter-footer-ribbon p-5 sm:p-6 flex items-center justify-between gap-4 no-underline group text-[#864e5a] border border-[#ffb7c5]/40 block shadow-md hover:shadow-xl transition-all">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-[#baeaff]/40 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform flex-shrink-0">
+            ⏳
+          </div>
+          <div>
+            <span class="text-[11px] uppercase tracking-wider font-semibold text-[#864e5a]/60 block mb-0.5">Next Chapter</span>
+            <span class="text-base sm:text-lg font-bold font-serif text-[#864e5a] group-hover:text-[#d12450] transition-colors">
+              Chapter 2: Little Moments &amp; Timeline
+            </span>
+          </div>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-[#ffb7c5]/30 group-hover:bg-[#d12450] group-hover:text-white flex items-center justify-center transition-all duration-300 flex-shrink-0">
+          <span class="material-symbols-outlined text-lg group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+        </div>
+      </a>
+    </div>
+
   </main>
 
   <!-- Bottom Nav -->

@@ -5,6 +5,7 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>BAKUDI NI STORY | Our Story</title>
+  <meta name="description" content="A thousand little moments, woven together into one beautiful story." />
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
@@ -17,32 +18,27 @@
   <link href="https://fonts.googleapis.com" rel="preconnect" />
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
   <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Quicksand:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet" />
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
     rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="assets/js/theme.js"></script>
+  <link rel="stylesheet" href="assets/css/shared.css" />
   <style>
     body {
       margin: 0;
       overflow-x: hidden;
+      background-color: #0d060a;
+      font-family: 'Inter', sans-serif;
     }
 
-    /* Ultra-premium glassmorphism */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    }
-
+    /* Staggered Apple-style cinematic entrance */
     .fade-in-up {
-      animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: fadeInUp 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(22px);
     }
 
     @keyframes fadeInUp {
@@ -52,40 +48,70 @@
       }
     }
 
-    .delay-1 {
-      animation-delay: 0.2s;
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.35s; }
+    .delay-3 { animation-delay: 0.55s; }
+    .delay-4 { animation-delay: 0.75s; }
+
+    /* Ultra-premium glassmorphism */
+    .hero-glass {
+      background: radial-gradient(130% 100% at 50% 0%, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 100%);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
     }
 
-    .delay-2 {
-      animation-delay: 0.4s;
+    /* Magnetic CTA Button */
+    .cta-primary {
+      position: relative;
+      background: linear-gradient(135deg, rgba(209, 36, 80, 0.9) 0%, rgba(255, 117, 140, 0.85) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 10px 30px rgba(209, 36, 80, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Swiper Button CSS */
+    .cta-primary:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 16px 40px rgba(209, 36, 80, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .cta-primary:active {
+      transform: translateY(1px) scale(0.97);
+    }
+
+    /* Swiper Button */
     .swp-container {
-      background-color: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       border: 1px solid rgba(255, 255, 255, 0.2);
       display: flex;
       width: 100%;
       max-width: 440px;
-      height: 100px;
+      height: 90px;
       position: relative;
-      border-radius: 12px;
-      transition: 0.3s ease-in-out;
-      margin-top: 2rem;
+      border-radius: 16px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer;
-      transform-origin: center top;
+      overflow: hidden;
     }
 
     .swp-container:hover {
-      transform: scale(1.02);
+      transform: translateY(-2px) scale(1.02);
+      border-color: rgba(255, 183, 197, 0.5);
+      box-shadow: 0 16px 36px rgba(209, 36, 80, 0.2);
+    }
+
+    .swp-container:active {
+      transform: scale(0.98);
     }
 
     .swp-left-side {
-      background-color: #ffb7c5;
-      width: 110px;
+      background: linear-gradient(135deg, #ffb7c5 0%, #ff758c 100%);
+      width: 96px;
       height: 100%;
-      border-radius: 10px;
+      border-radius: 14px;
       position: relative;
       display: flex;
       justify-content: center;
@@ -96,95 +122,67 @@
     }
 
     .swp-right-side {
-      width: calc(100% - 110px);
+      width: calc(100% - 96px);
       display: flex;
       align-items: center;
       overflow: hidden;
       justify-content: space-between;
       white-space: nowrap;
       transition: 0.3s;
-      padding-right: 15px;
-    }
-
-    .swp-right-side:hover {
-      background-color: rgba(255, 255, 255, 0.05);
-    }
-
-    .swp-arrow {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-    }
-
-    .swp-new {
-      font-size: 18px;
-      font-family: "Inter", sans-serif;
-      margin-left: 15px;
-      color: white;
-      font-weight: 500;
+      padding: 0 20px;
     }
 
     .swp-card {
-      width: 60px;
-      height: 40px;
-      background-color: #ffdae0;
+      width: 52px;
+      height: 36px;
+      background-color: #ffffff;
       border-radius: 6px;
       position: absolute;
       display: flex;
       z-index: 10;
       flex-direction: column;
       align-items: center;
-      box-shadow: 6px 6px 9px -2px rgba(255, 183, 197, 0.72);
+      box-shadow: 0 4px 12px rgba(209, 36, 80, 0.3);
     }
 
     .swp-card-line {
-      width: 55px;
-      height: 11px;
+      width: 42px;
+      height: 8px;
       background-color: #ff758c;
       border-radius: 2px;
       margin-top: 6px;
     }
 
-    @media only screen and (max-width: 480px) {
-      .swp-container {
-        height: 80px;
-        margin-top: 1.25rem;
-        border-radius: 10px;
-      }
-
-      .swp-left-side {
-        width: 85px;
-      }
-
-      .swp-right-side {
-        width: calc(100% - 85px);
-        padding-right: 10px;
-      }
-
-      .swp-new {
-        font-size: 14.5px;
-        margin-left: 10px;
-      }
-
-      .swp-arrow {
-        width: 15px;
-        height: 15px;
-      }
-
-      .swp-card {
-        width: 48px;
-        height: 32px;
-      }
+    .swp-post {
+      width: 54px;
+      height: 64px;
+      background-color: #ffffff;
+      position: absolute;
+      z-index: 11;
+      bottom: 10px;
+      top: 100px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
 
-    .swp-buttons {
-      width: 8px;
-      height: 8px;
-      background-color: #d12450;
-      box-shadow: 0 -10px 0 0 #ff4d4d, 0 10px 0 0 #ff4d4d;
-      border-radius: 50%;
-      transform: rotate(90deg);
-      margin: 10px 0 0 -30px;
+    .swp-screen {
+      width: 40px;
+      height: 20px;
+      background-color: #ffeef2;
+      position: absolute;
+      top: 18px;
+      left: 7px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .swp-dollar {
+      font-size: 14px;
+      color: #d12450;
+      line-height: 1;
     }
 
     .swp-container:hover .swp-card {
@@ -196,241 +194,343 @@
     }
 
     @keyframes slide-top {
-      0% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-70px) rotate(90deg);
-      }
-
-      60% {
-        transform: translateY(-70px) rotate(90deg);
-      }
-
-      100% {
-        transform: translateY(-8px) rotate(90deg);
-      }
-    }
-
-    .swp-post {
-      width: 63px;
-      height: 75px;
-      background-color: #dddde0;
-      position: absolute;
-      z-index: 11;
-      bottom: 10px;
-      top: 120px;
-      border-radius: 6px;
-      overflow: hidden;
-    }
-
-    .swp-post-line {
-      width: 47px;
-      height: 9px;
-      background-color: #545354;
-      position: absolute;
-      border-radius: 0px 0px 3px 3px;
-      right: 8px;
-      top: 8px;
-    }
-
-    .swp-post-line:before {
-      content: "";
-      position: absolute;
-      width: 47px;
-      height: 9px;
-      background-color: #757375;
-      top: -8px;
-    }
-
-    .swp-screen {
-      width: 47px;
-      height: 23px;
-      background-color: #ffffff;
-      position: absolute;
-      top: 22px;
-      right: 8px;
-      border-radius: 3px;
-    }
-
-    .swp-numbers {
-      width: 12px;
-      height: 12px;
-      background-color: #838183;
-      box-shadow: 0 -18px 0 0 #838183, 0 18px 0 0 #838183;
-      border-radius: 2px;
-      position: absolute;
-      transform: rotate(90deg);
-      left: 25px;
-      top: 52px;
-    }
-
-    .swp-numbers-line2 {
-      width: 12px;
-      height: 12px;
-      background-color: #aaa9ab;
-      box-shadow: 0 -18px 0 0 #aaa9ab, 0 18px 0 0 #aaa9ab;
-      border-radius: 2px;
-      position: absolute;
-      transform: rotate(90deg);
-      left: 25px;
-      top: 68px;
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-60px) rotate(90deg); }
+      100% { transform: translateY(-6px) rotate(90deg); }
     }
 
     @keyframes slide-post {
-      50% {
-        transform: translateY(0);
-      }
-
-      100% {
-        transform: translateY(-70px);
-      }
+      50% { transform: translateY(0); }
+      100% { transform: translateY(-60px); }
     }
 
-    .swp-dollar {
-      position: absolute;
-      font-size: 16px;
-      font-family: "Inter", sans-serif;
-      width: 100%;
-      left: 0;
-      top: 0;
-      color: #d12450;
-      text-align: center;
-    }
-
-    .swp-container:hover .swp-dollar {
-      animation: fade-in-fwd 0.3s 1s backwards;
-    }
-
-    @keyframes fade-in-fwd {
-      0% {
-        opacity: 0;
-        transform: translateY(-5px);
+    @media only screen and (max-width: 480px) {
+      .swp-container {
+        height: 76px;
+        max-width: 100%;
       }
-
-      100% {
-        opacity: 1;
-        transform: translateY(0);
+      .swp-left-side {
+        width: 80px;
+      }
+      .swp-right-side {
+        width: calc(100% - 80px);
+        padding: 0 14px;
       }
     }
   </style>
 </head>
 
-<body class="font-sans antialiased relative w-full overflow-x-hidden min-h-[100dvh] bg-black">
+<body class="font-sans antialiased relative w-full overflow-x-hidden min-h-[100dvh] bg-[#0c0509] text-white selection:bg-[#d12450] selection:text-white">
 
-
-  <!-- Background Image: Full bleed, perfectly centered/bottom to show the couple -->
-  <div class="fixed inset-0 z-0">
-    <img src="assets/images/landing_bg_couple.png" class="w-full h-full object-cover object-[center_80%] opacity-100"
-      alt="Background" />
-    <!-- Lighter gradient that doesn't darken the couple at the bottom -->
-    <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent h-1/2"></div>
+  <!-- Ambient Cursor & Touch Spotlight Glow -->
+  <div id="ambient-glow" class="fixed inset-0 pointer-events-none z-1 transition-opacity duration-700 opacity-60"
+    style="background: radial-gradient(600px circle at 50% 30%, rgba(209, 36, 80, 0.18), transparent 70%);">
   </div>
 
-  <!-- Content moved to top so it doesn't block the couple -->
-  <main class="relative z-10 w-full h-full flex flex-col items-center justify-start pt-16 sm:pt-20 md:pt-24 px-4 sm:px-6">
-    <div class="rounded-3xl p-6 sm:p-10 md:p-16 flex flex-col items-center text-center max-w-2xl w-full fade-in-up">
-      <span class="material-symbols-outlined text-white/80 text-3xl sm:text-4xl mb-3 sm:mb-4"
-        style="font-variation-settings:'FILL' 1">favorite</span>
+  <!-- Background Image: Full bleed, perfectly centered to show the couple -->
+  <div class="fixed inset-0 z-0 pointer-events-none">
+    <img src="assets/images/landing_bg_couple.png" class="w-full h-full object-cover object-[center_80%] opacity-90 scale-100 transition-transform duration-1000 ease-out"
+      alt="Background Couple" id="hero-bg-image" />
+    <!-- Cinematic dual vignette gradients -->
+    <div class="absolute inset-0 bg-gradient-to-b from-[#0c0509]/80 via-[#0c0509]/30 to-[#0c0509]/90"></div>
+    <div class="absolute inset-0 bg-radial from-transparent via-transparent to-[#0c0509]/60"></div>
+  </div>
 
-      <h1
-        class="font-serif text-4xl sm:text-6xl md:text-7xl text-white font-semibold tracking-tight mb-3 sm:mb-4 drop-shadow-md delay-1 fade-in-up">
+  <!-- Main Hero Section -->
+  <main class="relative z-10 w-full min-h-[100dvh] flex flex-col items-center justify-between pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 px-4 sm:px-6">
+    
+    <!-- Hero Card Content -->
+    <div class="hero-glass rounded-3xl p-6 sm:p-10 md:p-14 flex flex-col items-center text-center max-w-2xl w-full fade-in-up mt-2 sm:mt-6">
+      
+      <!-- Chapter Badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/90 text-xs font-semibold tracking-wider uppercase mb-5 delay-1 fade-in-up shimmer-effect backdrop-blur-md">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#ff758c] animate-ping"></span>
+        <span>Prologue · Bakudi Ni Story</span>
+      </div>
+
+      <!-- Pulsing Heart Glyphs -->
+      <div class="relative mb-3 sm:mb-4 delay-1 fade-in-up">
+        <span class="material-symbols-outlined text-[#ff758c] text-3xl sm:text-4xl animate-heartbeat drop-shadow-[0_0_15px_rgba(255,117,140,0.8)]"
+          style="font-variation-settings:'FILL' 1">favorite</span>
+      </div>
+
+      <!-- Main Title -->
+      <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl text-white font-semibold tracking-tight mb-3 sm:mb-4 drop-shadow-[0_4px_16px_rgba(0,0,0,0.6)] delay-2 fade-in-up"
+        style="font-family:'Playfair Display',serif;">
         Our Story
       </h1>
 
-      <p class="text-white/90 text-base sm:text-lg md:text-xl font-light max-w-md mb-6 sm:mb-10 leading-relaxed delay-2 fade-in-up">
-        A thousand little moments, woven together into one beautiful story.
+      <!-- Subtitle -->
+      <p class="text-white/85 text-sm sm:text-base md:text-lg font-light max-w-md mb-6 sm:mb-8 leading-relaxed delay-2 fade-in-up font-sans">
+        A thousand little moments, smiles, and whispers, woven together into one timeless story.
       </p>
 
-      <a href="gallery.html"
-        class="group relative px-6 sm:px-8 py-3.5 sm:py-4 bg-white/20 hover:bg-white/30 border border-white/40 text-white rounded-full transition-all duration-300 ease-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] flex items-center gap-2.5 sm:gap-3 backdrop-blur-md delay-2 fade-in-up no-underline">
-        <span class="font-medium tracking-wide uppercase text-xs sm:text-sm">Open Memories</span>
-        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">east</span>
-      </a>
+      <!-- Action Buttons Group -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 sm:gap-4 w-full max-w-md delay-3 fade-in-up">
+        <a href="about.html"
+          class="cta-primary w-full sm:w-auto px-7 py-3.5 sm:py-4 rounded-full text-white font-medium text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 no-underline group">
+          <span>Start The Journey</span>
+          <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </a>
+        <a href="gallery.html"
+          class="w-full sm:w-auto px-6 py-3.5 sm:py-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/25 text-white/90 font-medium text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 backdrop-blur-md transition-all duration-300 hover:scale-105 no-underline">
+          <span class="material-symbols-outlined text-base">collections</span>
+          <span>Open Memories</span>
+        </a>
+      </div>
 
-      <!-- Show 100 I LOVE YOU Swipe Button -->
-      <div class="swp-container delay-2 fade-in-up" onclick="show100ILoveYou()">
+      <!-- Show 100 Flowers Interactive Swiper -->
+      <div class="swp-container mt-6 sm:mt-8 delay-4 fade-in-up" onclick="startProgressive100Flowers()">
         <div class="swp-left-side">
           <div class="swp-card">
             <div class="swp-card-line"></div>
-            <div class="swp-buttons"></div>
           </div>
           <div class="swp-post">
-            <div class="swp-post-line"></div>
-            <div class="swp-screen">
-              <div class="swp-dollar">❤</div>
+            <div class="swp-screen flex items-center justify-center p-1">
+              <img src="assets/flower/rose.webp" alt="Rose" class="w-6 h-6 object-contain drop-shadow-sm" />
             </div>
-            <div class="swp-numbers"></div>
-            <div class="swp-numbers-line2"></div>
           </div>
         </div>
         <div class="swp-right-side">
-          <div class="swp-new">Show 100 Flowers</div>
-          <svg viewBox="0 0 451.846 451.847" height="512" width="512" xmlns="http://www.w3.org/2000/svg"
-            class="swp-arrow">
-            <path fill="#ffffff" data-old_color="#000000" class="active-path" data-original="#000000"
-              d="M345.441 248.292L151.154 442.573c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744L278.318 225.92 106.409 54.017c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.287 194.284c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373z">
-            </path>
-          </svg>
+          <div class="flex flex-col text-left">
+            <span class="text-sm sm:text-base font-semibold text-white">Show 100 Flowers</span>
+            <span class="text-[11px] sm:text-xs text-white/60">Tap for progressive bloom</span>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center text-white/90">
+            <span class="material-symbols-outlined text-sm">east</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Chapter Pathway Quick Journey Ribbon -->
+    <div class="w-full max-w-xl mx-auto mt-6 sm:mt-8 px-2 delay-4 fade-in-up">
+      <div class="bg-white/10 backdrop-blur-xl border border-white/15 rounded-2xl p-3 sm:p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/80">
+        <div class="flex items-center gap-2 font-medium">
+          <span class="material-symbols-outlined text-[#ff758c] text-base">auto_stories</span>
+          <span>Story Chapters:</span>
+        </div>
+        <div class="flex items-center flex-wrap justify-center gap-1.5 sm:gap-2 text-[11px]">
+          <a href="about.html" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white no-underline transition-colors">1. Beginning</a>
+          <span class="text-white/40">›</span>
+          <a href="timeline.html" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white no-underline transition-colors">2. Moments</a>
+          <span class="text-white/40">›</span>
+          <a href="gallery.html" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white no-underline transition-colors">3. Memories</a>
+          <span class="text-white/40">›</span>
+          <a href="letters.html" class="px-2.5 py-1 rounded-lg bg-[#ff758c]/30 hover:bg-[#ff758c]/50 text-white font-medium no-underline transition-colors">4. Letters</a>
+          <span class="text-white/40">›</span>
+          <a href="final.html" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white no-underline transition-colors">5. Finale</a>
         </div>
       </div>
     </div>
+
   </main>
+
+  <!-- Progressive 100 Flowers Milestone Modal -->
+  <div id="flower-modal" class="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-500">
+    <div class="bg-[#1a0c14]/95 border border-[#ff758c]/40 rounded-3xl p-6 sm:p-8 max-w-md w-full text-center shadow-[0_20px_60px_rgba(209,36,80,0.35)] transform scale-90 transition-transform duration-500" id="flower-modal-content">
+      <div class="w-16 h-16 rounded-full bg-[#ff758c]/20 border border-[#ff758c]/40 flex items-center justify-center mx-auto mb-4 text-3xl animate-bounce">
+        💌
+      </div>
+      <div id="flower-counter" class="text-3xl sm:text-4xl font-bold font-serif text-[#ffb7c5] mb-2">100 Flowers</div>
+      <p id="flower-quote" class="text-sm sm:text-base text-white/90 leading-relaxed mb-6 font-light">
+        "100 flowers weren't enough to capture how much you mean to me... So I wrote it down in letters for you."
+      </p>
+      <div class="flex flex-col gap-2.5">
+        <a href="letters.html" class="cta-primary w-full py-3.5 rounded-full text-white font-medium text-xs sm:text-sm uppercase tracking-wider no-underline flex items-center justify-center gap-2">
+          <span>Read The Love Letters</span>
+          <span class="material-symbols-outlined text-sm">mail</span>
+        </a>
+        <button onclick="closeFlowerModal()" class="w-full py-3 rounded-full bg-white/10 hover:bg-white/15 text-white/75 text-xs font-medium uppercase tracking-wider transition-colors">
+          Keep Exploring
+        </button>
+      </div>
+    </div>
+  </div>
 
   <script src="assets/js/sounds.js"></script>
   <script src="assets/js/nav.js"></script>
   <script>
-    function show100ILoveYou() {
-      const flowers = [
-        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/2764.svg', // Red Heart
-        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f496.svg', // Sparkling Heart
-        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f495.svg', // Two Hearts
-        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f339.svg', // Rose
-        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f33b.svg', // Sunflower
-        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f337.svg'  // Tulip
-      ];
+    // Ambient Cursor Glow Motion
+    const ambientGlow = document.getElementById('ambient-glow');
+    window.addEventListener('pointermove', (e) => {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      ambientGlow.style.background = `radial-gradient(600px circle at ${x}% ${y}%, rgba(209, 36, 80, 0.22), transparent 70%)`;
+    }, { passive: true });
 
-      for (let i = 0; i < 100; i++) {
-        const el = document.createElement('img');
-        const flowerSrc = flowers[Math.floor(Math.random() * flowers.length)];
+    // 100 Flowers Gravity Fountain & Heap Physics Engine
+    let isFlowering = false;
+    const realFlowerImages = [
+      'assets/flower/rose.webp',
+      'assets/flower/peony.webp',
+      'assets/flower/tulip.webp',
+      'assets/flower/lily.webp',
+      'assets/flower/sunflower.webp',
+      'assets/flower/daisy.webp',
+      'assets/flower/orchid.webp',
+      'assets/flower/ranunculus.webp',
+      'assets/flower/anemone.webp',
+      'assets/flower/zinnia.webp'
+    ];
 
-        el.src = flowerSrc;
-        el.style.position = 'fixed';
-        el.style.left = (Math.random() * 90 + 5) + 'vw';
-        el.style.top = (Math.random() * 90 + 5) + 'vh';
+    let activePhysicsFlowers = [];
+    let physicsAnimFrame = null;
+    let totalSpawnedSoFar = 0;
 
-        const size = (Math.random() * 30 + 30) + 'px';
-        el.style.width = size;
-        el.style.height = size;
-        el.style.objectFit = 'contain';
+    function initPhysicsLoop() {
+      if (physicsAnimFrame) return;
 
-        el.style.pointerEvents = 'none';
-        el.style.zIndex = '999999';
-        el.style.opacity = '0';
-        el.style.transform = `translateY(40px) scale(0.5) rotate(${Math.random() * 360}deg)`;
-        el.style.transition = 'all 1.5s cubic-bezier(0.16, 1, 0.3, 1)';
-        el.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+      function update() {
+        const screenW = window.innerWidth;
+        const screenH = window.innerHeight;
 
-        document.body.appendChild(el);
+        for (let i = activePhysicsFlowers.length - 1; i >= 0; i--) {
+          const f = activePhysicsFlowers[i];
+          if (f.settled) continue;
 
-        setTimeout(() => {
-          el.style.opacity = '1';
-          el.style.transform = `translateY(-${Math.random() * 150 + 50}px) scale(1) rotate(${Math.random() * 360}deg)`;
-        }, 50 + Math.random() * 600);
+          // Apply Gravity, Flutter & Velocity
+          f.vy += 0.44; // smooth gentle gravity
+          f.vx *= 0.992; // air resistance
+          
+          // Gentle sinusoidal breeze flutter
+          const flutter = Math.sin(f.y * 0.015 + f.seedRandom * 20) * 0.7;
+          f.x += f.vx + flutter;
+          f.y += f.vy;
+          f.rot += f.vRot;
 
-        setTimeout(() => {
-          el.style.opacity = '0';
-          el.style.transform = `translateY(-${Math.random() * 250 + 150}px) scale(1.2) rotate(${Math.random() * 360}deg)`;
-          setTimeout(() => el.remove(), 1500);
-        }, 1500 + Math.random() * 1000);
+          // Screen left/right wall bounce / damping
+          if (f.x < 15) {
+            f.x = 15;
+            f.vx = Math.abs(f.vx) * 0.6;
+          } else if (f.x > screenW - f.size - 15) {
+            f.x = screenW - f.size - 15;
+            f.vx = -Math.abs(f.vx) * 0.6;
+          }
+
+          // Scattered floor level distributed across the entire screen
+          const localFloor = screenH - 25 - (f.seedRandom * 75);
+
+          // Floor collision & Bouncing
+          if (f.y >= localFloor) {
+            f.y = localFloor;
+            f.vy = -f.vy * 0.25;
+            f.vx *= 0.6;
+            f.vRot *= 0.35;
+            f.bounces++;
+
+            if (f.bounces >= 3 || Math.abs(f.vy) < 1.0) {
+              f.settled = true;
+              f.el.style.transform = `translate3d(${f.x}px, ${f.y}px, 0) scale(${f.scale}) rotate(${f.rot}deg)`;
+              f.el.style.filter = 'drop-shadow(0 6px 14px rgba(0,0,0,0.45))';
+            }
+          }
+
+          if (!f.settled) {
+            f.el.style.transform = `translate3d(${f.x}px, ${f.y}px, 0) scale(${f.scale}) rotate(${f.rot}deg)`;
+          }
+        }
+
+        physicsAnimFrame = requestAnimationFrame(update);
       }
+
+      physicsAnimFrame = requestAnimationFrame(update);
+    }
+
+    function spawnPhysicsFlowerBatch(count) {
+      const swpBtn = document.querySelector('.swp-container');
+      const rect = swpBtn ? swpBtn.getBoundingClientRect() : { left: window.innerWidth / 2 - 50, top: window.innerHeight / 2, width: 100, height: 50 };
+      const originX = rect.left + rect.width / 2;
+      const originY = rect.top + rect.height / 2;
+      const screenW = window.innerWidth;
+
+      if (typeof playSound === 'function') {
+        try { playSound('pop'); } catch (e) {}
+      }
+
+      for (let i = 0; i < count; i++) {
+        totalSpawnedSoFar++;
+        const el = document.createElement('img');
+        el.src = realFlowerImages[Math.floor(Math.random() * realFlowerImages.length)];
+        el.style.position = 'fixed';
+        el.style.left = '0px';
+        el.style.top = '0px';
+        const size = Math.random() * 22 + 36;
+        el.style.width = size + 'px';
+        el.style.height = size + 'px';
+        el.style.objectFit = 'contain';
+        el.style.pointerEvents = 'none';
+        el.style.zIndex = 9000 + totalSpawnedSoFar;
+        el.style.filter = 'drop-shadow(0 8px 18px rgba(0,0,0,0.4))';
+        el.style.willChange = 'transform';
+
+        // Wide full-screen blast trajectory (Throws all over the entire page)
+        const spreadAngle = (Math.random() - 0.5) * 2.5 - Math.PI / 2; // wide fan explosion
+        const maxVelocityH = Math.min(screenW * 0.028, 22);
+        const speed = Math.random() * 16 + 12;
+        const vx = Math.cos(spreadAngle) * speed + (Math.random() - 0.5) * maxVelocityH;
+        const vy = Math.sin(spreadAngle) * speed - (Math.random() * 6 + 2); // shoots high into sky
+
+        const flowerData = {
+          el: el,
+          size: size,
+          x: originX + (Math.random() - 0.5) * 40,
+          y: originY + (Math.random() - 0.5) * 20,
+          vx: vx,
+          vy: vy,
+          rot: Math.random() * 360,
+          vRot: (Math.random() - 0.5) * 14,
+          scale: Math.random() * 0.35 + 0.85,
+          bounces: 0,
+          settled: false,
+          seedRandom: Math.random()
+        };
+
+        el.style.transform = `translate3d(${flowerData.x}px, ${flowerData.y}px, 0) scale(${flowerData.scale}) rotate(${flowerData.rot}deg)`;
+        document.body.appendChild(el);
+        activePhysicsFlowers.push(flowerData);
+      }
+
+      initPhysicsLoop();
+    }
+
+    function startProgressive100Flowers() {
+      if (isFlowering) return;
+      isFlowering = true;
+
+      // Staged blossom fountain from the button: 1 -> 9 -> 15 -> 25 -> 25 -> 25 = 100
+      spawnPhysicsFlowerBatch(1);
+      setTimeout(() => spawnPhysicsFlowerBatch(9), 350);
+      setTimeout(() => spawnPhysicsFlowerBatch(15), 800);
+      setTimeout(() => spawnPhysicsFlowerBatch(25), 1350);
+      setTimeout(() => spawnPhysicsFlowerBatch(25), 1900);
+      setTimeout(() => {
+        spawnPhysicsFlowerBatch(25);
+        setTimeout(() => {
+          openFlowerModal();
+          isFlowering = false;
+        }, 1200);
+      }, 2450);
+    }
+
+    function openFlowerModal() {
+      const modal = document.getElementById('flower-modal');
+      const content = document.getElementById('flower-modal-content');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      content.classList.remove('scale-90');
+      content.classList.add('scale-100');
+    }
+
+    function closeFlowerModal() {
+      const modal = document.getElementById('flower-modal');
+      const content = document.getElementById('flower-modal-content');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      content.classList.add('scale-90');
+      content.classList.remove('scale-100');
     }
   </script>
   <script type="module" src="assets/js/firebase.js"></script>
-  <script>
-    console.log("index.html linked to firebase");
-  </script>
 </body>
 
 </html>

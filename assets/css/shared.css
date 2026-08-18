@@ -247,3 +247,159 @@ body {
     font-size: 16px;
   }
 }
+
+/* ── 9.5+ Micro-Interactions & Luxury Polish ── */
+
+/* Heartbeat pulse */
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.18); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.12); }
+  70% { transform: scale(1); }
+}
+
+.animate-heartbeat {
+  animation: heartBeat 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  transform-origin: center;
+  display: inline-block;
+}
+
+/* Subtle Shimmer on buttons/badges */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.shimmer-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-effect::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transform: skewX(-20deg);
+  animation: shimmer 3.5s infinite;
+  pointer-events: none;
+}
+
+/* Cursor Glow Spotlight (Desktop) */
+#cursor-glow-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.5s ease;
+}
+
+/* Chapter Continuity Footer Ribbon */
+.chapter-footer-ribbon {
+  background: rgba(255, 249, 246, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 12px 36px rgba(134, 78, 90, 0.08);
+  border-radius: 20px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chapter-footer-ribbon:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 45px rgba(134, 78, 90, 0.14);
+}
+
+/* 3D Tilt Card Helper */
+.tilt-card {
+  transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.2s ease;
+  will-change: transform;
+}
+
+/* Lightbox Modal Animations */
+@keyframes modalBackdropIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalContentIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-backdrop-in {
+  animation: modalBackdropIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.modal-content-in {
+  animation: modalContentIn 0.36s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Floating Flower Petals */
+.floating-petal {
+  position: fixed;
+  pointer-events: none;
+  z-index: 5;
+  user-select: none;
+  animation: petalFall linear infinite;
+  opacity: 0.8;
+}
+
+@keyframes petalFall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.75;
+  }
+  90% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate3d(80px, 110vh, 0) rotate(480deg);
+    opacity: 0;
+  }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .floating-petal, #cursor-glow-canvas {
+    display: none !important;
+  }
+}
+
+/* ── Avatar Face Focal Positioning ── */
+.avatar-face,
+img[src*="rishi_profile"],
+img[src*="hetvi_profile"],
+img[alt*="Profile"],
+img[alt*="Sender"],
+img[alt*="Partner"],
+img[alt*="Caller"],
+img[alt*="Hetvi"],
+img[alt*="Rishi"],
+#chat-header-avatar,
+#incoming-caller-avatar,
+#active-call-avatar,
+#audio-stage-avatar {
+  object-fit: cover !important;
+  object-position: 50% 15% !important;
+}

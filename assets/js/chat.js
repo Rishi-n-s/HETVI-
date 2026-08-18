@@ -168,9 +168,23 @@ requireAuth((user, profile) => {
 
     console.log("Authenticated Chat User:", currentAuthUser.email, "Profile:", currentProfile);
 
-    // Update Top User Chip
+    // Update Top User Chip & Avatar
     if (currentUserNameEl) {
         currentUserNameEl.textContent = `👤 ${currentProfile.name}`;
+    }
+
+    const topUserAvatar = document.querySelector("#chat-sidebar img[alt='My Profile']");
+    if (topUserAvatar && currentProfile.photo) {
+        topUserAvatar.src = currentProfile.photo;
+    }
+
+    if (chatHeaderTitle) {
+        chatHeaderTitle.textContent = currentProfile.partner;
+    }
+
+    const headerAvatar = document.getElementById("chat-header-avatar");
+    if (headerAvatar) {
+        headerAvatar.src = (currentProfile.role === 'rishi' ? 'assets/images/hetvi_profile.jpg' : 'assets/images/rishi_profile.jpg');
     }
 
     // Connect to initial active chat and typing listeners
@@ -1139,11 +1153,14 @@ function renderBubbleShell(isSentByMe, senderDisplayName, timeFormatted, innerCo
             </div>
         `;
     } else {
+        const isHetvi = (senderDisplayName || "").toLowerCase().includes("hetvi") || (senderDisplayName || "").toLowerCase().includes("bakudi");
+        const senderPhoto = isHetvi ? "assets/images/hetvi_profile.jpg" : "assets/images/rishi_profile.jpg";
+
         return `
             <div class="flex items-center gap-1.5 max-w-[88%] sm:max-w-[78%] md:max-w-[72%]">
                 <div class="flex items-start gap-2.5">
                     <div class="w-8 h-8 rounded-full bg-pink-200 border border-white flex-shrink-0 overflow-hidden shadow-xs mt-1">
-                        <img src="assets/images/main.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80'" class="w-full h-full object-cover" alt="Sender" />
+                        <img src="${senderPhoto}" onerror="this.src='assets/images/rishi_profile.jpg'" class="w-full h-full object-cover" alt="${escapeHTML(senderDisplayName)}" />
                     </div>
                     <div class="flex flex-col">
                         <span class="text-[11px] font-quicksand font-semibold text-primary-dark ml-1 mb-0.5">${escapeHTML(senderDisplayName)}</span>

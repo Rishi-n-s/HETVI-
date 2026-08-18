@@ -1,11 +1,11 @@
-/* netflix-intro.css — Cinematic Netflix-style "H ❤️ R" Intro */
+/* netflix-intro.css — Studio-Grade Cinematic Monogram Intro */
 
 #netflix-intro-overlay {
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #000000;
+  background-color: #050204;
   z-index: 999999;
   display: flex;
   flex-direction: column;
@@ -14,8 +14,8 @@
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease-in-out;
-  font-family: 'Bebas Neue', 'Montserrat', 'Bricolage Grotesque', sans-serif;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'Montserrat', sans-serif;
   user-select: none;
   -webkit-user-select: none;
 }
@@ -29,31 +29,12 @@
 .netflix-vignette {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(209, 36, 80, 0.15) 0%, rgba(10, 2, 6, 0.8) 55%, #000000 100%);
+  background: radial-gradient(circle at center, rgba(209, 36, 80, 0.2) 0%, rgba(10, 2, 5, 0.88) 55%, #050204 100%);
   pointer-events: none;
   z-index: 1;
 }
 
-.netflix-stars-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* 3D Ribbon Laser Canvas */
-#netflix-ribbon-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 5;
-  pointer-events: none;
-}
-
-/* Center Logo Container */
+/* Center Logo Stage */
 .netflix-logo-container {
   position: relative;
   z-index: 10;
@@ -61,8 +42,30 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transform-style: preserve-3d;
-  perspective: 1000px;
+  animation: studioZoom 3.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity, filter;
+}
+
+@keyframes studioZoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translate3d(0, 8px, 0);
+    filter: blur(8px) brightness(0.8);
+  }
+  15% {
+    opacity: 1;
+    filter: blur(0px) brightness(1);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(1.05) translate3d(0, 0, 0);
+    filter: blur(0px) brightness(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.15) translate3d(0, -4px, 0);
+    filter: blur(12px) brightness(1.4);
+  }
 }
 
 .netflix-monogram {
@@ -73,135 +76,149 @@
   position: relative;
 }
 
-/* Letters H and R styled like Netflix Iconic Curved Red Glyphs */
+/* Letters H and R styled like iconic luxury typography */
 .netflix-letter {
   font-family: 'Bebas Neue', 'Montserrat', sans-serif;
-  font-size: clamp(80px, 18vw, 190px);
+  font-size: clamp(84px, 19vw, 190px);
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.02em;
   color: #e50914;
-  background: linear-gradient(180deg, #ff3366 0%, #e50914 45%, #8b001d 85%, #4a000d 100%);
+  background: linear-gradient(180deg, #ff4b72 0%, #e50914 42%, #8e001f 85%, #42000d 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 25px rgba(229, 9, 20, 0.85)) drop-shadow(0 15px 35px rgba(0, 0, 0, 0.9));
+  filter: drop-shadow(0 0 35px rgba(229, 9, 20, 0.8)) drop-shadow(0 15px 40px rgba(0, 0, 0, 0.9));
   position: relative;
   display: inline-block;
-  transform-origin: center center;
 }
 
 .netflix-letter::before {
   content: attr(data-letter);
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 40%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 40%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   pointer-events: none;
 }
 
-/* Center Beating Neon Heart */
+/* Center Beating Heart */
 .netflix-heart-wrap {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(70px, 15vw, 160px);
-  height: clamp(70px, 15vw, 160px);
-  margin: 0 -0.05em;
-  transform-origin: center center;
+  width: clamp(70px, 15vw, 155px);
+  height: clamp(70px, 15vw, 155px);
+  margin: 0 -0.04em;
 }
 
 .netflix-heart-svg {
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 0 30px #ff1744) drop-shadow(0 0 60px #ff2d55) drop-shadow(0 0 100px rgba(255, 45, 85, 0.6));
-  animation: netflixHeartPulse 1.2s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+  filter: drop-shadow(0 0 30px #ff1744) drop-shadow(0 0 60px #ff2d55) drop-shadow(0 0 100px rgba(255, 45, 85, 0.7));
+  animation: studioHeartPulse 1.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
-@keyframes netflixHeartPulse {
+@keyframes studioHeartPulse {
   0% {
     transform: scale(1);
-    filter: drop-shadow(0 0 25px #ff1744) drop-shadow(0 0 50px rgba(255, 23, 68, 0.7));
   }
-  18% {
-    transform: scale(1.18);
-    filter: drop-shadow(0 0 45px #ff1744) drop-shadow(0 0 90px #ff2d55) drop-shadow(0 0 140px rgba(255, 45, 85, 0.9));
+  20% {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 45px #ff1744) drop-shadow(0 0 90px #ff2d55);
   }
-  32% {
+  35% {
     transform: scale(1.02);
-    filter: drop-shadow(0 0 30px #ff1744) drop-shadow(0 0 60px rgba(255, 23, 68, 0.8));
   }
-  48% {
-    transform: scale(1.24);
-    filter: drop-shadow(0 0 55px #ff1744) drop-shadow(0 0 110px #ff2d55) drop-shadow(0 0 160px rgba(255, 45, 85, 1));
+  50% {
+    transform: scale(1.18);
+    filter: drop-shadow(0 0 55px #ff1744) drop-shadow(0 0 110px #ff2d55);
   }
-  68% {
+  70% {
     transform: scale(1);
-    filter: drop-shadow(0 0 25px #ff1744) drop-shadow(0 0 50px rgba(255, 23, 68, 0.7));
   }
   100% {
     transform: scale(1);
-    filter: drop-shadow(0 0 25px #ff1744) drop-shadow(0 0 50px rgba(255, 23, 68, 0.7));
   }
 }
 
 /* Cinematic Subtitle */
 .netflix-subtitle {
-  margin-top: 1rem;
-  font-family: 'Montserrat', 'Bebas Neue', sans-serif;
-  font-size: clamp(10px, 2.2vw, 18px);
+  margin-top: 1.2rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(10px, 2vw, 16px);
   font-weight: 700;
   letter-spacing: 0.55em;
   text-transform: uppercase;
-  color: #ffffff;
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(229, 9, 20, 0.6);
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(229, 9, 20, 0.6);
   opacity: 0;
-  transform: translateY(15px);
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: subtitleFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
 }
 
-.netflix-subtitle.reveal {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes subtitleFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .netflix-subtitle span {
   color: #ff3366;
 }
 
-/* Anamorphic Lens Flare Line across screen */
+/* Anamorphic Horizontal Glow */
 .netflix-anamorphic-flare {
   position: absolute;
   top: 50%;
   left: 0;
   width: 100vw;
-  height: 3px;
+  height: 2px;
   background: linear-gradient(90deg, 
     transparent 0%, 
-    rgba(255, 50, 100, 0.1) 15%, 
-    rgba(255, 150, 180, 0.8) 45%, 
+    rgba(255, 50, 100, 0.05) 20%, 
+    rgba(255, 170, 195, 0.85) 48%, 
     #ffffff 50%, 
-    rgba(255, 150, 180, 0.8) 55%, 
-    rgba(255, 50, 100, 0.1) 85%, 
+    rgba(255, 170, 195, 0.85) 52%, 
+    rgba(255, 50, 100, 0.05) 80%, 
     transparent 100%
   );
-  box-shadow: 0 0 25px 5px rgba(255, 45, 85, 0.9), 0 0 60px 10px rgba(255, 100, 150, 0.5);
+  box-shadow: 0 0 30px 4px rgba(255, 45, 85, 0.9), 0 0 60px 10px rgba(255, 100, 150, 0.5);
   transform: translateY(-50%) scaleX(0);
-  opacity: 0;
+  animation: flareSweep 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
   z-index: 15;
   pointer-events: none;
 }
 
-/* Supernova Flash effect at the climax */
+@keyframes flareSweep {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) scaleX(0);
+  }
+  30% {
+    opacity: 0.95;
+    transform: translateY(-50%) scaleX(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50%) scaleX(1.8);
+  }
+}
+
+/* Supernova Flash Transition */
 .netflix-supernova {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, #ffffff 0%, #ffccd5 40%, rgba(209, 36, 80, 0.9) 70%, #000000 100%);
+  background: radial-gradient(circle at center, #ffffff 0%, #ffe6eb 40%, rgba(209, 36, 80, 0.75) 75%, #050204 100%);
   opacity: 0;
   pointer-events: none;
   z-index: 30;
-  transition: opacity 0.5s ease-out;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Skip Button */
@@ -210,14 +227,15 @@
   top: 24px;
   right: 24px;
   z-index: 40;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: rgba(255, 255, 255, 0.85);
   padding: 8px 18px;
   border-radius: 9999px;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 13px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -225,24 +243,15 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  transition: all 0.3s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .netflix-skip-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.2);
   color: #ffffff;
-  transform: scale(1.05);
-  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.04);
 }
 
-/* Lock Unlock Pulse animation on the form */
-@keyframes lockShatter {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.1) rotate(-3deg); }
-  60% { transform: scale(1.15) rotate(3deg); filter: brightness(2) drop-shadow(0 0 30px #ff2d55); }
-  100% { transform: scale(0.6); opacity: 0; }
-}
-
-.lock-shattering {
-  animation: lockShatter 0.7s cubic-bezier(0.36, 0, 0.66, -0.56) forwards !important;
+.netflix-skip-btn:active {
+  transform: scale(0.96);
 }

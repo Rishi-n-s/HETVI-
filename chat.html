@@ -411,6 +411,17 @@
     #remote-pip-video.mirrored {
       transform: scaleX(-1) !important;
     }
+
+    /* Face alignment for profile circles */
+    img[src*="rishi_profile"],
+    img[src*="hetvi_profile"],
+    #chat-header-avatar,
+    #incoming-caller-avatar,
+    #active-call-avatar,
+    #audio-stage-avatar {
+      object-fit: cover !important;
+      object-position: 50% 15% !important;
+    }
   </style>
 </head>
 
@@ -435,8 +446,8 @@
           <div class="flex items-center gap-3">
             <div
               class="w-10 h-10 rounded-full bg-gradient-to-tr from-pink-300 to-rose-400 p-[2px] shadow-sm flex-shrink-0">
-              <img src="assets/images/main.jpeg"
-                onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'"
+              <img src="assets/images/rishi_profile.jpg"
+                onerror="this.src='assets/images/hetvi_profile.jpg'"
                 alt="My Profile" class="w-full h-full object-cover rounded-full" />
             </div>
             <div>
@@ -448,16 +459,12 @@
             </div>
           </div>
 
-          <!-- Authenticated User Profile & Sign Out -->
+          <!-- Quick Link to Settings -->
           <div class="flex items-center gap-1.5 flex-shrink-0">
-            <span id="current-user-name"
-              class="px-2.5 py-1 text-xs font-quicksand font-semibold bg-white/70 text-primary-dark rounded-full border border-pink-200 shadow-xs">
-              Loading...
-            </span>
-            <button id="sign-out-btn" title="Sign Out"
-              class="p-1.5 text-xs font-quicksand bg-white/60 hover:bg-rose-100 text-rose-600 rounded-full border border-pink-200 transition-all flex items-center justify-center">
-              <span class="material-symbols-outlined text-[16px]">logout</span>
-            </button>
+            <a href="settings.html" title="Account & Preferences"
+              class="p-2 text-primary hover:text-primary-dark bg-white/70 hover:bg-white rounded-full border border-pink-200 shadow-xs transition-all flex items-center justify-center">
+              <span class="material-symbols-outlined text-[18px]">settings</span>
+            </a>
           </div>
         </div>
 
@@ -477,19 +484,19 @@
           <!-- Conversation 1 (Default Active) -->
           <div
             class="chat-item active flex items-center gap-3 p-3 rounded-2xl cursor-pointer hover:bg-white/50 transition-all border border-transparent"
-            data-chat-id="our_story_room" data-chat-name="Bakudi ❤️" data-chat-status="Always in my heart">
+            data-chat-id="our_story_room" data-chat-name="Hetvi ❤️" data-chat-status="Always in my heart">
             <div class="relative flex-shrink-0">
               <div class="w-12 h-12 rounded-full overflow-hidden shadow-sm border border-white">
-                <img src="assets/images/main.jpeg"
-                  onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=120&auto=format&fit=crop&q=80'"
-                  alt="Bakudi" class="w-full h-full object-cover" />
+                <img src="assets/images/hetvi_profile.jpg"
+                  onerror="this.src='assets/images/main.jpeg'"
+                  alt="Hetvi ❤️" class="w-full h-full object-cover" />
               </div>
               <span
                 class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white"></span>
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex justify-between items-baseline mb-0.5">
-                <h3 class="font-quicksand font-bold text-sm text-gray-800 truncate">Bakudi ❤️</h3>
+                <h3 class="font-quicksand font-bold text-sm text-gray-800 truncate">Hetvi ❤️</h3>
                 <span class="text-[11px] text-gray-400 font-sans" id="last-msg-time">Live</span>
               </div>
               <p class="text-xs text-gray-500 truncate" id="last-msg-preview">Tap to view live messages...</p>
@@ -537,15 +544,15 @@
 
             <div class="relative">
               <div class="w-10 h-10 rounded-full overflow-hidden shadow-sm border border-white flex-shrink-0">
-                <img id="chat-header-avatar" src="assets/images/main.jpeg"
-                  onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=120&auto=format&fit=crop&q=80'"
+                <img id="chat-header-avatar" src="assets/images/hetvi_profile.jpg"
+                  onerror="this.src='assets/images/main.jpeg'"
                   alt="Active User" class="w-full h-full object-cover" />
               </div>
             </div>
 
             <div>
               <h2 id="chat-header-title"
-                class="font-quicksand font-bold text-base md:text-lg text-gray-800 leading-tight">Bakudi ❤️</h2>
+                class="font-quicksand font-bold text-base md:text-lg text-gray-800 leading-tight">Hetvi ❤️</h2>
               <p id="chat-header-subtitle" class="text-xs text-emerald-600 font-medium flex items-center gap-1">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Connected in Real-time
               </p>

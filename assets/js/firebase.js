@@ -45,11 +45,11 @@ const db = getFirestore(app);
 console.log("Firebase App, Auth & Firestore initialized successfully (Storage handled by Supabase)");
 
 // ==========================================
-// 4. Authorized Users Whitelist (Rishi & Bakudi)
+// 4. Authorized Users Whitelist (Rishi & Hetvi)
 // ==========================================
 const ALLOWED_ACCOUNTS = {
-    "rishisolanki7319@gmail.com": { name: "Rishi", partner: "Bakudi ❤️", role: "rishi" },
-    "hetvidodiya2447@gmail.com": { name: "Bakudi", partner: "Rishi ❤️", role: "bakudi" }
+    "rishisolanki7319@gmail.com": { name: "Rishi", partner: "Hetvi", role: "rishi", photo: "assets/images/rishi_profile.jpg" },
+    "hetvidodiya2447@gmail.com": { name: "Hetvi", partner: "Rishi", role: "bakudi", photo: "assets/images/hetvi_profile.jpg" }
 };
 
 /**
@@ -76,10 +76,10 @@ function getUserProfile(user) {
         return ALLOWED_ACCOUNTS[cleanEmail];
     }
     
-    if (cleanEmail.includes("rishi")) {
-        return { name: "Rishi", partner: "Bakudi ❤️", role: "rishi" };
+    if (cleanEmail.includes("hetvi") || cleanEmail.includes("bakudi")) {
+        return { name: "Hetvi", partner: "Rishi", role: "bakudi", photo: "assets/images/hetvi_profile.jpg" };
     }
-    return { name: "Bakudi", partner: "Rishi ❤️", role: "bakudi" };
+    return { name: "Rishi", partner: "Hetvi", role: "rishi", photo: "assets/images/rishi_profile.jpg" };
 }
 
 // ==========================================

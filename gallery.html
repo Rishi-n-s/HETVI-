@@ -15,7 +15,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
   <link
-    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600;700&family=Caveat:wght@400;700&family=Inter:wght@300;400;500&display=swap"
     rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
     rel="stylesheet" />
@@ -26,29 +26,30 @@
     body {
       overflow-x: hidden;
       background-color: #faf9f6;
+      font-family: 'Quicksand', sans-serif;
     }
 
-    .polaroid-hover {
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    .polaroid-card {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+      will-change: transform;
     }
 
-    .polaroid-hover:hover {
-      transform: translateY(-8px) scale(1.02) !important;
-      box-shadow: 20px 20px 40px rgba(74, 55, 40, 0.15) !important;
-      z-index: 50;
+    .polaroid-card:hover {
+      transform: translateY(-8px) scale(1.03) !important;
+      box-shadow: 0 20px 40px rgba(74, 55, 40, 0.16) !important;
+      z-index: 30;
     }
 
     .washi-tape {
-      background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, 0.2) 5px, rgba(255, 255, 255, 0.2) 10px);
+      background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, 0.3) 5px, rgba(255, 255, 255, 0.3) 10px);
     }
 
     /* Entrance Animation */
     @keyframes fadeUp {
       from {
         opacity: 0;
-        transform: translateY(60px) scale(0.95);
+        transform: translateY(40px) scale(0.96);
       }
-
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -56,20 +57,13 @@
     }
 
     .animate-fade-up {
-      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+      animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
     }
 
     /* Gentle Floating Animation */
     @keyframes gentleFloat {
-
-      0%,
-      100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-12px);
-      }
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
     .animate-float {
@@ -78,22 +72,23 @@
 
     /* Browser Animation */
     #browser-overlay {
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .browser {
       width: 90vw;
-      max-width: 450px;
-      height: 300px;
-      background: lightgrey;
-      border-radius: 7px;
+      max-width: 460px;
+      height: 290px;
+      background: #2b2b2b;
+      border-radius: 12px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
       position: relative;
-      box-shadow: 5px 5px 25px rgba(31, 31, 31, 0.4);
-      transform: scale(1.2);
-      transition: all 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+      transform: scale(1);
+      transition: all 0.9s cubic-bezier(0.77, 0, 0.175, 1);
     }
 
     .browser.expanded-browser {
@@ -106,249 +101,78 @@
       box-shadow: none !important;
     }
 
-    /* tabs-head */
     .tabs-head {
-      background-color: #353535;
-      height: 40px;
+      background-color: #1f1f1f;
+      height: 38px;
       display: flex;
       justify-content: space-between;
-      align-items: end;
-      padding-left: 20px;
+      align-items: center;
+      padding: 0 12px;
     }
 
-    .tabs-head .tab-open {
-      width: 100px;
-      height: 34px;
-      border-radius: 7px 7px 0 0;
-      background-color: #515151;
-      display: flex;
-      gap: 5px;
-      align-items: start;
-      justify-content: space-between;
-      padding: 4px 8px;
-      position: relative;
-    }
-
-    .tabs-head .tab-open .close-tab {
-      color: #fff;
-      font-size: 9px;
-      padding: 1px 4px 1px 4px;
-      border-radius: 50%;
-      cursor: default;
-    }
-
-    .tabs-head .tab-open .close-tab:hover {
-      background-color: #5d5d5d;
-    }
-
-    .tabs-head .tab-open .rounded-l {
-      position: absolute;
-      background-color: #515151;
-      width: 20px;
-      height: 24px;
-      top: 0;
-      right: 0;
-      transform: translate(100%);
-      overflow: hidden;
-    }
-
-    .tabs-head .tab-open .rounded-l .mask-round {
-      width: 100%;
-      height: 100%;
-      background-color: #353535;
-      border-radius: 0 0 0 7px;
-    }
-
-    .tabs-head .tab-open .rounded-r {
-      position: absolute;
-      background-color: #515151;
-      width: 20px;
-      height: 24px;
-      top: 0;
-      left: 0;
-      transform: translate(-100%);
-      overflow: hidden;
-    }
-
-    .tabs-head .tab-open .rounded-r .mask-round {
-      width: 100%;
-      height: 100%;
-      background-color: #353535;
-      border-radius: 0 0 7px 0;
-    }
-
-    .tabs-head .tab-open span {
-      color: #fff;
-      font-size: 10px;
-    }
-
-    .tabs-head .window-opt {
-      display: flex;
-    }
-
-    .tabs-head .window-opt button {
-      height: 30px;
-      width: 30px;
-      border: none;
-      background-color: transparent;
-      transition: 0.1s ease-out;
-      color: #fff;
-      margin-bottom: 10px;
-    }
-
-    .tabs-head .window-opt button:hover {
-      background-color: #515151c8;
-    }
-
-    .tabs-head .window-opt .window-close:hover {
-      background-color: rgb(255, 52, 52);
-    }
-
-    /* head-browser */
     .head-browser {
-      position: absolute;
-      top: 30px;
-      width: 100%;
-      height: 40px;
-      background-color: #515151;
-      padding: 7px;
+      background-color: #2b2b2b;
+      padding: 8px 12px;
       display: flex;
-      border-radius: 7px 7px 0 0;
-      gap: 5px;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .head-browser input {
-      background-color: #3b3b3b;
-      border: 2px solid transparent;
-      height: 100%;
-      border-radius: 20px;
+      background-color: #3d3d3d;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      height: 32px;
+      border-radius: 16px;
       outline: none;
       color: #fff;
-      padding: 0 15px;
-      font-size: 14px;
+      padding: 0 14px;
+      font-size: 13px;
       flex: 1;
-      transition: 0.2s ease-in-out;
-    }
-
-    .head-browser input:hover {
-      background-color: #5d5d5d;
-    }
-
-    .head-browser input:focus {
-      border-color: rgb(173, 214, 255);
-      background-color: #3b3b3b;
-      transition: none;
-    }
-
-    .head-browser input::placeholder {
-      color: #fff;
     }
 
     .head-browser button {
-      width: 27px;
-      height: 25px;
-      border: none;
-      background-color: transparent;
-      color: #fff;
-      border-radius: 50%;
-      transition: 0.2s ease-in-out;
-    }
-
-    .head-browser button:disabled {
-      opacity: 0.4;
-    }
-
-    .head-browser button:hover {
-      background-color: #5d5d5d;
-    }
-
-    .head-browser button:disabled:hover {
-      background-color: transparent;
-    }
-
-    .head-browser .star {
-      color: #fff;
-      position: absolute;
-      right: 45px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 15px;
-      opacity: 0.7;
-      height: 18px;
-      width: 19px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding-bottom: 3px;
-    }
-
-    .search-content-placeholder {
-      flex: 1;
+      color: #bbb;
       background: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding-top: 40px;
-      /* space for header */
-      transition: all 0.5s ease;
-    }
-
-    .search-content-placeholder.scrollable {
-      display: block;
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding-top: 0;
+      border: none;
+      cursor: pointer;
     }
   </style>
 </head>
 
-<body class="bg-background text-on-surface font-body-main overflow-x-hidden">
+<body class="bg-[#faf9f6] text-[#2c1d22] overflow-x-hidden min-h-screen">
 
   <!-- Browser Animation Overlay -->
   <div id="browser-overlay"
-    class="fixed inset-0 bg-background/95 z-[60] flex items-center justify-center transition-opacity duration-1000">
+    class="fixed inset-0 bg-[#12080e]/90 z-[60] flex items-center justify-center transition-opacity duration-700 cursor-pointer"
+    title="Click to skip intro">
     <div class="browser" id="fake-browser">
       <div class="tabs-head">
-        <div class="tabs">
-          <div class="tab-open">
-            <div class="rounded-l">
-              <div class="mask-round"></div>
-            </div>
-            <span>Search</span>
-            <div class="close-tab">✕</div>
-            <div class="rounded-r">
-              <div class="mask-round"></div>
-            </div>
-          </div>
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+          <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+          <span class="w-3 h-3 rounded-full bg-[#27c93f]"></span>
+          <span class="text-xs text-white/50 font-medium ml-2">Google Chrome</span>
         </div>
-
-        <div class="window-opt">
-          <button>-</button>
-          <button>□</button>
-          <button class="window-close">✕</button>
-        </div>
+        <span class="text-[11px] text-white/40">Tap anywhere to skip</span>
       </div>
 
       <div class="head-browser">
-        <button>←</button>
-        <button disabled="">→</button>
-
-        <input type="text" name="" id="browser-input" placeholder="Search Google or type URL" value="" readonly />
-
-        <button>⋮</button>
-        <button class="star">✰</button>
+        <button class="material-symbols-outlined text-sm">arrow_back</button>
+        <button class="material-symbols-outlined text-sm opacity-50">arrow_forward</button>
+        <input type="text" id="browser-input" placeholder="Search Google or type URL" readonly />
+        <span class="material-symbols-outlined text-sm text-[#ff758c]">favorite</span>
       </div>
 
-      <div class="search-content-placeholder">
-        <!-- Google logo fake -->
+      <div class="flex-1 flex flex-col items-center justify-center bg-[#1e1e1e] p-6 text-center">
         <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google"
-          style="width: 120px; opacity: 0.2; pointer-events: none;" />
+          class="w-24 opacity-30 mb-3" />
+        <span class="text-xs text-white/40">Searching for memories...</span>
       </div>
 
       <!-- Fake cursor -->
-      <div id="fake-cursor" class="absolute z-50 pointer-events-none"
-        style="top: 200px; left: 250px; width: 20px; height: 20px; transition: top 0.8s ease-in-out, left 0.8s ease-in-out;">
+      <div id="fake-cursor" class="absolute z-50 pointer-events-none transition-all duration-700"
+        style="top: 180px; left: 240px; width: 18px; height: 18px;">
         <svg viewBox="0 0 320 320" fill="white" stroke="black" stroke-width="15">
           <path d="M 0 0 L 160 320 L 190 220 L 290 190 Z" />
         </svg>
@@ -356,44 +180,158 @@
     </div>
   </div>
 
-  <!-- Background -->
+  <!-- Background Ambient Tint -->
   <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-    <div class="absolute inset-0 bg-cover bg-center opacity-40 scale-105"
+    <div class="absolute inset-0 bg-cover bg-center opacity-35 scale-105"
       style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBm-E1ym0M2GzHooAWb5h8l453TronsIOtuzmAhFuKfIXX2xcPVz5MX1bwj2iD7cLIy5UNmZEOvpkwM1vanzAMG448gtczHA7_nKbSerHp-scbtg23KiSayZ_j8jwGcb5R0pIvfh7x_82FYkjCrzZop95u2ANYPyZMwaJIkbxJrjrukkQEpXN0FvcUV5zWrhEb1YwpBjhQh3bpRzfsquN9uTg_Hwrn6fMPXqYhUQjHI4R8Dg5xyZ5c')">
     </div>
+    <div class="absolute inset-0 bg-radial from-transparent via-[#faf9f6]/40 to-[#faf9f6]/90"></div>
   </div>
 
   <!-- Top AppBar -->
   <header
     class="flex justify-between items-center w-full px-4 sm:px-8 pt-4 sm:pt-6 fixed top-0 z-40 bg-transparent pointer-events-none">
-    <a href="index.html" class="no-underline pointer-events-auto font-subtitle-serif text-sm sm:text-base italic text-primary drop-shadow-md hover:opacity-80 transition-opacity">BAKUDI NI STORY</a>
-    <div class="flex items-center gap-4 sm:gap-6 pointer-events-auto">
-      <a href="music.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
-          class="material-symbols-outlined text-xl sm:text-2xl">music_note</span></a>
-      <a href="settings.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
-          class="material-symbols-outlined text-xl sm:text-2xl">palette</span></a>
+    <a href="index.html" class="no-underline pointer-events-auto font-serif text-sm sm:text-base italic text-[#864e5a] font-semibold drop-shadow-sm hover:opacity-80 transition-opacity">
+      BAKUDI NI STORY
+    </a>
+    <div class="flex items-center gap-3 sm:gap-4 pointer-events-auto">
+      <a href="timeline.html" class="px-3 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-[#864e5a]/15 text-[#864e5a] text-xs font-semibold hover:bg-white transition-all no-underline shadow-sm">
+        ‹ Timeline
+      </a>
+      <a href="music.html" class="w-8 h-8 rounded-full bg-white/70 backdrop-blur-md border border-[#864e5a]/15 text-[#864e5a] flex items-center justify-center hover:scale-105 transition-all shadow-sm">
+        <span class="material-symbols-outlined text-lg">music_note</span>
+      </a>
     </div>
   </header>
 
-  <!-- Main -->
+  <!-- Main Content -->
   <main class="relative z-10 pt-20 sm:pt-28 pb-32 sm:pb-40 px-4 sm:px-6 md:px-10 min-h-screen w-full max-w-7xl mx-auto">
-    <div id="gallery-header" class="mb-8 sm:mb-14 text-center opacity-0 transition-opacity duration-1000">
-      <h1 class="font-headline-xl text-3xl sm:text-5xl md:text-[64px] text-primary drop-shadow-sm mb-2 sm:mb-4 mt-4 sm:mt-6 leading-tight"
-        style="font-family:'Playfair Display',serif;font-style:italic;">All Her Memories</h1>
-      <p class="font-handwritten text-xl sm:text-2xl md:text-3xl text-on-surface-variant/80 max-w-xl mx-auto">A thousand little moments,
-        beautifully captured.</p>
+    
+    <!-- Gallery Header -->
+    <div id="gallery-header" class="mb-10 sm:mb-16 text-center opacity-0 transition-opacity duration-1000">
+      
+      <!-- Chapter Badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ffb7c5]/30 border border-[#ffb7c5]/60 text-[#864e5a] text-xs font-semibold tracking-wider uppercase mb-3">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#d12450]"></span>
+        <span>Chapter 3 · Our Memories</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl md:text-[68px] text-[#864e5a] drop-shadow-sm mb-3 mt-2 leading-tight"
+        style="font-family:'Playfair Display',serif; font-style:italic; font-weight: 600;">
+        All Her Memories
+      </h1>
+      
+      <p class="font-handwritten text-2xl sm:text-3xl md:text-4xl text-[#864e5a]/80 max-w-xl mx-auto"
+        style="font-family:'Caveat', cursive;">
+        A thousand little moments, beautifully captured.
+      </p>
+
+      <div class="mt-4 flex items-center justify-center gap-2 text-xs text-[#864e5a]/60">
+        <span class="material-symbols-outlined text-sm">touch_app</span>
+        <span>Tap any memory to view details & photos</span>
+      </div>
     </div>
 
-    <!-- Dynamic Gallery Grid -->
+    <!-- Dynamic Masonry Gallery Grid -->
     <div id="gallery-grid"
-      class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6 sm:gap-8 md:gap-12 space-y-6 sm:space-y-10 md:space-y-16 w-full pb-20 sm:pb-32 opacity-0 transition-opacity duration-1000">
-      <!-- Media will be injected here by JavaScript -->
+      class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-5 sm:gap-7 md:gap-9 space-y-6 sm:space-y-8 md:space-y-10 w-full opacity-0 transition-opacity duration-1000">
+      <!-- Media dynamically injected by JavaScript -->
     </div>
+
+    <!-- Chapter Continuity Footer Ribbon -->
+    <div class="mt-16 sm:mt-24 max-w-2xl mx-auto">
+      <a href="playful.html"
+        class="chapter-footer-ribbon p-5 sm:p-7 flex items-center justify-between gap-4 no-underline group text-[#864e5a] border border-[#ffb7c5]/40 block">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-[#ffb7c5]/40 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+            🌸
+          </div>
+          <div>
+            <span class="text-[11px] uppercase tracking-wider font-semibold text-[#864e5a]/60 block mb-0.5">Next Chapter</span>
+            <span class="text-base sm:text-lg font-bold font-serif text-[#864e5a] group-hover:text-[#d12450] transition-colors">
+              Chapter 4: 100 Flowers & Playful Moments
+            </span>
+          </div>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-[#ffb7c5]/30 group-hover:bg-[#d12450] group-hover:text-white flex items-center justify-center transition-all duration-300">
+          <span class="material-symbols-outlined text-lg group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+        </div>
+      </a>
+    </div>
+
   </main>
+
+  <!-- Interactive Memory Scrapbook Lightbox Modal -->
+  <div id="lightbox-modal"
+    class="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+    
+    <div class="relative max-w-4xl w-full bg-[#fdfbf7] rounded-3xl overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.5)] border border-white/40 flex flex-col md:flex-row transform scale-95 transition-transform duration-300"
+      id="lightbox-container">
+      
+      <!-- Close Button -->
+      <button onclick="closeLightbox()"
+        class="absolute top-4 right-4 z-30 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-md transition-colors">
+        <span class="material-symbols-outlined text-xl">close</span>
+      </button>
+
+      <!-- Media Display Area -->
+      <div class="w-full md:w-3/5 bg-black/95 flex items-center justify-center min-h-[300px] sm:min-h-[420px] max-h-[70vh] relative overflow-hidden">
+        <div id="lightbox-media-container" class="w-full h-full flex items-center justify-center">
+          <!-- Injected dynamically -->
+        </div>
+        
+        <!-- Navigation Prev/Next Overlays -->
+        <button onclick="navigateLightbox(-1)"
+          class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center backdrop-blur-md transition-all">
+          <span class="material-symbols-outlined text-xl">arrow_back_ios_new</span>
+        </button>
+        <button onclick="navigateLightbox(1)"
+          class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center backdrop-blur-md transition-all">
+          <span class="material-symbols-outlined text-xl">arrow_forward_ios</span>
+        </button>
+      </div>
+
+      <!-- Scrapbook Caption & Details Pane -->
+      <div class="w-full md:w-2/5 p-6 sm:p-8 flex flex-col justify-between bg-[#fdfbf7] border-t md:border-t-0 md:border-l border-[#864e5a]/10">
+        <div>
+          <!-- Date / Milestone Badge -->
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#ffb7c5]/30 text-[#864e5a] text-xs font-semibold tracking-wider mb-4" id="lightbox-date">
+            <span class="material-symbols-outlined text-sm">calendar_month</span>
+            <span>Memory Captured</span>
+          </div>
+
+          <h3 class="font-serif text-2xl sm:text-3xl text-[#864e5a] font-bold mb-3" id="lightbox-title" style="font-family:'Playfair Display',serif;">
+            A Precious Moment
+          </h3>
+
+          <p class="text-sm sm:text-base text-[#4a3728]/85 leading-relaxed font-sans" id="lightbox-desc">
+            "Every second captured here is a reminder of how lucky I am to have you in my life."
+          </p>
+        </div>
+
+        <!-- Scrapbook Footnote & Heart reaction -->
+        <div class="pt-6 border-t border-[#864e5a]/10 flex items-center justify-between mt-6">
+          <div class="flex items-center gap-2 text-xs text-[#864e5a]/60">
+            <span class="material-symbols-outlined text-sm text-[#d12450]">favorite</span>
+            <span id="lightbox-index">Memory 1 of 100</span>
+          </div>
+          <button onclick="triggerHeartReaction(this)"
+            class="px-4 py-2 rounded-full bg-[#ffb7c5]/30 hover:bg-[#ffb7c5]/60 text-[#864e5a] text-xs font-semibold flex items-center gap-1.5 transition-all">
+            <span class="material-symbols-outlined text-sm text-[#d12450]">favorite</span>
+            <span>Love It</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
 
   <script src="assets/js/media-data.js"></script>
   <script>
-    // Browser Animation Logic
+    let currentLightboxIdx = 0;
+
+    // Browser intro animation
     document.addEventListener('DOMContentLoaded', () => {
       const overlay = document.getElementById('browser-overlay');
       const input = document.getElementById('browser-input');
@@ -401,128 +339,199 @@
       const grid = document.getElementById('gallery-grid');
       const header = document.getElementById('gallery-header');
 
-      // Prevent scrolling while animation is playing
-      document.body.style.overflow = 'hidden';
+      // Click to skip intro
+      overlay.addEventListener('click', skipIntro);
+
+      function skipIntro() {
+        if (!overlay) return;
+        overlay.classList.add('opacity-0', 'pointer-events-none');
+        setTimeout(() => overlay.remove(), 600);
+        grid.style.opacity = '1';
+        header.style.opacity = '1';
+        populateGallery();
+      }
 
       setTimeout(() => {
-        // 1. Move cursor to input
-        cursor.style.top = '40px';
-        cursor.style.left = '160px';
+        if (!cursor) return;
+        cursor.style.top = '22px';
+        cursor.style.left = '140px';
 
         setTimeout(() => {
-          // Hide cursor (it's "typing")
           cursor.style.opacity = '0';
-
-          // 2. Type text
           const textToType = "RISHI NI BAKUDI KON CHE ? ❤️";
           let i = 0;
           const typeWriter = setInterval(() => {
-            if (i < textToType.length) {
+            if (i < textToType.length && input) {
               input.value += textToType.charAt(i);
               i++;
             } else {
               clearInterval(typeWriter);
-
-              // 3. Simulate hitting Enter (pause, then expand browser)
               setTimeout(() => {
                 const browser = document.getElementById('fake-browser');
-                const overlay = document.getElementById('browser-overlay');
-                const searchContent = document.querySelector('.search-content-placeholder');
-                const googleLogo = searchContent.querySelector('img');
-
-                // Fade out google logo
-                googleLogo.style.transition = 'opacity 0.5s';
-                googleLogo.style.opacity = '0';
-
-                // Expand the browser window AND fade it out
-                browser.classList.add('expanded-browser');
-                browser.style.opacity = '0';
-
+                if (browser) {
+                  browser.classList.add('expanded-browser');
+                  browser.style.opacity = '0';
+                }
                 setTimeout(() => {
-                  overlay.remove();
-                  document.body.style.overflow = 'auto'; // restore scroll
-
-                  // Fade in gallery
-                  grid.style.opacity = '1';
-                  header.style.opacity = '1';
-
-                  populateGallery();
-                }, 1200); // Wait for expand animation
-              }, 800);
+                  skipIntro();
+                }, 900);
+              }, 600);
             }
-          }, 80);
-        }, 1000); // Wait for cursor move
-      }, 600);
+          }, 60);
+        }, 800);
+      }, 500);
     });
 
-    // Populate the masonry grid with all images/videos, styled as Polaroids
+    // Helper to format date from filename like IMG-20260715-WA0004.jpg
+    function parseDateFromFilename(filename) {
+      const match = filename.match(/(\d{4})(\d{2})(\d{2})/);
+      if (match) {
+        const year = match[1];
+        const monthNum = parseInt(match[2], 10);
+        const day = parseInt(match[3], 10);
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        return `${months[monthNum - 1] || 'Special Date'} ${day}, ${year}`;
+      }
+      return "Cherished Memory";
+    }
+
+    const captions = [
+      'That irreplaceable smile that lights up my world',
+      'Quiet moments that speak louder than words',
+      'Sun-kissed and breathtaking as always',
+      'A golden day etched forever in my heart',
+      'Lost in your thoughts, captivating as ever',
+      'Pure laughter and boundless joy',
+      'Serenity in every frame',
+      'Just being you — perfectly beautiful',
+      'A chapter I never want to end',
+      'The prettiest view in any room',
+      'Golden hour glow',
+      'Forever my favorite person'
+    ];
+
     function populateGallery() {
       const grid = document.getElementById('gallery-grid');
-
-      // Washi tape colors to randomize
-      const tapeColors = ['bg-primary-container/80', 'bg-secondary-container/80', 'bg-tertiary-container/80', 'bg-[#ffb7c5]/80', 'bg-[#baeaff]/80', 'bg-[#e2c6ff]/80'];
-
-      // Descriptive captions to randomize
-      const captions = ['Beautiful smile', 'Quiet moments', 'Sun-kissed', 'A day to remember', 'Lost in thoughts', 'Laughing out loud', 'Serenity', 'Perfect day', 'Memories', 'Just chilling', 'Golden hour', 'So precious'];
+      const tapeColors = ['bg-[#ffb7c5]/80', 'bg-[#baeaff]/80', 'bg-[#ffd9df]/80', 'bg-[#e2c6ff]/80'];
 
       if (typeof mediaFiles !== 'undefined' && mediaFiles.length > 0) {
+        grid.innerHTML = '';
         mediaFiles.forEach((file, index) => {
           const isVideo = file.toLowerCase().endsWith('.mp4');
           const srcPath = encodeURI(`./assets/images/images of her/${file}`);
-
-          // Randomize polaroid styling to make them look messy and unaligned
-          const randomRot = (Math.random() * 14) - 7; // -7 to 7 degrees
-          const randomX = (Math.random() * 80) - 40; // -40px to 40px shift horizontally
-          const randomY = (Math.random() * 80) - 40; // -40px to 40px shift vertically
-
-          const randomTapeRot = (Math.random() * 16) - 8; // -8 to 8 degrees
+          const formattedDate = parseDateFromFilename(file);
+          const caption = captions[index % captions.length];
           const tapeColor = tapeColors[index % tapeColors.length];
-          const caption = captions[Math.floor(Math.random() * captions.length)];
 
-          // Animation timing
-          const entranceDelay = (index % 12) * 0.1; // Staggered entrance
-          const floatDelay = Math.random() * -6; // Negative delay so they don't start in sync
-          const floatDuration = 5 + (Math.random() * 3); // 5s to 8s loop
+          // Controlled subtle rotation (-3deg to 3deg) to prevent overflow
+          const randomRot = ((index % 7) - 3) * 0.9;
+          const randomTapeRot = ((index % 5) - 2) * 2;
 
           const itemDiv = document.createElement('div');
-          itemDiv.className = `break-inside-avoid w-full relative polaroid-hover group cursor-pointer mb-16 animate-fade-up`;
-          itemDiv.style.animationDelay = `${entranceDelay}s`;
+          itemDiv.className = `break-inside-avoid w-full relative polaroid-card group cursor-pointer mb-8 sm:mb-10 animate-fade-up`;
+          itemDiv.style.animationDelay = `${(index % 8) * 0.08}s`;
+          itemDiv.onclick = () => openLightbox(index);
 
-          // We wrap the transform in another div so the float animation doesn't fight the hover transform
           let mediaHtml = isVideo ?
-            `<video class="w-full min-h-[350px] aspect-[4/5] object-cover group-hover:scale-[1.03] transition-transform duration-700 bg-black/10" controls playsinline>
-          <source src="${srcPath}" type="video/mp4">
-          Your browser does not support videos.
-        </video>` :
-            `<img class="w-full aspect-[4/5] object-cover group-hover:scale-[1.03] transition-transform duration-700" loading="lazy" src="${srcPath}" alt="Memory">`;
+            `<video class="w-full aspect-[4/5] object-cover group-hover:scale-[1.02] transition-transform duration-500 bg-black/10" muted playsinline>
+               <source src="${srcPath}" type="video/mp4">
+             </video>` :
+            `<img class="w-full aspect-[4/5] object-cover group-hover:scale-[1.02] transition-transform duration-500" loading="lazy" src="${srcPath}" alt="Memory ${index + 1}">`;
 
           itemDiv.innerHTML = `
-        <div class="animate-float" style="animation-delay: ${floatDelay}s; animation-duration: ${floatDuration}s">
-          <div class="bg-surface-container-lowest p-3 pb-4 shadow-[10px_10px_20px_rgba(0,0,0,0.06)] border border-surface-variant/40 relative" style="transform: translate(${randomX}px, ${randomY}px) rotate(${randomRot}deg)">
-            <!-- Washi tape -->
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-6 ${tapeColor} washi-tape z-20 shadow-sm" style="transform: translateX(-50%) rotate(${randomTapeRot}deg)"></div>
-            
-            <!-- Image Container -->
-            <div class="w-full overflow-hidden bg-surface-container-high shadow-inner relative">
-              ${mediaHtml}
+            <div class="bg-white p-3 sm:p-4 pb-4 sm:pb-5 rounded-xl shadow-[0_8px_24px_rgba(74,55,40,0.08)] border border-[#864e5a]/10 relative" style="transform: rotate(${randomRot}deg)">
+              <!-- Washi Tape -->
+              <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 w-14 h-5 ${tapeColor} washi-tape z-20 shadow-sm rounded-sm" style="transform: translateX(-50%) rotate(${randomTapeRot}deg)"></div>
+              
+              <!-- Image Container -->
+              <div class="w-full overflow-hidden rounded-lg bg-black/5 shadow-inner relative">
+                ${mediaHtml}
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                  <span class="material-symbols-outlined text-white opacity-0 group-hover:opacity-100 transition-opacity drop-shadow-md text-2xl">zoom_in</span>
+                </div>
+              </div>
+              
+              <!-- Polaroid Caption area -->
+              <div class="mt-3.5 flex justify-between items-center px-1">
+                <span class="material-symbols-outlined text-[#d12450]/60 text-xs">favorite</span>
+                <p class="font-handwritten text-xl sm:text-2xl text-center text-[#4a3728] flex-1 px-2 truncate" style="font-family:'Caveat', cursive;">${caption}</p>
+                <span class="text-[10px] text-[#864e5a]/50 font-medium font-sans">${formattedDate.split(',')[0]}</span>
+              </div>
             </div>
-            
-            <!-- Polaroid Caption area -->
-            <div class="mt-4 flex justify-between items-center px-1">
-               <span class="material-symbols-outlined text-primary/40 text-sm">favorite</span>
-               <p class="font-handwritten text-2xl text-center text-on-surface-variant flex-1 px-2 line-clamp-1">${caption}</p>
-               <span class="material-symbols-outlined text-outline/40 text-sm rotate-45">push_pin</span>
-            </div>
-          </div>
-        </div>
-      `;
+          `;
 
           grid.appendChild(itemDiv);
         });
       } else {
-        grid.innerHTML = '<p class="text-center w-full col-span-full font-handwritten text-3xl">No media found.</p>';
+        grid.innerHTML = '<p class="text-center w-full col-span-full font-serif text-2xl text-[#864e5a]">No memories found.</p>';
       }
-    } // end populateGallery
+    }
+
+    // Lightbox Modal Logic
+    function openLightbox(index) {
+      currentLightboxIdx = index;
+      const file = mediaFiles[index];
+      const isVideo = file.toLowerCase().endsWith('.mp4');
+      const srcPath = encodeURI(`./assets/images/images of her/${file}`);
+      const formattedDate = parseDateFromFilename(file);
+      const caption = captions[index % captions.length];
+
+      const modal = document.getElementById('lightbox-modal');
+      const container = document.getElementById('lightbox-container');
+      const mediaBox = document.getElementById('lightbox-media-container');
+
+      if (isVideo) {
+        mediaBox.innerHTML = `<video class="max-h-[65vh] max-w-full object-contain" controls autoplay playsinline><source src="${srcPath}" type="video/mp4"></video>`;
+      } else {
+        mediaBox.innerHTML = `<img src="${srcPath}" alt="Memory" class="max-h-[65vh] max-w-full object-contain rounded-md" />`;
+      }
+
+      document.getElementById('lightbox-date').innerHTML = `<span class="material-symbols-outlined text-sm">calendar_month</span><span>${formattedDate}</span>`;
+      document.getElementById('lightbox-desc').innerText = `"${caption}. Every second captured here is a reminder of how lucky I am to have you in my life."`;
+      document.getElementById('lightbox-index').innerText = `Memory ${index + 1} of ${mediaFiles.length}`;
+
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      container.classList.remove('scale-95');
+      container.classList.add('scale-100');
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById('lightbox-modal');
+      const container = document.getElementById('lightbox-container');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      container.classList.add('scale-95');
+      container.classList.remove('scale-100');
+      
+      const mediaBox = document.getElementById('lightbox-media-container');
+      const vid = mediaBox.querySelector('video');
+      if (vid) vid.pause();
+    }
+
+    function navigateLightbox(dir) {
+      if (!mediaFiles || mediaFiles.length === 0) return;
+      currentLightboxIdx = (currentLightboxIdx + dir + mediaFiles.length) % mediaFiles.length;
+      openLightbox(currentLightboxIdx);
+    }
+
+    // Keyboard support for Lightbox
+    window.addEventListener('keydown', (e) => {
+      const modal = document.getElementById('lightbox-modal');
+      if (modal && !modal.classList.contains('pointer-events-none')) {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') navigateLightbox(1);
+        if (e.key === 'ArrowLeft') navigateLightbox(-1);
+      }
+    });
+
+    function triggerHeartReaction(btn) {
+      if (typeof playSound === 'function') {
+        try { playSound('pop'); } catch (e) {}
+      }
+      btn.innerHTML = `<span class="material-symbols-outlined text-sm text-[#d12450] animate-ping">favorite</span><span>Loved ❤️</span>`;
+      setTimeout(() => {
+        btn.innerHTML = `<span class="material-symbols-outlined text-sm text-[#d12450]">favorite</span><span>Love It</span>`;
+      }, 1500);
+    }
   </script>
   <script src="assets/js/nav.js"></script>
   <script src="assets/js/sounds.js"></script>

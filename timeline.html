@@ -80,6 +80,11 @@
   <!-- Main Content -->
   <main class="relative z-10 pt-20 sm:pt-28 md:pt-32 min-h-screen flex flex-col overflow-x-hidden">
     <div class="px-4 sm:px-6 mb-6 sm:mb-8 flex flex-col items-center">
+      <!-- Chapter Badge -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ffb7c5]/30 border border-[#ffb7c5]/60 text-[#864e5a] text-xs font-semibold tracking-wider uppercase mb-3">
+        <span class="w-1.5 h-1.5 rounded-full bg-[#d12450]"></span>
+        <span>Chapter 2 · Little Moments</span>
+      </div>
       <h1 class="font-headline-xl text-4xl sm:text-5xl md:text-[64px] text-primary text-center drop-shadow-sm mb-2 leading-tight"
         style="font-family:'Playfair Display',serif;font-style:italic;">Our Journey</h1>
       <p class="font-handwritten text-xl sm:text-2xl md:text-3xl text-on-surface-variant/80 max-w-xl mx-auto text-center">Every moment led us
@@ -87,7 +92,7 @@
     </div>
 
     <!-- Horizontal Timeline -->
-    <div class="relative w-full overflow-x-auto custom-scrollbar touch-pan-x px-4 sm:px-10 pb-24 sm:pb-40 cursor-grab active:cursor-grabbing"
+    <div class="relative w-full overflow-x-auto custom-scrollbar touch-pan-x px-4 sm:px-10 pb-16 sm:pb-24 cursor-grab active:cursor-grabbing"
       id="timeline-container">
       <div class="flex items-center gap-16 sm:gap-24 md:gap-32 min-w-max h-[480px] sm:h-[550px] md:h-[600px] px-8 sm:px-16 md:px-20 relative" id="timeline-track">
         <!-- The glowing center timeline bar -->
@@ -110,6 +115,27 @@
         </div>
 
       </div>
+    </div>
+
+    <!-- Chapter Continuity Footer Ribbon -->
+    <div class="mt-4 mb-24 max-w-xl w-full mx-auto px-4">
+      <a href="gallery.html"
+        class="chapter-footer-ribbon p-5 sm:p-6 flex items-center justify-between gap-4 no-underline group text-[#864e5a] border border-[#ffb7c5]/40 block">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-[#ffd9df]/60 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+            📸
+          </div>
+          <div>
+            <span class="text-[11px] uppercase tracking-wider font-semibold text-[#864e5a]/60 block mb-0.5">Next Chapter</span>
+            <span class="text-base sm:text-lg font-bold font-serif text-[#864e5a] group-hover:text-[#d12450] transition-colors">
+              Chapter 3: Our Memories Gallery
+            </span>
+          </div>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-[#ffb7c5]/30 group-hover:bg-[#d12450] group-hover:text-white flex items-center justify-center transition-all duration-300">
+          <span class="material-symbols-outlined text-lg group-hover:translate-x-0.5 transition-transform">arrow_forward</span>
+        </div>
+      </a>
     </div>
   </main>
 

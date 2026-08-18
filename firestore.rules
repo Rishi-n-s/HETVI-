@@ -126,6 +126,11 @@ service cloud.firestore {
       allow read, write, update, delete: if isAllowedUser() && request.auth.uid == userId;
     }
 
+    // Real-time Shared Bucket List / Dreams Collection
+    match /bucket_list/{itemId} {
+      allow read, write, delete: if isAllowedUser();
+    }
+
     // Deny all other database access
     match /{document=**} {
       allow read, write: if false;

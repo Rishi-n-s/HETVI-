@@ -7,17 +7,17 @@
 
   /* ── Pages manifest ── */
   const pages = [
-    { href: 'index.html', icon: 'photo_library', label: 'Memories', bg: '#ffb7c5', fill: true },
-    { href: 'chat.html', icon: 'chat', label: 'Chat', bg: '#ffb7c5', fill: true },
-    { href: 'gallery.html', icon: 'collections', label: 'Gallery', bg: '#ffd9df', fill: true },
-    { href: 'timeline.html', icon: 'auto_stories', label: 'Timeline', bg: '#baeaff', fill: true },
+    { href: 'index.html', icon: 'home', label: 'Prologue', bg: '#ffb7c5', fill: true },
+    { href: 'about.html', icon: 'favorite', label: '1. Beginning', bg: '#ffb7c5', fill: true },
+    { href: 'timeline.html', icon: 'hourglass_top', label: '2. Moments', bg: '#baeaff', fill: true },
+    { href: 'gallery.html', icon: 'collections', label: '3. Memories', bg: '#ffd9df', fill: true },
+    { href: 'playful.html', icon: 'celebration', label: '4. Flowers', bg: '#7be07d', fill: true },
+    { href: 'final.html', icon: 'wb_twilight', label: '5. Finale', bg: '#ffb7c5', fill: true },
     { href: 'letters.html', icon: 'mail', label: 'Letters', bg: '#ffd9df', fill: true },
+    { href: 'chat.html', icon: 'chat', label: 'Chat', bg: '#ffb7c5', fill: true },
     { href: 'music.html', icon: 'music_note', label: 'Music', bg: '#9ae1ff', fill: true },
-    { href: 'about.html', icon: 'favorite', label: 'Our Story', bg: '#ffb7c5', fill: true },
-    { href: 'playful.html', icon: 'celebration', label: 'Playful', bg: '#7be07d', fill: true },
     { href: 'dreams.html', icon: 'star', label: 'Dreams', bg: '#ffd9df', fill: true },
     { href: 'settings.html', icon: 'tune', label: 'Settings', bg: '#e3e2e0', fill: false },
-    { href: 'final.html', icon: 'auto_stories', label: 'Finale', bg: '#ffb7c5', fill: true },
   ];
 
   /* ── Inject Google Fonts & Material Icons if not already loaded ── */
