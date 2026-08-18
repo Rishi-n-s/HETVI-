@@ -47,23 +47,8 @@
     });
   }
 
-  // Add click sound and visual effect for every click anywhere on the site
+  // Add visual effect for every click/tap anywhere on the site
   document.addEventListener('mousedown', (e) => {
-    // Play sweet "I love you" baby voice
-    if (window.speechSynthesis) {
-      // Cancel any currently playing speech to ensure only ONE sound comes out at a time
-      window.speechSynthesis.cancel();
-
-      const utterance = new SpeechSynthesisUtterance("I love you");
-      utterance.pitch = 2.0; // Very high pitch like a baby
-      utterance.rate = 1.2; // Slightly fast
-      utterance.volume = 1.0;
-      const voices = window.speechSynthesis.getVoices();
-      const sweetVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Samantha') || v.name.includes('Zira') || v.name.includes('Google UK English Female'));
-      if (sweetVoice) utterance.voice = sweetVoice;
-      window.speechSynthesis.speak(utterance);
-    }
-
     // Create R❤H popup effect
     const popup = document.createElement('div');
     popup.innerHTML = 'R<span style="color: #ff2d55;">❤</span>H';
