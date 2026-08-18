@@ -1,0 +1,38 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: Verify user is authenticated with one of the two exact allowed emails
+    function isAllowedUser() {
+      return request.auth != null && (
+        request.auth.token.email == 'rishisolanki7319@gmail.com' ||
+        request.auth.token.email == 'hetvidodiya2447@gmail.com'
+      );
+    }
+
+    // Helper: Validate incoming message fields
+    function isValidMessage() {
+      let data = request.resource.data;
+      return data.uid == request.auth.uid
+        && data.email == request.auth.token.email
+        && data.displayName is string
+        && data.displayName.size() > 0
+        && data.message is string
+        && data.message.size() >= 1
+        && data.message.size() <= 2000;
+    }
+
+    // Protect only /our_story_room collection
+    match /our_story_room/{messageId} {
+      allow read: if isAllowedUser();
+      allow create: if isAllowedUser() && isValidMessage();
+      allow update, delete: if false;
+    }
+
+    // Deny all other database access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+  }
+}

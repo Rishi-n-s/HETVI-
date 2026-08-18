@@ -1,8 +1,12 @@
 /* shared.css - BAKUDI NI STORY Shared Styles */
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -10,45 +14,104 @@ html { scroll-behavior: smooth; }
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); border-radius: 10px; }
-::-webkit-scrollbar-thumb { background: #864e5a; border-radius: 10px; }
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #864e5a;
+  border-radius: 10px;
+}
 
 /* Custom Animations */
 @keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(1deg); }
-}
-@keyframes spinSlow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-@keyframes drift {
-  0% { transform: translate(0,0) rotate(0deg); opacity: 0; }
-  10% { opacity: 0.8; }
-  90% { opacity: 0.8; }
-  100% { transform: translate(100vw,100vh) rotate(360deg); opacity: 0; }
-}
-@keyframes moveGradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
 }
 
-.animate-float { animation: float 6s ease-in-out infinite; }
-.animate-spin-slow { animation: spinSlow 8s linear infinite; }
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  90% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translate(100vw, 100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes moveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spinSlow 8s linear infinite;
+}
 
 /* Washi Tape Effect */
 .washi-tape {
-  background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.15) 5px, rgba(255,255,255,0.15) 10px);
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, 0.15) 5px, rgba(255, 255, 255, 0.15) 10px);
 }
-.washi-tape-pink { background: rgba(255, 183, 197, 0.7); }
-.washi-tape-blue { background: rgba(137, 208, 237, 0.7); }
+
+.washi-tape-pink {
+  background: rgba(255, 183, 197, 0.7);
+}
+
+.washi-tape-blue {
+  background: rgba(137, 208, 237, 0.7);
+}
 
 /* Paper Textures */
 .paper-grain {
   background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
 }
+
 .notebook-paper {
   background-image: linear-gradient(#e9e8e5 1px, transparent 1px);
   background-size: 100% 24px;
@@ -57,7 +120,7 @@ html { scroll-behavior: smooth; }
 /* Wax Seal */
 .wax-seal {
   background: radial-gradient(circle at 30% 30%, #ffb7c5, #864e5a);
-  box-shadow: inset -2px -2px 4px rgba(0,0,0,0.3), 2px 2px 5px rgba(0,0,0,0.2);
+  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.3), 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Glass Card */
@@ -68,11 +131,13 @@ html { scroll-behavior: smooth; }
 }
 
 /* Shinkai glow */
-.shinkai-glow { box-shadow: 0 0 40px rgba(255, 183, 197, 0.4); }
+.shinkai-glow {
+  box-shadow: 0 0 40px rgba(255, 183, 197, 0.4);
+}
 
 /* Marker highlight text */
 .marker-highlight {
-  background: linear-gradient(100deg, rgba(255,218,214,0) 0%, rgba(255,183,197,0.4) 20%, rgba(255,183,197,0.4) 80%, rgba(255,218,214,0) 100%);
+  background: linear-gradient(100deg, rgba(255, 218, 214, 0) 0%, rgba(255, 183, 197, 0.4) 20%, rgba(255, 183, 197, 0.4) 80%, rgba(255, 218, 214, 0) 100%);
 }
 
 /* Grain Overlay */
@@ -86,10 +151,20 @@ html { scroll-behavior: smooth; }
 .page-enter {
   animation: pageEnter 0.6s ease forwards;
 }
+
 @keyframes pageEnter {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* No-underline link util */
-.no-underline { text-decoration: none; }
+.no-underline {
+  text-decoration: none;
+}

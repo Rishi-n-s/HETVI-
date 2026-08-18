@@ -1,84 +1,315 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>BAKUDI NI STORY | Our Story</title>
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
-<link rel="apple-touch-icon" href="assets/images/icon-192.png">
-<meta name="theme-color" content="#d12450">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
-<!-- Modern Fonts -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
-<!-- Material Icons -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="assets/js/theme.js"></script>
-<style>
-  body { margin: 0; overflow-x: hidden; }
-  
-  /* Ultra-premium glassmorphism */
-  .glass-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  }
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>BAKUDI NI STORY | Our Story</title>
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
+  <link rel="apple-touch-icon" href="assets/images/icon-192.png">
+  <meta name="theme-color" content="#d12450">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
+  <!-- Modern Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="assets/js/theme.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow-x: hidden;
+    }
 
-  .fade-in-up {
-    animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
-    transform: translateY(20px);
-  }
+    /* Ultra-premium glassmorphism */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
 
-  @keyframes fadeInUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  .delay-1 { animation-delay: 0.2s; }
-  .delay-2 { animation-delay: 0.4s; }
+    .fade-in-up {
+      animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
 
-  /* Swiper Button CSS */
-  .swp-container { background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); display: flex; width: 460px; height: 120px; position: relative; border-radius: 6px; transition: 0.3s ease-in-out; margin-top: 2rem; cursor: pointer; transform-origin: center top;}
-  .swp-container:hover { transform: scale(1.03); width: 220px; }
-  .swp-container:hover .swp-left-side { width: 100%; }
-  .swp-left-side { background-color: #ffb7c5; width: 130px; height: 120px; border-radius: 4px; position: relative; display: flex; justify-content: center; align-items: center; transition: 0.3s; flex-shrink: 0; overflow: hidden; }
-  .swp-right-side { width: calc(100% - 130px); display: flex; align-items: center; overflow: hidden; justify-content: space-between; white-space: nowrap; transition: 0.3s; }
-  .swp-right-side:hover { background-color: rgba(255,255,255,0.05); }
-  .swp-arrow { width: 20px; height: 20px; margin-right: 20px; }
-  .swp-new { font-size: 23px; font-family: "Inter", sans-serif; margin-left: 20px; color: white; font-weight: 500; }
-  .swp-card { width: 70px; height: 46px; background-color: #ffdae0; border-radius: 6px; position: absolute; display: flex; z-index: 10; flex-direction: column; align-items: center; box-shadow: 9px 9px 9px -2px rgba(255, 183, 197, 0.72); }
-  .swp-card-line { width: 65px; height: 13px; background-color: #ff758c; border-radius: 2px; margin-top: 7px; }
-  @media only screen and (max-width: 480px) { .swp-container { transform: scale(0.65); margin-top: 0rem; } .swp-container:hover { transform: scale(0.7); } .swp-new { font-size: 18px; } }
-  .swp-buttons { width: 8px; height: 8px; background-color: #d12450; box-shadow: 0 -10px 0 0 #ff4d4d, 0 10px 0 0 #ff4d4d; border-radius: 50%; transform: rotate(90deg); margin: 10px 0 0 -30px; }
-  .swp-container:hover .swp-card { animation: slide-top 1.2s cubic-bezier(0.645, 0.045, 0.355, 1) both; }
-  .swp-container:hover .swp-post { animation: slide-post 1s cubic-bezier(0.165, 0.84, 0.44, 1) both; }
-  @keyframes slide-top { 0% { transform: translateY(0); } 50% { transform: translateY(-70px) rotate(90deg); } 60% { transform: translateY(-70px) rotate(90deg); } 100% { transform: translateY(-8px) rotate(90deg); } }
-  .swp-post { width: 63px; height: 75px; background-color: #dddde0; position: absolute; z-index: 11; bottom: 10px; top: 120px; border-radius: 6px; overflow: hidden; }
-  .swp-post-line { width: 47px; height: 9px; background-color: #545354; position: absolute; border-radius: 0px 0px 3px 3px; right: 8px; top: 8px; }
-  .swp-post-line:before { content: ""; position: absolute; width: 47px; height: 9px; background-color: #757375; top: -8px; }
-  .swp-screen { width: 47px; height: 23px; background-color: #ffffff; position: absolute; top: 22px; right: 8px; border-radius: 3px; }
-  .swp-numbers { width: 12px; height: 12px; background-color: #838183; box-shadow: 0 -18px 0 0 #838183, 0 18px 0 0 #838183; border-radius: 2px; position: absolute; transform: rotate(90deg); left: 25px; top: 52px; }
-  .swp-numbers-line2 { width: 12px; height: 12px; background-color: #aaa9ab; box-shadow: 0 -18px 0 0 #aaa9ab, 0 18px 0 0 #aaa9ab; border-radius: 2px; position: absolute; transform: rotate(90deg); left: 25px; top: 68px; }
-  @keyframes slide-post { 50% { transform: translateY(0); } 100% { transform: translateY(-70px); } }
-  .swp-dollar { position: absolute; font-size: 16px; font-family: "Inter", sans-serif; width: 100%; left: 0; top: 0; color: #d12450; text-align: center; }
-  .swp-container:hover .swp-dollar { animation: fade-in-fwd 0.3s 1s backwards; }
-  @keyframes fade-in-fwd { 0% { opacity: 0; transform: translateY(-5px); } 100% { opacity: 1; transform: translateY(0); } }
-</style>
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .delay-1 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-2 {
+      animation-delay: 0.4s;
+    }
+
+    /* Swiper Button CSS */
+    .swp-container {
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      width: 460px;
+      height: 120px;
+      position: relative;
+      border-radius: 6px;
+      transition: 0.3s ease-in-out;
+      margin-top: 2rem;
+      cursor: pointer;
+      transform-origin: center top;
+    }
+
+    .swp-container:hover {
+      transform: scale(1.03);
+      width: 220px;
+    }
+
+    .swp-container:hover .swp-left-side {
+      width: 100%;
+    }
+
+    .swp-left-side {
+      background-color: #ffb7c5;
+      width: 130px;
+      height: 120px;
+      border-radius: 4px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: 0.3s;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .swp-right-side {
+      width: calc(100% - 130px);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      justify-content: space-between;
+      white-space: nowrap;
+      transition: 0.3s;
+    }
+
+    .swp-right-side:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .swp-arrow {
+      width: 20px;
+      height: 20px;
+      margin-right: 20px;
+    }
+
+    .swp-new {
+      font-size: 23px;
+      font-family: "Inter", sans-serif;
+      margin-left: 20px;
+      color: white;
+      font-weight: 500;
+    }
+
+    .swp-card {
+      width: 70px;
+      height: 46px;
+      background-color: #ffdae0;
+      border-radius: 6px;
+      position: absolute;
+      display: flex;
+      z-index: 10;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 9px 9px 9px -2px rgba(255, 183, 197, 0.72);
+    }
+
+    .swp-card-line {
+      width: 65px;
+      height: 13px;
+      background-color: #ff758c;
+      border-radius: 2px;
+      margin-top: 7px;
+    }
+
+    @media only screen and (max-width: 480px) {
+      .swp-container {
+        transform: scale(0.65);
+        margin-top: 0rem;
+      }
+
+      .swp-container:hover {
+        transform: scale(0.7);
+      }
+
+      .swp-new {
+        font-size: 18px;
+      }
+    }
+
+    .swp-buttons {
+      width: 8px;
+      height: 8px;
+      background-color: #d12450;
+      box-shadow: 0 -10px 0 0 #ff4d4d, 0 10px 0 0 #ff4d4d;
+      border-radius: 50%;
+      transform: rotate(90deg);
+      margin: 10px 0 0 -30px;
+    }
+
+    .swp-container:hover .swp-card {
+      animation: slide-top 1.2s cubic-bezier(0.645, 0.045, 0.355, 1) both;
+    }
+
+    .swp-container:hover .swp-post {
+      animation: slide-post 1s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+    }
+
+    @keyframes slide-top {
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-70px) rotate(90deg);
+      }
+
+      60% {
+        transform: translateY(-70px) rotate(90deg);
+      }
+
+      100% {
+        transform: translateY(-8px) rotate(90deg);
+      }
+    }
+
+    .swp-post {
+      width: 63px;
+      height: 75px;
+      background-color: #dddde0;
+      position: absolute;
+      z-index: 11;
+      bottom: 10px;
+      top: 120px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .swp-post-line {
+      width: 47px;
+      height: 9px;
+      background-color: #545354;
+      position: absolute;
+      border-radius: 0px 0px 3px 3px;
+      right: 8px;
+      top: 8px;
+    }
+
+    .swp-post-line:before {
+      content: "";
+      position: absolute;
+      width: 47px;
+      height: 9px;
+      background-color: #757375;
+      top: -8px;
+    }
+
+    .swp-screen {
+      width: 47px;
+      height: 23px;
+      background-color: #ffffff;
+      position: absolute;
+      top: 22px;
+      right: 8px;
+      border-radius: 3px;
+    }
+
+    .swp-numbers {
+      width: 12px;
+      height: 12px;
+      background-color: #838183;
+      box-shadow: 0 -18px 0 0 #838183, 0 18px 0 0 #838183;
+      border-radius: 2px;
+      position: absolute;
+      transform: rotate(90deg);
+      left: 25px;
+      top: 52px;
+    }
+
+    .swp-numbers-line2 {
+      width: 12px;
+      height: 12px;
+      background-color: #aaa9ab;
+      box-shadow: 0 -18px 0 0 #aaa9ab, 0 18px 0 0 #aaa9ab;
+      border-radius: 2px;
+      position: absolute;
+      transform: rotate(90deg);
+      left: 25px;
+      top: 68px;
+    }
+
+    @keyframes slide-post {
+      50% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(-70px);
+      }
+    }
+
+    .swp-dollar {
+      position: absolute;
+      font-size: 16px;
+      font-family: "Inter", sans-serif;
+      width: 100%;
+      left: 0;
+      top: 0;
+      color: #d12450;
+      text-align: center;
+    }
+
+    .swp-container:hover .swp-dollar {
+      animation: fade-in-fwd 0.3s 1s backwards;
+    }
+
+    @keyframes fade-in-fwd {
+      0% {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
+
 <body class="font-sans antialiased relative w-full overflow-x-hidden min-h-[100dvh] bg-black">
 
 
   <!-- Background Image: Full bleed, perfectly centered/bottom to show the couple -->
   <div class="fixed inset-0 z-0">
-    <img src="assets/images/landing_bg_couple.png" class="w-full h-full object-cover object-[center_80%] opacity-100" alt="Background"/>
+    <img src="assets/images/landing_bg_couple.png" class="w-full h-full object-cover object-[center_80%] opacity-100"
+      alt="Background" />
     <!-- Lighter gradient that doesn't darken the couple at the bottom -->
     <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent h-1/2"></div>
   </div>
@@ -86,94 +317,106 @@
   <!-- Content moved to top so it doesn't block the couple -->
   <main class="relative z-10 w-full h-full flex flex-col items-center justify-start pt-16 md:pt-24 px-6">
     <div class="rounded-3xl p-10 md:p-16 flex flex-col items-center text-center max-w-2xl w-full fade-in-up">
-      <span class="material-symbols-outlined text-white/80 text-4xl mb-4" style="font-variation-settings:'FILL' 1">favorite</span>
-      
-      <h1 class="font-serif text-5xl md:text-7xl text-white font-semibold tracking-tight mb-4 drop-shadow-md delay-1 fade-in-up">
+      <span class="material-symbols-outlined text-white/80 text-4xl mb-4"
+        style="font-variation-settings:'FILL' 1">favorite</span>
+
+      <h1
+        class="font-serif text-5xl md:text-7xl text-white font-semibold tracking-tight mb-4 drop-shadow-md delay-1 fade-in-up">
         Our Story
       </h1>
-      
+
       <p class="text-white/90 text-lg md:text-xl font-light max-w-md mb-10 leading-relaxed delay-2 fade-in-up">
         A thousand little moments, woven together into one beautiful story.
       </p>
-      
-      <a href="gallery.html" class="group relative px-8 py-4 bg-white/20 hover:bg-white/30 border border-white/40 text-white rounded-full transition-all duration-300 ease-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] flex items-center gap-3 backdrop-blur-md delay-2 fade-in-up no-underline">
+
+      <a href="gallery.html"
+        class="group relative px-8 py-4 bg-white/20 hover:bg-white/30 border border-white/40 text-white rounded-full transition-all duration-300 ease-out hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] flex items-center gap-3 backdrop-blur-md delay-2 fade-in-up no-underline">
         <span class="font-medium tracking-wide uppercase text-sm">Open Memories</span>
         <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">east</span>
       </a>
 
       <!-- Show 100 I LOVE YOU Swipe Button -->
       <div class="swp-container delay-2 fade-in-up" onclick="show100ILoveYou()">
-       <div class="swp-left-side">
-        <div class="swp-card">
-         <div class="swp-card-line"></div>
-         <div class="swp-buttons"></div>
+        <div class="swp-left-side">
+          <div class="swp-card">
+            <div class="swp-card-line"></div>
+            <div class="swp-buttons"></div>
+          </div>
+          <div class="swp-post">
+            <div class="swp-post-line"></div>
+            <div class="swp-screen">
+              <div class="swp-dollar">❤</div>
+            </div>
+            <div class="swp-numbers"></div>
+            <div class="swp-numbers-line2"></div>
+          </div>
         </div>
-        <div class="swp-post">
-         <div class="swp-post-line"></div>
-         <div class="swp-screen">
-          <div class="swp-dollar">❤</div>
-         </div>
-         <div class="swp-numbers"></div>
-         <div class="swp-numbers-line2"></div>
+        <div class="swp-right-side">
+          <div class="swp-new">Show 100 Flowers</div>
+          <svg viewBox="0 0 451.846 451.847" height="512" width="512" xmlns="http://www.w3.org/2000/svg"
+            class="swp-arrow">
+            <path fill="#ffffff" data-old_color="#000000" class="active-path" data-original="#000000"
+              d="M345.441 248.292L151.154 442.573c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744L278.318 225.92 106.409 54.017c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.287 194.284c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373z">
+            </path>
+          </svg>
         </div>
-       </div>
-       <div class="swp-right-side">
-        <div class="swp-new">Show 100 Flowers</div>
-         <svg viewBox="0 0 451.846 451.847" height="512" width="512" xmlns="http://www.w3.org/2000/svg" class="swp-arrow"><path fill="#ffffff" data-old_color="#000000" class="active-path" data-original="#000000" d="M345.441 248.292L151.154 442.573c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744L278.318 225.92 106.409 54.017c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.287 194.284c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373z"></path></svg>
-       </div>
       </div>
     </div>
   </main>
 
-<script src="assets/js/sounds.js"></script>
-<script src="assets/js/nav.js"></script>
-<script>
-function show100ILoveYou() {
-  const flowers = [
-    'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/2764.svg', // Red Heart
-    'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f496.svg', // Sparkling Heart
-    'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f495.svg', // Two Hearts
-    'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f339.svg', // Rose
-    'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f33b.svg', // Sunflower
-    'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f337.svg'  // Tulip
-  ];
+  <script src="assets/js/sounds.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script>
+    function show100ILoveYou() {
+      const flowers = [
+        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/2764.svg', // Red Heart
+        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f496.svg', // Sparkling Heart
+        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f495.svg', // Two Hearts
+        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f339.svg', // Rose
+        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f33b.svg', // Sunflower
+        'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/1f337.svg'  // Tulip
+      ];
 
-  for(let i=0; i<100; i++) {
-    const el = document.createElement('img');
-    const flowerSrc = flowers[Math.floor(Math.random() * flowers.length)];
-    
-    el.src = flowerSrc;
-    el.style.position = 'fixed';
-    el.style.left = (Math.random() * 90 + 5) + 'vw';
-    el.style.top = (Math.random() * 90 + 5) + 'vh';
-    
-    const size = (Math.random() * 30 + 30) + 'px';
-    el.style.width = size;
-    el.style.height = size;
-    el.style.objectFit = 'contain';
-    
-    el.style.pointerEvents = 'none';
-    el.style.zIndex = '999999';
-    el.style.opacity = '0';
-    el.style.transform = `translateY(40px) scale(0.5) rotate(${Math.random()*360}deg)`;
-    el.style.transition = 'all 1.5s cubic-bezier(0.16, 1, 0.3, 1)';
-    el.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
-    
-    document.body.appendChild(el);
-    
-    setTimeout(() => {
-      el.style.opacity = '1';
-      el.style.transform = `translateY(-${Math.random()*150 + 50}px) scale(1) rotate(${Math.random()*360}deg)`;
-    }, 50 + Math.random() * 600);
-    
-    setTimeout(() => {
-      el.style.opacity = '0';
-      el.style.transform = `translateY(-${Math.random()*250 + 150}px) scale(1.2) rotate(${Math.random()*360}deg)`;
-      setTimeout(() => el.remove(), 1500);
-    }, 1500 + Math.random() * 1000);
-  }
-}
-</script>
+      for (let i = 0; i < 100; i++) {
+        const el = document.createElement('img');
+        const flowerSrc = flowers[Math.floor(Math.random() * flowers.length)];
+
+        el.src = flowerSrc;
+        el.style.position = 'fixed';
+        el.style.left = (Math.random() * 90 + 5) + 'vw';
+        el.style.top = (Math.random() * 90 + 5) + 'vh';
+
+        const size = (Math.random() * 30 + 30) + 'px';
+        el.style.width = size;
+        el.style.height = size;
+        el.style.objectFit = 'contain';
+
+        el.style.pointerEvents = 'none';
+        el.style.zIndex = '999999';
+        el.style.opacity = '0';
+        el.style.transform = `translateY(40px) scale(0.5) rotate(${Math.random() * 360}deg)`;
+        el.style.transition = 'all 1.5s cubic-bezier(0.16, 1, 0.3, 1)';
+        el.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+
+        document.body.appendChild(el);
+
+        setTimeout(() => {
+          el.style.opacity = '1';
+          el.style.transform = `translateY(-${Math.random() * 150 + 50}px) scale(1) rotate(${Math.random() * 360}deg)`;
+        }, 50 + Math.random() * 600);
+
+        setTimeout(() => {
+          el.style.opacity = '0';
+          el.style.transform = `translateY(-${Math.random() * 250 + 150}px) scale(1.2) rotate(${Math.random() * 360}deg)`;
+          setTimeout(() => el.remove(), 1500);
+        }, 1500 + Math.random() * 1000);
+      }
+    }
+  </script>
+  <script type="module" src="assets/js/firebase.js"></script>
+  <script>
+    console.log("index.html linked to firebase");
+  </script>
 </body>
-</html>
 
+</html>

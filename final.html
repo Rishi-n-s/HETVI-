@@ -1,148 +1,205 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>BAKUDI NI STORY - The Final Sunset</title>
-<meta name="description" content="Close the scrapbook, but never the heart."/>
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
-<link rel="apple-touch-icon" href="assets/images/icon-192.png">
-<meta name="theme-color" content="#d12450">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Great+Vibes&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script src="assets/js/theme.js"></script>
-<link rel="stylesheet" href="assets/css/shared.css"/>
-<style>
-  @keyframes drift { 0%{transform:translate(0,0) rotate(0deg);opacity:0;} 10%{opacity:0.8;} 90%{opacity:0.8;} 100%{transform:translate(100vw,100vh) rotate(360deg);opacity:0;} }
-  .petal { position:fixed; top:-10%; left:-10%; pointer-events:none; z-index:40; filter:blur(1px); }
-  .vignette { box-shadow: inset 0 0 150px rgba(74,55,40,0.2); }
-  .glass-card { backdrop-filter:blur(12px); background:rgba(255,249,246,0.4); border:1px solid rgba(255,255,255,0.3); }
-  .glow-button { box-shadow: 0 0 20px rgba(134,78,90,0.3); }
-</style>
-</head>
-<body class="bg-background text-on-surface font-body-main min-h-screen overflow-x-hidden flex flex-col items-center justify-center py-24">
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>BAKUDI NI STORY - The Final Sunset</title>
+  <meta name="description" content="Close the scrapbook, but never the heart." />
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
+  <link rel="apple-touch-icon" href="assets/images/icon-192.png">
+  <meta name="theme-color" content="#d12450">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Great+Vibes&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="assets/js/theme.js"></script>
+  <link rel="stylesheet" href="assets/css/shared.css" />
+  <style>
+    @keyframes drift {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0;
+      }
 
-<!-- Cinematic Background -->
-<div class="fixed inset-0 w-full h-full z-0 overflow-hidden">
-  <div class="absolute inset-0 bg-gradient-to-t from-[#ffb7c5]/40 via-transparent to-transparent z-10 pointer-events-none"></div>
-  <div class="w-full h-full bg-cover bg-center scale-105 transform" style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuBmhzCsGJZxOG87HGBUIx5eht49tppVlqXYDV35K7RqvfyAfPkYHlVbyaq1F0YibeFvexpvMvXJxPgyu3jTw1XVlpxcRrv2U6ppB-Myrkl0a7Hcmx0nsmq99Es-n7MPUWqicG8JdYyngIjjlF5JiGvaUQMnh_5dzH71bfNYT8u56bjU5BlPcOiFOBXZX1Bd1_cSoC6uH___1pwzjf0JZgHRE2KuwKrXAdcHtKmbr9ayBlK8aN71ca9w')"></div>
-  <div class="absolute inset-0 vignette z-20 pointer-events-none"></div>
-</div>
+      10% {
+        opacity: 0.8;
+      }
 
-<!-- Floating Petals -->
-<div id="petal-container"></div>
+      90% {
+        opacity: 0.8;
+      }
 
-<!-- Header -->
-<header class="fixed top-0 left-0 w-full flex justify-between items-center px-10 pt-6 z-50 bg-gradient-to-b from-black/20 to-transparent pb-4">
-  <div class="font-subtitle-serif text-subtitle-serif italic text-primary drop-shadow-md">BAKUDI NI STORY</div>
-  <div class="flex gap-4">
-    <a href="music.html" class="material-symbols-outlined text-primary text-2xl hover:opacity-80 drop-shadow-md">music_note</a>
-    <a href="settings.html" class="material-symbols-outlined text-primary text-2xl hover:opacity-80 drop-shadow-md">palette</a>
-  </div>
-</header>
-
-<!-- Main Ending Canvas -->
-<main class="relative z-30 flex flex-col items-center text-center px-8 max-w-4xl mt-12 mb-20">
-  <div class="mb-8 mt-4">
-    <h1 class="font-script text-[80px] md:text-[120px] text-primary leading-tight drop-shadow-lg">Thank You</h1>
-    <p class="font-subtitle-serif text-subtitle-serif italic text-on-surface-variant -mt-4 drop-shadow-sm">For being part of this story.</p>
-  </div>
-
-  <!-- Final Card -->
-  <div class="glass-card rounded-xl p-8 md:p-12 shadow-2xl flex flex-col items-center gap-6 max-w-lg w-full relative">
-    <div class="absolute -top-4 -left-6 w-24 h-8 bg-secondary-container/80 rotate-[-15deg] backdrop-blur-sm shadow-sm flex items-center justify-center z-10">
-      <span class="font-label-caps text-[10px] text-on-secondary-container">END CHAPTER</span>
-    </div>
-    <div class="absolute -top-4 -right-6 w-24 h-8 bg-primary-container/80 rotate-[12deg] backdrop-blur-sm shadow-sm flex items-center justify-center z-10">
-      <span class="font-label-caps text-[10px] text-on-primary-container">MEMORIES</span>
-    </div>
-
-    <!-- Video Message -->
-    <div class="relative w-full rounded-lg overflow-hidden mb-4 shadow-md border border-white/20 bg-black/20">
-      <video id="message-video" class="w-full max-h-[50vh] object-contain rounded-lg" controls playsinline>
-        <source src="assets/images/images of her/lv_0_20260721055655.mp4" type="video/mp4">
-      </video>
-    </div>
-
-    <p class="font-body-main text-on-surface leading-relaxed text-center">
-      "Our paths may wander, but the moments we shared are etched in the light of this sunset. Close the book, but never the heart."
-    </p>
-
-    <a href="music.html" class="group flex items-center gap-3 bg-primary text-on-primary px-8 py-4 rounded-full font-label-caps hover:scale-105 active:scale-95 transition-all glow-button">
-      <span class="material-symbols-outlined">music_note</span>
-      LISTEN TO THE ECHOES
-    </a>
-
-    <!-- Close Wax Seal -->
-    <div class="mt-4 flex flex-col items-center gap-2">
-      <a href="index.html" class="relative w-16 h-16 bg-primary rounded-full shadow-lg flex items-center justify-center cursor-pointer hover:rotate-12 transition-transform group">
-        <div class="absolute inset-0 rounded-full border-4 border-primary-fixed/20"></div>
-        <span class="material-symbols-outlined text-on-primary text-3xl" style="font-variation-settings:'FILL' 1">auto_stories</span>
-      </a>
-      <a href="index.html" class="font-label-caps text-primary opacity-60">CLOSE SCRAPBOOK</a>
-    </div>
-  </div>
-</main>
-
-<!-- Footer -->
-<footer class="fixed bottom-0 w-full flex flex-col items-center justify-center py-10 z-30 opacity-60">
-  <div class="font-label-caps text-primary mb-2">Hand-crafted with love &amp; nostalgia</div>
-  <div class="flex gap-6">
-    <a class="font-body-small text-on-surface-variant/60 hover:text-primary" href="settings.html">Privacy Policy</a>
-    <a class="font-body-small text-on-surface-variant/60 hover:text-primary" href="about.html">Our Story</a>
-  </div>
-</footer>
-
-<!-- Side Nav Desktop -->
-<!-- Side nav removed � using macOS popup nav.js -->
-
-<script>
-  function createPetal() {
-    const container = document.getElementById('petal-container');
-    const petal = document.createElement('div');
-    petal.className = 'petal material-symbols-outlined';
-    petal.style.color = 'rgba(255,183,197,0.4)';
-    petal.innerText = 'filter_vintage';
-    const size = 10 + Math.random()*20;
-    const duration = 10 + Math.random()*15;
-    const delay = Math.random()*5;
-    petal.style.left = (Math.random()*100) + 'vw';
-    petal.style.fontSize = size + 'px';
-    petal.style.animation = `drift ${duration}s linear ${delay}s infinite`;
-    petal.style.opacity = '0';
-    container.appendChild(petal);
-    setTimeout(() => petal.remove(), (duration+delay)*1000);
-  }
-  for(let i=0; i<20; i++) setTimeout(createPetal, i*300);
-  setInterval(createPetal, 1500);
-</script>
-<script src="assets/js/nav.js"></script>
-<script src="assets/js/sounds.js"></script>
-<script>
-  // Handle video message playing to pause global background music
-  document.addEventListener('DOMContentLoaded', () => {
-    const messageVideo = document.getElementById('message-video');
-    const globalAudio = document.getElementById('global-bg-audio');
-    
-    if (messageVideo && globalAudio) {
-      messageVideo.addEventListener('play', () => {
-        globalAudio.pause();
-      });
-      messageVideo.addEventListener('pause', () => {
-        globalAudio.play().catch(() => {});
-      });
-      messageVideo.addEventListener('ended', () => {
-        globalAudio.play().catch(() => {});
-      });
+      100% {
+        transform: translate(100vw, 100vh) rotate(360deg);
+        opacity: 0;
+      }
     }
-  });
-</script>
-</body>
-</html>
 
+    .petal {
+      position: fixed;
+      top: -10%;
+      left: -10%;
+      pointer-events: none;
+      z-index: 40;
+      filter: blur(1px);
+    }
+
+    .vignette {
+      box-shadow: inset 0 0 150px rgba(74, 55, 40, 0.2);
+    }
+
+    .glass-card {
+      backdrop-filter: blur(12px);
+      background: rgba(255, 249, 246, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .glow-button {
+      box-shadow: 0 0 20px rgba(134, 78, 90, 0.3);
+    }
+  </style>
+</head>
+
+<body
+  class="bg-background text-on-surface font-body-main min-h-screen overflow-x-hidden flex flex-col items-center justify-center py-24">
+
+  <!-- Cinematic Background -->
+  <div class="fixed inset-0 w-full h-full z-0 overflow-hidden">
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-[#ffb7c5]/40 via-transparent to-transparent z-10 pointer-events-none">
+    </div>
+    <div class="w-full h-full bg-cover bg-center scale-105 transform"
+      style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuBmhzCsGJZxOG87HGBUIx5eht49tppVlqXYDV35K7RqvfyAfPkYHlVbyaq1F0YibeFvexpvMvXJxPgyu3jTw1XVlpxcRrv2U6ppB-Myrkl0a7Hcmx0nsmq99Es-n7MPUWqicG8JdYyngIjjlF5JiGvaUQMnh_5dzH71bfNYT8u56bjU5BlPcOiFOBXZX1Bd1_cSoC6uH___1pwzjf0JZgHRE2KuwKrXAdcHtKmbr9ayBlK8aN71ca9w')">
+    </div>
+    <div class="absolute inset-0 vignette z-20 pointer-events-none"></div>
+  </div>
+
+  <!-- Floating Petals -->
+  <div id="petal-container"></div>
+
+  <!-- Header -->
+  <header
+    class="fixed top-0 left-0 w-full flex justify-between items-center px-10 pt-6 z-50 bg-gradient-to-b from-black/20 to-transparent pb-4">
+    <div class="font-subtitle-serif text-subtitle-serif italic text-primary drop-shadow-md">BAKUDI NI STORY</div>
+    <div class="flex gap-4">
+      <a href="music.html"
+        class="material-symbols-outlined text-primary text-2xl hover:opacity-80 drop-shadow-md">music_note</a>
+      <a href="settings.html"
+        class="material-symbols-outlined text-primary text-2xl hover:opacity-80 drop-shadow-md">palette</a>
+    </div>
+  </header>
+
+  <!-- Main Ending Canvas -->
+  <main class="relative z-30 flex flex-col items-center text-center px-8 max-w-4xl mt-12 mb-20">
+    <div class="mb-8 mt-4">
+      <h1 class="font-script text-[80px] md:text-[120px] text-primary leading-tight drop-shadow-lg">Thank You</h1>
+      <p class="font-subtitle-serif text-subtitle-serif italic text-on-surface-variant -mt-4 drop-shadow-sm">For being
+        part of this story.</p>
+    </div>
+
+    <!-- Final Card -->
+    <div class="glass-card rounded-xl p-8 md:p-12 shadow-2xl flex flex-col items-center gap-6 max-w-lg w-full relative">
+      <div
+        class="absolute -top-4 -left-6 w-24 h-8 bg-secondary-container/80 rotate-[-15deg] backdrop-blur-sm shadow-sm flex items-center justify-center z-10">
+        <span class="font-label-caps text-[10px] text-on-secondary-container">END CHAPTER</span>
+      </div>
+      <div
+        class="absolute -top-4 -right-6 w-24 h-8 bg-primary-container/80 rotate-[12deg] backdrop-blur-sm shadow-sm flex items-center justify-center z-10">
+        <span class="font-label-caps text-[10px] text-on-primary-container">MEMORIES</span>
+      </div>
+
+      <!-- Video Message -->
+      <div class="relative w-full rounded-lg overflow-hidden mb-4 shadow-md border border-white/20 bg-black/20">
+        <video id="message-video" class="w-full max-h-[50vh] object-contain rounded-lg" controls playsinline>
+          <source src="assets/images/images of her/lv_0_20260721055655.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <p class="font-body-main text-on-surface leading-relaxed text-center">
+        "Our paths may wander, but the moments we shared are etched in the light of this sunset. Close the book, but
+        never the heart."
+      </p>
+
+      <a href="music.html"
+        class="group flex items-center gap-3 bg-primary text-on-primary px-8 py-4 rounded-full font-label-caps hover:scale-105 active:scale-95 transition-all glow-button">
+        <span class="material-symbols-outlined">music_note</span>
+        LISTEN TO THE ECHOES
+      </a>
+
+      <!-- Close Wax Seal -->
+      <div class="mt-4 flex flex-col items-center gap-2">
+        <a href="index.html"
+          class="relative w-16 h-16 bg-primary rounded-full shadow-lg flex items-center justify-center cursor-pointer hover:rotate-12 transition-transform group">
+          <div class="absolute inset-0 rounded-full border-4 border-primary-fixed/20"></div>
+          <span class="material-symbols-outlined text-on-primary text-3xl"
+            style="font-variation-settings:'FILL' 1">auto_stories</span>
+        </a>
+        <a href="index.html" class="font-label-caps text-primary opacity-60">CLOSE SCRAPBOOK</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="fixed bottom-0 w-full flex flex-col items-center justify-center py-10 z-30 opacity-60">
+    <div class="font-label-caps text-primary mb-2">Hand-crafted with love &amp; nostalgia</div>
+    <div class="flex gap-6">
+      <a class="font-body-small text-on-surface-variant/60 hover:text-primary" href="settings.html">Privacy Policy</a>
+      <a class="font-body-small text-on-surface-variant/60 hover:text-primary" href="about.html">Our Story</a>
+    </div>
+  </footer>
+
+  <!-- Side Nav Desktop -->
+  <!-- Side nav removed � using macOS popup nav.js -->
+
+  <script>
+    function createPetal() {
+      const container = document.getElementById('petal-container');
+      const petal = document.createElement('div');
+      petal.className = 'petal material-symbols-outlined';
+      petal.style.color = 'rgba(255,183,197,0.4)';
+      petal.innerText = 'filter_vintage';
+      const size = 10 + Math.random() * 20;
+      const duration = 10 + Math.random() * 15;
+      const delay = Math.random() * 5;
+      petal.style.left = (Math.random() * 100) + 'vw';
+      petal.style.fontSize = size + 'px';
+      petal.style.animation = `drift ${duration}s linear ${delay}s infinite`;
+      petal.style.opacity = '0';
+      container.appendChild(petal);
+      setTimeout(() => petal.remove(), (duration + delay) * 1000);
+    }
+    for (let i = 0; i < 20; i++) setTimeout(createPetal, i * 300);
+    setInterval(createPetal, 1500);
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/sounds.js"></script>
+  <script>
+    // Handle video message playing to pause global background music
+    document.addEventListener('DOMContentLoaded', () => {
+      const messageVideo = document.getElementById('message-video');
+      const globalAudio = document.getElementById('global-bg-audio');
+
+      if (messageVideo && globalAudio) {
+        messageVideo.addEventListener('play', () => {
+          globalAudio.pause();
+        });
+        messageVideo.addEventListener('pause', () => {
+          globalAudio.play().catch(() => { });
+        });
+        messageVideo.addEventListener('ended', () => {
+          globalAudio.play().catch(() => { });
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

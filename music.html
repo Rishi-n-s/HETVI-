@@ -1,227 +1,288 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Music Sanctuary | BAKUDI NI STORY</title>
-<meta name="description" content="Your personal music sanctuary — the soundtrack to every memory."/>
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
-<link rel="apple-touch-icon" href="assets/images/icon-192.png">
-<meta name="theme-color" content="#d12450">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;700&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script src="assets/js/theme.js"></script>
-<link rel="stylesheet" href="assets/css/shared.css"/>
-<style>
-  .wood-texture { background-image: url("https://www.transparenttextures.com/patterns/wood-pattern-with-holes.png"); }
-  .paper-grain { background-image: url("https://www.transparenttextures.com/patterns/felt.png"); }
-  .wax-seal-box { box-shadow: inset 2px 2px 5px rgba(255,255,255,0.3), inset -2px -2px 5px rgba(0,0,0,0.2), 3px 3px 10px rgba(74,55,40,0.2); }
-</style>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Music Sanctuary | BAKUDI NI STORY</title>
+  <meta name="description" content="Your personal music sanctuary — the soundtrack to every memory." />
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
+  <link rel="apple-touch-icon" href="assets/images/icon-192.png">
+  <meta name="theme-color" content="#d12450">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="assets/js/theme.js"></script>
+  <link rel="stylesheet" href="assets/css/shared.css" />
+  <style>
+    .wood-texture {
+      background-image: url("https://www.transparenttextures.com/patterns/wood-pattern-with-holes.png");
+    }
+
+    .paper-grain {
+      background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+    }
+
+    .wax-seal-box {
+      box-shadow: inset 2px 2px 5px rgba(255, 255, 255, 0.3), inset -2px -2px 5px rgba(0, 0, 0, 0.2), 3px 3px 10px rgba(74, 55, 40, 0.2);
+    }
+  </style>
 </head>
+
 <body class="bg-background text-on-surface font-body-main overflow-x-hidden min-h-screen">
 
-<!-- Background -->
-<div class="fixed inset-0 z-[-1] overflow-hidden wood-texture bg-surface-container-high">
-  <div class="absolute inset-0 bg-gradient-to-tr from-[#4A3728]/10 via-transparent to-white/20"></div>
-  <div class="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px]"></div>
-</div>
-
-<!-- Top AppBar -->
-<header class="flex justify-between items-center w-full px-6 pt-6 fixed top-0 z-50 bg-transparent pointer-events-none">
-  <span class="font-subtitle-serif text-subtitle-serif italic text-primary drop-shadow-md pointer-events-auto">BAKUDI NI STORY</span>
-  <div class="flex items-center gap-6 pointer-events-auto">
-    <a href="music.html" class="text-primary hover:opacity-80 drop-shadow-md"><span class="material-symbols-outlined">music_note</span></a>
-    <a href="settings.html" class="text-primary hover:opacity-80 drop-shadow-md"><span class="material-symbols-outlined">palette</span></a>
+  <!-- Background -->
+  <div class="fixed inset-0 z-[-1] overflow-hidden wood-texture bg-surface-container-high">
+    <div class="absolute inset-0 bg-gradient-to-tr from-[#4A3728]/10 via-transparent to-white/20"></div>
+    <div class="absolute -top-1/4 -right-1/4 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px]"></div>
   </div>
-</header>
 
-<!-- Side nav removed — using macOS popup nav.js -->
+  <!-- Top AppBar -->
+  <header
+    class="flex justify-between items-center w-full px-6 pt-6 fixed top-0 z-50 bg-transparent pointer-events-none">
+    <span class="font-subtitle-serif text-subtitle-serif italic text-primary drop-shadow-md pointer-events-auto">BAKUDI
+      NI STORY</span>
+    <div class="flex items-center gap-6 pointer-events-auto">
+      <a href="music.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
+          class="material-symbols-outlined">music_note</span></a>
+      <a href="settings.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
+          class="material-symbols-outlined">palette</span></a>
+    </div>
+  </header>
+
+  <!-- Side nav removed — using macOS popup nav.js -->
 
 
-<!-- Main Content -->
-<main class="relative min-h-[calc(100vh-160px)] px-8 flex flex-col md:flex-row items-center justify-center gap-12 pt-10 pb-20">
-  <!-- Left: Vinyl Player -->
-  <div class="relative w-full max-w-lg aspect-square flex items-center justify-center">
-    <div class="absolute inset-0 bg-[#4A3728]/10 blur-[60px] rounded-full scale-110 translate-y-10"></div>
-    <div class="relative w-full h-full bg-white/40 backdrop-blur-sm rounded-xl p-8 border border-white/30 shadow-2xl rotate-[-1deg] hover:rotate-0 transition-all duration-700">
-      <div class="absolute inset-4 border border-primary/10 rounded-lg pointer-events-none"></div>
-      <div class="relative w-full h-full flex items-center justify-center">
-        <!-- Spinning Vinyl Record -->
-        <div class="relative w-[85%] aspect-square bg-[#1a1a1a] rounded-full shadow-2xl animate-spin-slow ring-[12px] ring-black/40 ring-inset" id="vinyl-record">
-          <div class="absolute inset-0 border-[0.5px] border-white/5 rounded-full scale-95"></div>
-          <div class="absolute inset-0 border-[0.5px] border-white/5 rounded-full scale-90"></div>
-          <!-- Label -->
-          <div class="absolute inset-[32%] bg-primary-container rounded-full flex flex-col items-center justify-center overflow-hidden border-2 border-[#1a1a1a]">
-            <div class="w-full h-full opacity-40 bg-cover bg-center" style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuBTTlNNuVPgi_8BXIRob0shNuWBqx7cigaoGysp1Mj0499-vzPBby8FFeZE8lv9I1kkXK0-qI7ntVYkxL3q0bWEmVzrap5Jad5cavC-iHGi_YFImT-9EzlmTmxO4OeTMA6JRUN8buZD877BFu3qO_PvCGp_mmrsrAdurIWdGNhKO9i3Dd4pH4N9jVdb851g_KzwRJuU4BWkx6Zwe-WXgpwDAaG28Ba7nJTs5FY8BvA7e5_R4InNA_ew')"></div>
-            <div class="absolute inset-0 flex items-center justify-center"><div class="w-4 h-4 bg-[#1a1a1a] rounded-full"></div></div>
+  <!-- Main Content -->
+  <main
+    class="relative min-h-[calc(100vh-160px)] px-8 flex flex-col md:flex-row items-center justify-center gap-12 pt-10 pb-20">
+    <!-- Left: Vinyl Player -->
+    <div class="relative w-full max-w-lg aspect-square flex items-center justify-center">
+      <div class="absolute inset-0 bg-[#4A3728]/10 blur-[60px] rounded-full scale-110 translate-y-10"></div>
+      <div
+        class="relative w-full h-full bg-white/40 backdrop-blur-sm rounded-xl p-8 border border-white/30 shadow-2xl rotate-[-1deg] hover:rotate-0 transition-all duration-700">
+        <div class="absolute inset-4 border border-primary/10 rounded-lg pointer-events-none"></div>
+        <div class="relative w-full h-full flex items-center justify-center">
+          <!-- Spinning Vinyl Record -->
+          <div
+            class="relative w-[85%] aspect-square bg-[#1a1a1a] rounded-full shadow-2xl animate-spin-slow ring-[12px] ring-black/40 ring-inset"
+            id="vinyl-record">
+            <div class="absolute inset-0 border-[0.5px] border-white/5 rounded-full scale-95"></div>
+            <div class="absolute inset-0 border-[0.5px] border-white/5 rounded-full scale-90"></div>
+            <!-- Label -->
+            <div
+              class="absolute inset-[32%] bg-primary-container rounded-full flex flex-col items-center justify-center overflow-hidden border-2 border-[#1a1a1a]">
+              <div class="w-full h-full opacity-40 bg-cover bg-center"
+                style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuBTTlNNuVPgi_8BXIRob0shNuWBqx7cigaoGysp1Mj0499-vzPBby8FFeZE8lv9I1kkXK0-qI7ntVYkxL3q0bWEmVzrap5Jad5cavC-iHGi_YFImT-9EzlmTmxO4OeTMA6JRUN8buZD877BFu3qO_PvCGp_mmrsrAdurIWdGNhKO9i3Dd4pH4N9jVdb851g_KzwRJuU4BWkx6Zwe-WXgpwDAaG28Ba7nJTs5FY8BvA7e5_R4InNA_ew')">
+              </div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-4 h-4 bg-[#1a1a1a] rounded-full"></div>
+              </div>
+            </div>
           </div>
-        </div>
-        <!-- Stylus -->
-        <div class="absolute top-0 right-4 w-40 h-80 origin-top rotate-[25deg] hover:rotate-[28deg] cursor-pointer transition-transform">
-          <div class="w-2 h-64 bg-slate-400/80 rounded-full shadow-md ml-auto mr-4 relative">
-            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-10 bg-slate-500 rounded-sm shadow-sm"></div>
+          <!-- Stylus -->
+          <div
+            class="absolute top-0 right-4 w-40 h-80 origin-top rotate-[25deg] hover:rotate-[28deg] cursor-pointer transition-transform">
+            <div class="w-2 h-64 bg-slate-400/80 rounded-full shadow-md ml-auto mr-4 relative">
+              <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-10 bg-slate-500 rounded-sm shadow-sm"></div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Polaroid Overlap -->
-    <div class="absolute -bottom-10 -right-6 w-48 bg-surface-container-lowest p-3 shadow-2xl rotate-[6deg] hover:rotate-[3deg] transition-transform duration-500 z-10 group">
-      <div class="relative w-full aspect-square overflow-hidden mb-4">
-        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAupY3lOa6nycGNwQFMhovLZ_B_xMSDReRM3CWxMpwcqW0DdB6YJ3RUPYjfD7PnSKcvgCRuMAaIqESdVGv2byNehJEVUmTOsbRWR0Rt69D8jTh8JB9pNa_FeQgeXpHiVsGjxSPqKvuozH75ZE1dNIHOPTTjwhvsozGX3aTY9P9RQBlSP3vvwYHQC2V6pnLfudcmpTmPxLffOztXG5xCvuHJHoRBIgK2ONSr8IeRp8voJzO-xGcx9ioP" alt="Vinyl room"/>
+      <!-- Polaroid Overlap -->
+      <div
+        class="absolute -bottom-10 -right-6 w-48 bg-surface-container-lowest p-3 shadow-2xl rotate-[6deg] hover:rotate-[3deg] transition-transform duration-500 z-10 group">
+        <div class="relative w-full aspect-square overflow-hidden mb-4">
+          <img class="w-full h-full object-cover"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAupY3lOa6nycGNwQFMhovLZ_B_xMSDReRM3CWxMpwcqW0DdB6YJ3RUPYjfD7PnSKcvgCRuMAaIqESdVGv2byNehJEVUmTOsbRWR0Rt69D8jTh8JB9pNa_FeQgeXpHiVsGjxSPqKvuozH75ZE1dNIHOPTTjwhvsozGX3aTY9P9RQBlSP3vvwYHQC2V6pnLfudcmpTmPxLffOztXG5xCvuHJHoRBIgK2ONSr8IeRp8voJzO-xGcx9ioP"
+            alt="Vinyl room" />
+        </div>
+        <p class="font-subtitle-serif italic text-on-surface-variant text-center pb-2">Sunday Afternoon</p>
+        <div
+          class="absolute -top-4 left-1/2 -translate-x-1/2 w-16 h-6 bg-secondary-container/40 washi-tape rotate-[-2deg]">
+        </div>
       </div>
-      <p class="font-subtitle-serif italic text-on-surface-variant text-center pb-2">Sunday Afternoon</p>
-      <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-16 h-6 bg-secondary-container/40 washi-tape rotate-[-2deg]"></div>
     </div>
-  </div>
 
-  <!-- Right: Playlist -->
-  <div class="flex flex-col gap-8 w-full max-w-md">
-    <!-- Playlist Card -->
-    <div class="paper-grain bg-[#fffdfa] p-8 shadow-xl rotate-[1deg] border border-[#f0e6d2] relative overflow-hidden">
-      <div class="absolute left-6 top-0 bottom-0 w-[1px] bg-red-200/50"></div>
-      <header class="mb-6 pl-4">
-        <h1 class="font-headline-lg text-headline-lg text-primary mb-1">Morning Echoes</h1>
-        <p class="font-label-caps text-on-surface-variant/60">COLLECTION NO. 04</p>
-      </header>
-      <ul class="space-y-4 pl-4 relative" id="playlist">
-        <li class="flex items-center justify-between group cursor-pointer text-primary transition-colors" onclick="setTrack(0,this)">
-          <div class="flex items-center gap-3"><span class="material-symbols-outlined text-sm" id="play-icon-0" style="font-variation-settings:'FILL' 1">play_arrow</span><span class="font-subtitle-serif font-bold">Bairan - Banjaare</span></div>
-        </li>
-        <li class="flex items-center justify-between group cursor-pointer hover:text-primary transition-colors" onclick="setTrack(1,this)">
-          <div class="flex items-center gap-3"><span class="font-label-caps text-primary/40" id="play-icon-1">02</span><span class="font-subtitle-serif text-slate-800 group-hover:text-primary transition-colors">Pal Pal Dil Ke Paas</span></div>
-        </li>
-        <li class="flex items-center justify-between group cursor-pointer hover:text-primary transition-colors" onclick="setTrack(2,this)">
-          <div class="flex items-center gap-3"><span class="font-label-caps text-primary/40" id="play-icon-2">03</span><span class="font-subtitle-serif text-slate-800 group-hover:text-primary transition-colors">Tum Ho Toh</span></div>
-        </li>
-        <li class="flex items-center justify-between group cursor-pointer hover:text-primary transition-colors" onclick="setTrack(3,this)">
-          <div class="flex items-center gap-3"><span class="font-label-caps text-primary/40" id="play-icon-3">04</span><span class="font-subtitle-serif text-slate-800 group-hover:text-primary transition-colors">Raataan Lambiyan</span></div>
-        </li>
-      </ul>
-      <div class="mt-8 flex justify-end">
-        <button class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white wax-seal-box hover:scale-105 transition-transform">
-          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">favorite</span>
+    <!-- Right: Playlist -->
+    <div class="flex flex-col gap-8 w-full max-w-md">
+      <!-- Playlist Card -->
+      <div
+        class="paper-grain bg-[#fffdfa] p-8 shadow-xl rotate-[1deg] border border-[#f0e6d2] relative overflow-hidden">
+        <div class="absolute left-6 top-0 bottom-0 w-[1px] bg-red-200/50"></div>
+        <header class="mb-6 pl-4">
+          <h1 class="font-headline-lg text-headline-lg text-primary mb-1">Morning Echoes</h1>
+          <p class="font-label-caps text-on-surface-variant/60">COLLECTION NO. 04</p>
+        </header>
+        <ul class="space-y-4 pl-4 relative" id="playlist">
+          <li class="flex items-center justify-between group cursor-pointer text-primary transition-colors"
+            onclick="setTrack(0,this)">
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined text-sm" id="play-icon-0"
+                style="font-variation-settings:'FILL' 1">play_arrow</span><span
+                class="font-subtitle-serif font-bold">Bairan - Banjaare</span></div>
+          </li>
+          <li class="flex items-center justify-between group cursor-pointer hover:text-primary transition-colors"
+            onclick="setTrack(1,this)">
+            <div class="flex items-center gap-3"><span class="font-label-caps text-primary/40"
+                id="play-icon-1">02</span><span
+                class="font-subtitle-serif text-slate-800 group-hover:text-primary transition-colors">Pal Pal Dil Ke
+                Paas</span></div>
+          </li>
+          <li class="flex items-center justify-between group cursor-pointer hover:text-primary transition-colors"
+            onclick="setTrack(2,this)">
+            <div class="flex items-center gap-3"><span class="font-label-caps text-primary/40"
+                id="play-icon-2">03</span><span
+                class="font-subtitle-serif text-slate-800 group-hover:text-primary transition-colors">Tum Ho Toh</span>
+            </div>
+          </li>
+          <li class="flex items-center justify-between group cursor-pointer hover:text-primary transition-colors"
+            onclick="setTrack(3,this)">
+            <div class="flex items-center gap-3"><span class="font-label-caps text-primary/40"
+                id="play-icon-3">04</span><span
+                class="font-subtitle-serif text-slate-800 group-hover:text-primary transition-colors">Raataan
+                Lambiyan</span></div>
+          </li>
+        </ul>
+        <div class="mt-8 flex justify-end">
+          <button
+            class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white wax-seal-box hover:scale-105 transition-transform">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">favorite</span>
+          </button>
+        </div>
+      </div>
+      <!-- Controls -->
+      <div
+        class="flex items-center justify-center gap-8 bg-surface-container-low/50 backdrop-blur-md py-4 px-8 rounded-full border border-white/50 shadow-lg">
+        <button class="text-on-surface-variant hover:text-primary transition-colors" onclick="prevTrack()"><span
+            class="material-symbols-outlined text-3xl">skip_previous</span></button>
+        <button id="play-btn"
+          class="w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all"
+          onclick="togglePlay()">
+          <span class="material-symbols-outlined text-4xl" id="play-btn-icon">pause</span>
         </button>
+        <button class="text-on-surface-variant hover:text-primary transition-colors" onclick="nextTrack()"><span
+            class="material-symbols-outlined text-3xl">skip_next</span></button>
+        <div class="w-[1px] h-6 bg-on-surface-variant/20"></div>
+        <button class="text-on-surface-variant hover:text-primary transition-colors"><span
+            class="material-symbols-outlined text-2xl">volume_up</span></button>
       </div>
     </div>
-    <!-- Controls -->
-    <div class="flex items-center justify-center gap-8 bg-surface-container-low/50 backdrop-blur-md py-4 px-8 rounded-full border border-white/50 shadow-lg">
-      <button class="text-on-surface-variant hover:text-primary transition-colors" onclick="prevTrack()"><span class="material-symbols-outlined text-3xl">skip_previous</span></button>
-      <button id="play-btn" class="w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all" onclick="togglePlay()">
-        <span class="material-symbols-outlined text-4xl" id="play-btn-icon">pause</span>
-      </button>
-      <button class="text-on-surface-variant hover:text-primary transition-colors" onclick="nextTrack()"><span class="material-symbols-outlined text-3xl">skip_next</span></button>
-      <div class="w-[1px] h-6 bg-on-surface-variant/20"></div>
-      <button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-2xl">volume_up</span></button>
+  </main>
+
+  <!-- Footer -->
+  <footer class="flex flex-col items-center justify-center py-10 w-full opacity-60 z-10 relative">
+    <p class="font-body-small text-on-surface-variant mb-2">Hand-crafted with love &amp; nostalgia</p>
+    <div class="flex gap-4">
+      <a class="font-label-caps text-on-surface-variant/60 hover:text-primary" href="settings.html">Privacy Policy</a>
+      <span class="text-on-surface-variant/20">•</span>
+      <a class="font-label-caps text-on-surface-variant/60 hover:text-primary" href="about.html">Our Story</a>
     </div>
+  </footer>
+
+  <!-- Mobile Nav -->
+  <div
+    class="md:hidden fixed bottom-0 left-0 right-0 h-20 bg-surface-container-low/95 backdrop-blur-lg z-50 flex justify-around items-center px-4">
+    <a class="flex flex-col items-center gap-1 text-on-surface-variant/60" href="index.html"><span
+        class="material-symbols-outlined">photo_library</span><span
+        class="text-[10px] font-label-caps">Memories</span></a>
+    <a class="flex flex-col items-center gap-1 text-on-surface-variant/60" href="letters.html"><span
+        class="material-symbols-outlined">mail</span><span class="text-[10px] font-label-caps">Letters</span></a>
+    <a class="flex flex-col items-center gap-1 text-primary" href="music.html"><span class="material-symbols-outlined"
+        style="font-variation-settings:'FILL' 1">music_note</span><span
+        class="text-[10px] font-label-caps">Music</span></a>
+    <a class="flex flex-col items-center gap-1 text-on-surface-variant/60" href="settings.html"><span
+        class="material-symbols-outlined">settings</span><span class="text-[10px] font-label-caps">Settings</span></a>
   </div>
-</main>
 
-<!-- Footer -->
-<footer class="flex flex-col items-center justify-center py-10 w-full opacity-60 z-10 relative">
-  <p class="font-body-small text-on-surface-variant mb-2">Hand-crafted with love &amp; nostalgia</p>
-  <div class="flex gap-4">
-    <a class="font-label-caps text-on-surface-variant/60 hover:text-primary" href="settings.html">Privacy Policy</a>
-    <span class="text-on-surface-variant/20">•</span>
-    <a class="font-label-caps text-on-surface-variant/60 hover:text-primary" href="about.html">Our Story</a>
-  </div>
-</footer>
+  <audio id="local-audio-player"></audio>
+  <script>
+    // Signal to the global background music that a local player exists
+    window.isLocalMusicPlaying = false;
 
-<!-- Mobile Nav -->
-<div class="md:hidden fixed bottom-0 left-0 right-0 h-20 bg-surface-container-low/95 backdrop-blur-lg z-50 flex justify-around items-center px-4">
-  <a class="flex flex-col items-center gap-1 text-on-surface-variant/60" href="index.html"><span class="material-symbols-outlined">photo_library</span><span class="text-[10px] font-label-caps">Memories</span></a>
-  <a class="flex flex-col items-center gap-1 text-on-surface-variant/60" href="letters.html"><span class="material-symbols-outlined">mail</span><span class="text-[10px] font-label-caps">Letters</span></a>
-  <a class="flex flex-col items-center gap-1 text-primary" href="music.html"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">music_note</span><span class="text-[10px] font-label-caps">Music</span></a>
-  <a class="flex flex-col items-center gap-1 text-on-surface-variant/60" href="settings.html"><span class="material-symbols-outlined">settings</span><span class="text-[10px] font-label-caps">Settings</span></a>
-</div>
+    const tracks = [
+      "assets/music/Bairan - Banjaare.mp3",
+      "assets/music/Blackmail - Pal Pal Dil Ke Paas Tum Rehti Ho - Kishore Kumar_MP3.mp3",
+      "assets/music/Lyrical  Tum Ho Toh Song  Saiyaara  Ahaan, Aneet  Vishal Mishra, Hansika Pareek  Raj Shekhar_MP3.mp3",
+      "assets/music/Raataan Lambiyan - Lyric Video  Shershaah  Sidharth, Kiara  Tanishk B.  Jubin  Asees_MP3.mp3"
+    ];
 
-<audio id="local-audio-player"></audio>
-<script>
-  // Signal to the global background music that a local player exists
-  window.isLocalMusicPlaying = false;
-  
-  const tracks = [
-    "assets/music/Bairan - Banjaare.mp3",
-    "assets/music/Blackmail - Pal Pal Dil Ke Paas Tum Rehti Ho - Kishore Kumar_MP3.mp3",
-    "assets/music/Lyrical  Tum Ho Toh Song  Saiyaara  Ahaan, Aneet  Vishal Mishra, Hansika Pareek  Raj Shekhar_MP3.mp3",
-    "assets/music/Raataan Lambiyan - Lyric Video  Shershaah  Sidharth, Kiara  Tanishk B.  Jubin  Asees_MP3.mp3"
-  ];
+    let isPlaying = false;
+    let currentTrack = 0;
 
-  let isPlaying = false;
-  let currentTrack = 0;
-  
-  const audio = document.getElementById('local-audio-player');
-  const record = document.getElementById('vinyl-record');
-  const playBtnIcon = document.getElementById('play-btn-icon');
-  
-  // Set initial source without autoplay
-  audio.src = tracks[currentTrack];
+    const audio = document.getElementById('local-audio-player');
+    const record = document.getElementById('vinyl-record');
+    const playBtnIcon = document.getElementById('play-btn-icon');
 
-  audio.addEventListener('ended', nextTrack);
-
-  function togglePlay() {
-    isPlaying = !isPlaying;
-    if (isPlaying) {
-      // Pause global background music if it's playing
-      window.isLocalMusicPlaying = true;
-      const bgAudio = document.getElementById('global-bg-audio');
-      if (bgAudio) bgAudio.pause();
-
-      audio.play();
-      record.style.animationPlayState = 'running';
-      playBtnIcon.textContent = 'pause';
-    } else {
-      audio.pause();
-      record.style.animationPlayState = 'paused';
-      playBtnIcon.textContent = 'play_arrow';
-      window.isLocalMusicPlaying = false;
-    }
-  }
-
-  function setTrack(idx, el) {
-    if (currentTrack === idx && isPlaying) return; // Already playing this track
-    
-    currentTrack = idx;
-    
-    // Update UI for playlist items
-    const lis = document.querySelectorAll('#playlist li');
-    lis.forEach((li, i) => {
-      li.classList.toggle('text-primary', i === idx);
-      li.classList.toggle('font-bold', i === idx);
-      const iconSpan = document.getElementById(`play-icon-${i}`);
-      if (i === idx) {
-        iconSpan.className = 'material-symbols-outlined text-sm';
-        iconSpan.innerHTML = 'play_arrow';
-        iconSpan.style.fontVariationSettings = "'FILL' 1";
-      } else {
-        iconSpan.className = 'font-label-caps text-primary/40';
-        iconSpan.innerHTML = '0' + (i + 1);
-        iconSpan.style.fontVariationSettings = "";
-      }
-    });
-
+    // Set initial source without autoplay
     audio.src = tracks[currentTrack];
-    
-    // If we weren't playing, start it. If we were playing, play the new track.
-    isPlaying = false;
-    togglePlay();
-  }
 
-  function nextTrack() { 
-    setTrack((currentTrack+1)%tracks.length, null); 
-  }
-  function prevTrack() { 
-    setTrack((currentTrack+tracks.length-1)%tracks.length, null); 
-  }
-</script>
-<script src="assets/js/nav.js"></script>
-<script src="assets/js/sounds.js"></script>
+    audio.addEventListener('ended', nextTrack);
+
+    function togglePlay() {
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        // Pause global background music if it's playing
+        window.isLocalMusicPlaying = true;
+        const bgAudio = document.getElementById('global-bg-audio');
+        if (bgAudio) bgAudio.pause();
+
+        audio.play();
+        record.style.animationPlayState = 'running';
+        playBtnIcon.textContent = 'pause';
+      } else {
+        audio.pause();
+        record.style.animationPlayState = 'paused';
+        playBtnIcon.textContent = 'play_arrow';
+        window.isLocalMusicPlaying = false;
+      }
+    }
+
+    function setTrack(idx, el) {
+      if (currentTrack === idx && isPlaying) return; // Already playing this track
+
+      currentTrack = idx;
+
+      // Update UI for playlist items
+      const lis = document.querySelectorAll('#playlist li');
+      lis.forEach((li, i) => {
+        li.classList.toggle('text-primary', i === idx);
+        li.classList.toggle('font-bold', i === idx);
+        const iconSpan = document.getElementById(`play-icon-${i}`);
+        if (i === idx) {
+          iconSpan.className = 'material-symbols-outlined text-sm';
+          iconSpan.innerHTML = 'play_arrow';
+          iconSpan.style.fontVariationSettings = "'FILL' 1";
+        } else {
+          iconSpan.className = 'font-label-caps text-primary/40';
+          iconSpan.innerHTML = '0' + (i + 1);
+          iconSpan.style.fontVariationSettings = "";
+        }
+      });
+
+      audio.src = tracks[currentTrack];
+
+      // If we weren't playing, start it. If we were playing, play the new track.
+      isPlaying = false;
+      togglePlay();
+    }
+
+    function nextTrack() {
+      setTrack((currentTrack + 1) % tracks.length, null);
+    }
+    function prevTrack() {
+      setTrack((currentTrack + tracks.length - 1) % tracks.length, null);
+    }
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/sounds.js"></script>
 </body>
+
 </html>
-
-

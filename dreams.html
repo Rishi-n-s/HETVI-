@@ -1,198 +1,256 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Dreams | BAKUDI NI STORY</title>
-<meta name="description" content="Future dreams, travel bucket lists, and shared goals."/>
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
-<link rel="apple-touch-icon" href="assets/images/icon-192.png">
-<meta name="theme-color" content="#d12450">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script src="assets/js/theme.js"></script>
-<link rel="stylesheet" href="assets/css/shared.css"/>
-<style>
-  .star-bg { background: radial-gradient(ellipse at 50% 0%, rgba(255,183,197,0.3) 0%, transparent 60%), radial-gradient(ellipse at 80% 100%, rgba(186,234,255,0.2) 0%, transparent 50%); }
-  .dream-card { transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.4s; }
-  .dream-card:hover { transform: translateY(-6px) scale(1.02) !important; }
-  .checked { text-decoration: line-through; opacity: 0.5; }
-</style>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Dreams | BAKUDI NI STORY</title>
+  <meta name="description" content="Future dreams, travel bucket lists, and shared goals." />
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
+  <link rel="apple-touch-icon" href="assets/images/icon-192.png">
+  <meta name="theme-color" content="#d12450">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="assets/js/theme.js"></script>
+  <link rel="stylesheet" href="assets/css/shared.css" />
+  <style>
+    .star-bg {
+      background: radial-gradient(ellipse at 50% 0%, rgba(255, 183, 197, 0.3) 0%, transparent 60%), radial-gradient(ellipse at 80% 100%, rgba(186, 234, 255, 0.2) 0%, transparent 50%);
+    }
+
+    .dream-card {
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+    }
+
+    .dream-card:hover {
+      transform: translateY(-6px) scale(1.02) !important;
+    }
+
+    .checked {
+      text-decoration: line-through;
+      opacity: 0.5;
+    }
+  </style>
 </head>
+
 <body class="bg-background text-on-surface font-body-main min-h-screen overflow-x-hidden star-bg flex flex-col">
 
-<!-- Cinematic Background -->
-<div class="fixed inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
-  <div class="w-full h-full bg-cover bg-center scale-105 transform" style="background-image:url('assets/images/landing_bg_couple.png')"></div>
-  <div class="absolute inset-0 bg-background/70 backdrop-blur-sm z-10"></div>
-</div>
-
-<!-- Top AppBar -->
-<header class="flex justify-between items-center w-full px-6 pt-6 fixed top-0 z-50 bg-transparent">
-  <span class="font-subtitle-serif text-subtitle-serif italic text-primary">BAKUDI NI STORY</span>
-  <div class="flex items-center gap-6">
-    <a href="music.html" class="text-primary hover:opacity-80"><span class="material-symbols-outlined">music_note</span></a>
-    <a href="settings.html" class="text-primary hover:opacity-80"><span class="material-symbols-outlined">palette</span></a>
-  </div>
-</header>
-
-<!-- Main -->
-<main class="relative z-10 pt-32 pb-32 px-6 md:px-10 min-h-screen">
-  <div class="text-center mb-12 max-w-2xl mx-auto">
-    <h1 class="font-headline-xl text-headline-xl text-primary mb-2">Future Dreams</h1>
-    <p class="font-subtitle-serif text-subtitle-serif italic text-on-surface-variant/80">Where we're headed together...</p>
+  <!-- Cinematic Background -->
+  <div class="fixed inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+    <div class="w-full h-full bg-cover bg-center scale-105 transform"
+      style="background-image:url('assets/images/landing_bg_couple.png')"></div>
+    <div class="absolute inset-0 bg-background/70 backdrop-blur-sm z-10"></div>
   </div>
 
-  <!-- Dream Board -->
-  <div class="max-w-3xl mx-auto">
-    <!-- Consolidated Bucket List -->
-    <div class="dream-card bg-surface-container-lowest p-6 md:p-10 rounded-2xl shadow-xl border border-outline-variant/20 rotate-[-1deg]">
-      <div class="w-16 h-16 bg-primary-container rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm">
-        <span class="material-symbols-outlined text-on-primary-container text-4xl">favorite</span>
+  <!-- Top AppBar -->
+  <header class="flex justify-between items-center w-full px-6 pt-6 fixed top-0 z-50 bg-transparent">
+    <span class="font-subtitle-serif text-subtitle-serif italic text-primary">BAKUDI NI STORY</span>
+    <div class="flex items-center gap-6">
+      <a href="music.html" class="text-primary hover:opacity-80"><span
+          class="material-symbols-outlined">music_note</span></a>
+      <a href="settings.html" class="text-primary hover:opacity-80"><span
+          class="material-symbols-outlined">palette</span></a>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="relative z-10 pt-32 pb-32 px-6 md:px-10 min-h-screen">
+    <div class="text-center mb-12 max-w-2xl mx-auto">
+      <h1 class="font-headline-xl text-headline-xl text-primary mb-2">Future Dreams</h1>
+      <p class="font-subtitle-serif text-subtitle-serif italic text-on-surface-variant/80">Where we're headed
+        together...</p>
+    </div>
+
+    <!-- Dream Board -->
+    <div class="max-w-3xl mx-auto">
+      <!-- Consolidated Bucket List -->
+      <div
+        class="dream-card bg-surface-container-lowest p-6 md:p-10 rounded-2xl shadow-xl border border-outline-variant/20 rotate-[-1deg]">
+        <div class="w-16 h-16 bg-primary-container rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm">
+          <span class="material-symbols-outlined text-on-primary-container text-4xl">favorite</span>
+        </div>
+        <h3 class="font-headline-lg text-3xl text-primary mb-8 text-center">Our Bucket List</h3>
+        <ul class="space-y-4 max-w-xl mx-auto" id="bucket-list">
+          <!-- The Main 3 Wishes -->
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-2xl text-primary font-bold">Have marriage with each other</span>
+          </li>
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-2xl text-primary font-bold">Have a great, wonderful, rich, and happy
+              family</span>
+          </li>
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-2xl text-primary font-bold">The whole khandan would see our beautiful
+              lovestory and say "Pyaar kare toh Rishi aur Hetvi ki tarah kare, baki na kare"</span>
+          </li>
+
+          <!-- Travel Dreams -->
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
+              <span class="material-symbols-outlined text-[16px] text-primary hidden">check</span>
+            </span>
+            <span class="font-handwritten text-2xl text-on-surface">Kyoto in cherry blossom season</span>
+          </li>
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-2xl text-on-surface">Northern Lights in Iceland</span>
+          </li>
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-2xl text-on-surface">Santorini at sunset</span>
+          </li>
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-2xl text-on-surface">A tiny café in Paris</span>
+          </li>
+
+          <!-- Experiences -->
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-2xl text-on-surface">Dance in the rain together</span>
+          </li>
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-2xl text-on-surface">Read the same book at the same time</span>
+          </li>
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-2xl text-on-surface">Cook a 3-hour meal from scratch</span>
+          </li>
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-2xl text-on-surface">Watch every Ghibli film</span>
+          </li>
+
+          <!-- Big Dreams -->
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-2xl text-on-surface">A home with a garden</span>
+          </li>
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-2xl text-on-surface">Adopt a rescue cat</span>
+          </li>
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-2xl text-on-surface">Write a book together</span>
+          </li>
+          <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
+            <span
+              class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span
+                class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
+            <span class="font-handwritten text-2xl text-on-surface">Grow old together gracefully</span>
+          </li>
+        </ul>
       </div>
-      <h3 class="font-headline-lg text-3xl text-primary mb-8 text-center">Our Bucket List</h3>
-      <ul class="space-y-4 max-w-xl mx-auto" id="bucket-list">
-        <!-- The Main 3 Wishes -->
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-          <span class="font-handwritten text-2xl text-primary font-bold">Have marriage with each other</span>
-        </li>
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-          <span class="font-handwritten text-2xl text-primary font-bold">Have a great, wonderful, rich, and happy family</span>
-        </li>
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-          <span class="font-handwritten text-2xl text-primary font-bold">The whole khandan would see our beautiful lovestory and say "Pyaar kare toh Rishi aur Hetvi ki tarah kare, baki na kare"</span>
-        </li>
-        
-        <!-- Travel Dreams -->
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
-            <span class="material-symbols-outlined text-[16px] text-primary hidden">check</span>
-          </span>
-          <span class="font-handwritten text-2xl text-on-surface">Kyoto in cherry blossom season</span>
-        </li>
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-          <span class="font-handwritten text-2xl text-on-surface">Northern Lights in Iceland</span>
-        </li>
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-          <span class="font-handwritten text-2xl text-on-surface">Santorini at sunset</span>
-        </li>
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-          <span class="font-handwritten text-2xl text-on-surface">A tiny café in Paris</span>
-        </li>
-        
-        <!-- Experiences -->
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-          <span class="font-handwritten text-2xl text-on-surface">Dance in the rain together</span>
-        </li>
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-          <span class="font-handwritten text-2xl text-on-surface">Read the same book at the same time</span>
-        </li>
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-          <span class="font-handwritten text-2xl text-on-surface">Cook a 3-hour meal from scratch</span>
-        </li>
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-          <span class="font-handwritten text-2xl text-on-surface">Watch every Ghibli film</span>
-        </li>
-
-        <!-- Big Dreams -->
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-          <span class="font-handwritten text-2xl text-on-surface">A home with a garden</span>
-        </li>
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-          <span class="font-handwritten text-2xl text-on-surface">Adopt a rescue cat</span>
-        </li>
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-          <span class="font-handwritten text-2xl text-on-surface">Write a book together</span>
-        </li>
-        <li class="flex items-center gap-4 cursor-pointer group" onclick="checkItem(this)">
-          <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors"><span class="material-symbols-outlined text-[16px] text-primary hidden">check</span></span>
-          <span class="font-handwritten text-2xl text-on-surface">Grow old together gracefully</span>
-        </li>
-      </ul>
     </div>
-  </div>
 
-  <!-- Add Dream Input -->
-  <div class="max-w-2xl mx-auto mt-12 bg-surface-container-low/60 backdrop-blur-md rounded-2xl p-6 border border-outline-variant/20 shadow-lg relative z-20">
-    <p class="font-label-caps text-primary mb-3">ADD A NEW DREAM</p>
-    <div class="flex gap-4">
-      <input type="text" id="new-dream" placeholder="Write your dream here..." class="flex-1 bg-surface-container-lowest rounded-full px-6 py-3 border border-outline-variant/30 font-handwritten text-xl focus:outline-none focus:border-primary"/>
-      <button onclick="addDream()" class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg">
-        <span class="material-symbols-outlined">add</span>
-      </button>
+    <!-- Add Dream Input -->
+    <div
+      class="max-w-2xl mx-auto mt-12 bg-surface-container-low/60 backdrop-blur-md rounded-2xl p-6 border border-outline-variant/20 shadow-lg relative z-20">
+      <p class="font-label-caps text-primary mb-3">ADD A NEW DREAM</p>
+      <div class="flex gap-4">
+        <input type="text" id="new-dream" placeholder="Write your dream here..."
+          class="flex-1 bg-surface-container-lowest rounded-full px-6 py-3 border border-outline-variant/30 font-handwritten text-xl focus:outline-none focus:border-primary" />
+        <button onclick="addDream()"
+          class="bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg">
+          <span class="material-symbols-outlined">add</span>
+        </button>
+      </div>
     </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="flex flex-col items-center justify-center py-10 w-full opacity-60 z-30 mt-auto">
+    <p class="font-label-caps text-primary mb-2">Hand-crafted with love &amp; nostalgia</p>
+    <div class="flex gap-6">
+      <a class="font-label-caps text-on-surface-variant/60 hover:text-primary" href="settings.html">Privacy</a>
+      <a class="font-label-caps text-on-surface-variant/60 hover:text-primary" href="about.html">Our Story</a>
+    </div>
+  </footer>
+
+  <!-- Bottom Nav -->
+  <div class="fixed bottom-6 right-10 z-50 flex items-center gap-4">
+    <a href="index.html"
+      class="w-12 h-12 bg-white/70 backdrop-blur-md rounded-full shadow-md border border-white/50 flex items-center justify-center text-primary hover:bg-white hover:scale-105 transition-all"><span
+        class="material-symbols-outlined">home</span></a>
   </div>
-</main>
 
-<!-- Footer -->
-<footer class="flex flex-col items-center justify-center py-10 w-full opacity-60 z-30 mt-auto">
-  <p class="font-label-caps text-primary mb-2">Hand-crafted with love &amp; nostalgia</p>
-  <div class="flex gap-6">
-    <a class="font-label-caps text-on-surface-variant/60 hover:text-primary" href="settings.html">Privacy</a>
-    <a class="font-label-caps text-on-surface-variant/60 hover:text-primary" href="about.html">Our Story</a>
-  </div>
-</footer>
-
-<!-- Bottom Nav -->
-<div class="fixed bottom-6 right-10 z-50 flex items-center gap-4">
-  <a href="index.html" class="w-12 h-12 bg-white/70 backdrop-blur-md rounded-full shadow-md border border-white/50 flex items-center justify-center text-primary hover:bg-white hover:scale-105 transition-all"><span class="material-symbols-outlined">home</span></a>
-</div>
-
-<script>
-  function checkItem(li) {
-    const span = li.querySelector('span:last-child');
-    const icon = li.querySelector('.material-symbols-outlined');
-    const circle = li.querySelector('span:first-child');
-    span.classList.toggle('checked');
-    if (span.classList.contains('checked')) {
-      circle.style.background = '#864e5a';
-      icon.classList.remove('hidden');
-      icon.style.color = 'white';
-    } else {
-      circle.style.background = '';
-      icon.classList.add('hidden');
+  <script>
+    function checkItem(li) {
+      const span = li.querySelector('span:last-child');
+      const icon = li.querySelector('.material-symbols-outlined');
+      const circle = li.querySelector('span:first-child');
+      span.classList.toggle('checked');
+      if (span.classList.contains('checked')) {
+        circle.style.background = '#864e5a';
+        icon.classList.remove('hidden');
+        icon.style.color = 'white';
+      } else {
+        circle.style.background = '';
+        icon.classList.add('hidden');
+      }
     }
-  }
-  
-  function addDream() {
-    const input = document.getElementById('new-dream');
-    if (!input.value.trim()) return;
-    const li = document.createElement('li');
-    li.className = 'flex items-center gap-4 cursor-pointer group';
-    li.setAttribute('onclick', 'checkItem(this)');
-    li.innerHTML = `
+
+    function addDream() {
+      const input = document.getElementById('new-dream');
+      if (!input.value.trim()) return;
+      const li = document.createElement('li');
+      li.className = 'flex items-center gap-4 cursor-pointer group';
+      li.setAttribute('onclick', 'checkItem(this)');
+      li.innerHTML = `
       <span class="w-6 h-6 rounded-full border-2 border-primary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
         <span class="material-symbols-outlined text-[16px] text-primary hidden">check</span>
       </span>
       <span class="font-handwritten text-2xl text-on-surface">${input.value}</span>
     `;
-    // Changed this to append to the new bucket-list id
-    document.getElementById('bucket-list').appendChild(li);
-    input.value = '';
-    input.focus();
-  }
-</script>
-<script src="assets/js/nav.js"></script>
-<script src="assets/js/sounds.js"></script>
+      // Changed this to append to the new bucket-list id
+      document.getElementById('bucket-list').appendChild(li);
+      input.value = '';
+      input.focus();
+    }
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/sounds.js"></script>
 </body>
-</html>
 
+</html>

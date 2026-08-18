@@ -1,149 +1,190 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Timeline | BAKUDI NI STORY</title>
-<meta name="description" content="Our love story, told through milestones and cherished moments."/>
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
-<link rel="apple-touch-icon" href="assets/images/icon-192.png">
-<meta name="theme-color" content="#d12450">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script src="assets/js/theme.js"></script>
-<style>
-  body { overflow-x: hidden; background-color: #faf9f6; }
-  .custom-scrollbar::-webkit-scrollbar { height: 8px; }
-  .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.02); }
-  .custom-scrollbar::-webkit-scrollbar-thumb { background: #ffb7c5; border-radius: 10px; }
-  
-  .polaroid-hover { transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.4s ease; }
-  .polaroid-hover:hover { transform: translateY(-8px) scale(1.05) !important; box-shadow: 20px 20px 40px rgba(74,55,40,0.15) !important; z-index: 50; }
-  .washi-tape {
-    background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, 0.2) 5px, rgba(255, 255, 255, 0.2) 10px);
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Timeline | BAKUDI NI STORY</title>
+  <meta name="description" content="Our love story, told through milestones and cherished moments." />
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
+  <link rel="apple-touch-icon" href="assets/images/icon-192.png">
+  <meta name="theme-color" content="#d12450">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="assets/js/theme.js"></script>
+  <style>
+    body {
+      overflow-x: hidden;
+      background-color: #faf9f6;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #ffb7c5;
+      border-radius: 10px;
+    }
+
+    .polaroid-hover {
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    }
+
+    .polaroid-hover:hover {
+      transform: translateY(-8px) scale(1.05) !important;
+      box-shadow: 20px 20px 40px rgba(74, 55, 40, 0.15) !important;
+      z-index: 50;
+    }
+
+    .washi-tape {
+      background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, 0.2) 5px, rgba(255, 255, 255, 0.2) 10px);
+    }
+  </style>
 </head>
+
 <body class="bg-background text-on-surface font-body-main overflow-x-hidden">
 
-<!-- Background Image (Consistent with the rest of the site) -->
-<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-  <div class="absolute inset-0 bg-cover bg-center opacity-40 scale-105" style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBm-E1ym0M2GzHooAWb5h8l453TronsIOtuzmAhFuKfIXX2xcPVz5MX1bwj2iD7cLIy5UNmZEOvpkwM1vanzAMG448gtczHA7_nKbSerHp-scbtg23KiSayZ_j8jwGcb5R0pIvfh7x_82FYkjCrzZop95u2ANYPyZMwaJIkbxJrjrukkQEpXN0FvcUV5zWrhEb1YwpBjhQh3bpRzfsquN9uTg_Hwrn6fMPXqYhUQjHI4R8Dg5xyZ5c')"></div>
-</div>
-
-<!-- Top AppBar -->
-<header class="flex justify-between items-center w-full px-6 pt-6 fixed top-0 z-50 bg-transparent pointer-events-none">
-  <span class="font-subtitle-serif text-subtitle-serif italic text-primary drop-shadow-md pointer-events-auto">BAKUDI NI STORY</span>
-  <div class="flex items-center gap-6 pointer-events-auto">
-    <a href="music.html" class="text-primary hover:opacity-80 drop-shadow-md"><span class="material-symbols-outlined">music_note</span></a>
-    <a href="settings.html" class="text-primary hover:opacity-80 drop-shadow-md"><span class="material-symbols-outlined">palette</span></a>
-  </div>
-</header>
-
-<!-- Main Content -->
-<main class="relative z-10 pt-32 min-h-screen flex flex-col overflow-x-hidden">
-  <div class="px-6 mb-8 flex flex-col items-center">
-    <h1 class="font-headline-xl text-[64px] text-primary text-center drop-shadow-sm mb-2" style="font-family:'Playfair Display',serif;font-style:italic;">Our Journey</h1>
-    <p class="font-handwritten text-3xl text-on-surface-variant/80 max-w-xl mx-auto text-center">Every moment led us here.</p>
-  </div>
-
-  <!-- Horizontal Timeline -->
-  <div class="relative w-full overflow-x-auto custom-scrollbar px-10 pb-40 cursor-grab active:cursor-grabbing" id="timeline-container">
-    <div class="flex items-center gap-32 min-w-max h-[600px] px-20 relative" id="timeline-track">
-      <!-- The glowing center timeline bar -->
-      <div class="absolute top-1/2 left-0 right-0 h-1 bg-primary/30 -translate-y-1/2 z-0 rounded-full shadow-[0_0_15px_rgba(255,143,163,0.5)]"></div>
-      
-      <!-- Dynamic Items will be injected here -->
-      
-      <!-- Ending Today Marker -->
-      <div class="relative z-10 flex flex-col items-center group self-center shrink-0 ml-10">
-        <div class="w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-2xl border-4 border-white ring-8 ring-primary/20 transition-all group-hover:scale-110">
-          <span class="material-symbols-outlined text-white animate-pulse text-3xl" style="font-variation-settings:'FILL' 1">favorite</span>
-        </div>
-        <div class="absolute top-20 w-60 text-center">
-          <p class="font-handwritten text-4xl text-primary drop-shadow-sm">Forever.</p>
-        </div>
-      </div>
-
+  <!-- Background Image (Consistent with the rest of the site) -->
+  <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+    <div class="absolute inset-0 bg-cover bg-center opacity-40 scale-105"
+      style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBm-E1ym0M2GzHooAWb5h8l453TronsIOtuzmAhFuKfIXX2xcPVz5MX1bwj2iD7cLIy5UNmZEOvpkwM1vanzAMG448gtczHA7_nKbSerHp-scbtg23KiSayZ_j8jwGcb5R0pIvfh7x_82FYkjCrzZop95u2ANYPyZMwaJIkbxJrjrukkQEpXN0FvcUV5zWrhEb1YwpBjhQh3bpRzfsquN9uTg_Hwrn6fMPXqYhUQjHI4R8Dg5xyZ5c')">
     </div>
   </div>
-</main>
 
-<!-- Bottom Nav -->
-<div class="fixed bottom-6 right-10 z-50 flex items-center gap-4">
-  <a href="index.html" class="w-12 h-12 bg-white/70 backdrop-blur-md rounded-full shadow-md border border-white/50 flex items-center justify-center text-primary hover:bg-white hover:scale-105 transition-all"><span class="material-symbols-outlined">home</span></a>
-</div>
+  <!-- Top AppBar -->
+  <header
+    class="flex justify-between items-center w-full px-6 pt-6 fixed top-0 z-50 bg-transparent pointer-events-none">
+    <span class="font-subtitle-serif text-subtitle-serif italic text-primary drop-shadow-md pointer-events-auto">BAKUDI
+      NI STORY</span>
+    <div class="flex items-center gap-6 pointer-events-auto">
+      <a href="music.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
+          class="material-symbols-outlined">music_note</span></a>
+      <a href="settings.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
+          class="material-symbols-outlined">palette</span></a>
+    </div>
+  </header>
 
-<script src="assets/js/media-data.js"></script>
-<script>
-  // Dynamic Timeline Generator
-  const track = document.getElementById('timeline-track');
-  
-  // Washi tape colors and captions for the scrapbook feel
-  const tapeColors = ['bg-primary-container/80', 'bg-secondary-container/80', 'bg-tertiary-container/80', 'bg-[#ffb7c5]/80', 'bg-[#baeaff]/80', 'bg-[#e2c6ff]/80'];
-  const captions = ['The beginning', 'Unforgettable', 'Sunny days', 'Just the two of us', 'Adventures', 'Stolen glances', 'Late nights', 'Perfect peace', 'My whole heart', 'Pure magic', 'Lost in time'];
-  const icons = ['favorite', 'auto_awesome', 'stars', 'local_cafe', 'explore', 'photo_camera', 'celebration', 'filter_vintage'];
+  <!-- Main Content -->
+  <main class="relative z-10 pt-32 min-h-screen flex flex-col overflow-x-hidden">
+    <div class="px-6 mb-8 flex flex-col items-center">
+      <h1 class="font-headline-xl text-[64px] text-primary text-center drop-shadow-sm mb-2"
+        style="font-family:'Playfair Display',serif;font-style:italic;">Our Journey</h1>
+      <p class="font-handwritten text-3xl text-on-surface-variant/80 max-w-xl mx-auto text-center">Every moment led us
+        here.</p>
+    </div>
 
-  // Helper to generate a fake chronological sequence over the last 3 years
-  function generateDates(count) {
-    const dates = [];
-    const now = new Date();
-    const threeYearsAgo = new Date(now.getFullYear() - 3, now.getMonth(), now.getDate());
-    
-    // Spread dates randomly but keep them sorted
-    for(let i = 0; i < count; i++) {
-      const randomTime = threeYearsAgo.getTime() + Math.random() * (now.getTime() - threeYearsAgo.getTime());
-      dates.push(new Date(randomTime));
+    <!-- Horizontal Timeline -->
+    <div class="relative w-full overflow-x-auto custom-scrollbar px-10 pb-40 cursor-grab active:cursor-grabbing"
+      id="timeline-container">
+      <div class="flex items-center gap-32 min-w-max h-[600px] px-20 relative" id="timeline-track">
+        <!-- The glowing center timeline bar -->
+        <div
+          class="absolute top-1/2 left-0 right-0 h-1 bg-primary/30 -translate-y-1/2 z-0 rounded-full shadow-[0_0_15px_rgba(255,143,163,0.5)]">
+        </div>
+
+        <!-- Dynamic Items will be injected here -->
+
+        <!-- Ending Today Marker -->
+        <div class="relative z-10 flex flex-col items-center group self-center shrink-0 ml-10">
+          <div
+            class="w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-2xl border-4 border-white ring-8 ring-primary/20 transition-all group-hover:scale-110">
+            <span class="material-symbols-outlined text-white animate-pulse text-3xl"
+              style="font-variation-settings:'FILL' 1">favorite</span>
+          </div>
+          <div class="absolute top-20 w-60 text-center">
+            <p class="font-handwritten text-4xl text-primary drop-shadow-sm">Forever.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <div class="fixed bottom-6 right-10 z-50 flex items-center gap-4">
+    <a href="index.html"
+      class="w-12 h-12 bg-white/70 backdrop-blur-md rounded-full shadow-md border border-white/50 flex items-center justify-center text-primary hover:bg-white hover:scale-105 transition-all"><span
+        class="material-symbols-outlined">home</span></a>
+  </div>
+
+  <script src="assets/js/media-data.js"></script>
+  <script>
+    // Dynamic Timeline Generator
+    const track = document.getElementById('timeline-track');
+
+    // Washi tape colors and captions for the scrapbook feel
+    const tapeColors = ['bg-primary-container/80', 'bg-secondary-container/80', 'bg-tertiary-container/80', 'bg-[#ffb7c5]/80', 'bg-[#baeaff]/80', 'bg-[#e2c6ff]/80'];
+    const captions = ['The beginning', 'Unforgettable', 'Sunny days', 'Just the two of us', 'Adventures', 'Stolen glances', 'Late nights', 'Perfect peace', 'My whole heart', 'Pure magic', 'Lost in time'];
+    const icons = ['favorite', 'auto_awesome', 'stars', 'local_cafe', 'explore', 'photo_camera', 'celebration', 'filter_vintage'];
+
+    // Helper to generate a fake chronological sequence over the last 3 years
+    function generateDates(count) {
+      const dates = [];
+      const now = new Date();
+      const threeYearsAgo = new Date(now.getFullYear() - 3, now.getMonth(), now.getDate());
+
+      // Spread dates randomly but keep them sorted
+      for (let i = 0; i < count; i++) {
+        const randomTime = threeYearsAgo.getTime() + Math.random() * (now.getTime() - threeYearsAgo.getTime());
+        dates.push(new Date(randomTime));
+      }
+      dates.sort((a, b) => a - b);
+
+      return dates.map(d => {
+        const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+        return `${months[d.getMonth()]} ${String(d.getDate()).padStart(2, '0')}, ${d.getFullYear()}`;
+      });
     }
-    dates.sort((a, b) => a - b);
-    
-    return dates.map(d => {
-      const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-      return `${months[d.getMonth()]} ${String(d.getDate()).padStart(2, '0')}, ${d.getFullYear()}`;
-    });
-  }
 
-  if (typeof mediaFiles !== 'undefined' && mediaFiles.length > 0) {
-    // Pick 12 random unique images from the user's folder
-    const shuffled = [...mediaFiles].sort(() => 0.5 - Math.random());
-    const selectedMedia = shuffled.slice(0, 12);
-    const storyDates = generateDates(12);
+    if (typeof mediaFiles !== 'undefined' && mediaFiles.length > 0) {
+      // Pick 12 random unique images from the user's folder
+      const shuffled = [...mediaFiles].sort(() => 0.5 - Math.random());
+      const selectedMedia = shuffled.slice(0, 12);
+      const storyDates = generateDates(12);
 
-    selectedMedia.forEach((file, index) => {
-      const isVideo = file.toLowerCase().endsWith('.mp4');
-      const srcPath = encodeURI(`./assets/images/images of her/${file}`);
-      
-      const isTop = index % 2 === 0; // Alternate top and bottom of the line
-      const randomRot = (Math.random() * 8) - 4; 
-      const randomTapeRot = (Math.random() * 16) - 8; 
-      const tapeColor = tapeColors[index % tapeColors.length];
-      const caption = captions[index % captions.length];
-      const icon = icons[index % icons.length];
-      
-      let mediaHtml = isVideo ? 
-        `<video class="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700 bg-black/10" autoplay loop muted playsinline>
+      selectedMedia.forEach((file, index) => {
+        const isVideo = file.toLowerCase().endsWith('.mp4');
+        const srcPath = encodeURI(`./assets/images/images of her/${file}`);
+
+        const isTop = index % 2 === 0; // Alternate top and bottom of the line
+        const randomRot = (Math.random() * 8) - 4;
+        const randomTapeRot = (Math.random() * 16) - 8;
+        const tapeColor = tapeColors[index % tapeColors.length];
+        const caption = captions[index % captions.length];
+        const icon = icons[index % icons.length];
+
+        let mediaHtml = isVideo ?
+          `<video class="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700 bg-black/10" autoplay loop muted playsinline>
           <source src="${srcPath}" type="video/mp4">
-        </video>` : 
-        `<img class="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700" loading="lazy" src="${srcPath}" alt="Memory">`;
-        
-      const itemHTML = document.createElement('div');
-      itemHTML.className = `relative z-10 flex flex-col items-center group shrink-0 ${isTop ? 'self-start mt-10' : 'self-end mb-10'}`;
-      
-      // The timeline dot/marker
-      const markerHtml = `
+        </video>` :
+          `<img class="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700" loading="lazy" src="${srcPath}" alt="Memory">`;
+
+        const itemHTML = document.createElement('div');
+        itemHTML.className = `relative z-10 flex flex-col items-center group shrink-0 ${isTop ? 'self-start mt-10' : 'self-end mb-10'}`;
+
+        // The timeline dot/marker
+        const markerHtml = `
         <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg border-2 border-primary/20 ring-4 ring-white/50 transition-all group-hover:scale-125 z-20 ${isTop ? 'order-2 mt-8' : 'order-1 mb-8'}">
           <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1">${icon}</span>
         </div>
       `;
 
-      // The polaroid card
-      const cardHtml = `
+        // The polaroid card
+        const cardHtml = `
         <div class="rotate-[${randomRot}deg] transition-transform group-hover:scale-105 group-hover:rotate-0 duration-300 ${isTop ? 'order-1' : 'order-2'}">
           <div class="w-64 bg-surface-container-lowest p-3 shadow-[15px_15px_30px_rgba(74,55,40,0.1)] border border-surface-variant/40 rounded-sm relative polaroid-hover">
             <div class="absolute ${isTop ? '-top-3' : '-bottom-3'} left-1/2 -translate-x-1/2 w-16 h-6 ${tapeColor} washi-tape z-20 shadow-sm" style="transform: translateX(-50%) rotate(${randomTapeRot}deg)"></div>
@@ -158,39 +199,38 @@
         </div>
       `;
 
-      itemHTML.innerHTML = isTop ? cardHtml + markerHtml : markerHtml + cardHtml;
-      
-      // Insert before the Ending marker
-      track.insertBefore(itemHTML, track.lastElementChild);
+        itemHTML.innerHTML = isTop ? cardHtml + markerHtml : markerHtml + cardHtml;
+
+        // Insert before the Ending marker
+        track.insertBefore(itemHTML, track.lastElementChild);
+      });
+    } else {
+      track.innerHTML = '<p class="font-handwritten text-3xl">No media found.</p>';
+    }
+
+    // Allow dragging the timeline container to scroll horizontally
+    const container = document.getElementById('timeline-container');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    container.addEventListener('mousedown', (e) => {
+      isDown = true;
+      startX = e.pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
     });
-  } else {
-    track.innerHTML = '<p class="font-handwritten text-3xl">No media found.</p>';
-  }
-
-  // Allow dragging the timeline container to scroll horizontally
-  const container = document.getElementById('timeline-container');
-  let isDown = false;
-  let startX;
-  let scrollLeft;
-
-  container.addEventListener('mousedown', (e) => {
-    isDown = true;
-    startX = e.pageX - container.offsetLeft;
-    scrollLeft = container.scrollLeft;
-  });
-  container.addEventListener('mouseleave', () => { isDown = false; });
-  container.addEventListener('mouseup', () => { isDown = false; });
-  container.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - container.offsetLeft;
-    const walk = (x - startX) * 2; 
-    container.scrollLeft = scrollLeft - walk;
-  });
-</script>
-<script src="assets/js/nav.js"></script>
-<script src="assets/js/sounds.js"></script>
+    container.addEventListener('mouseleave', () => { isDown = false; });
+    container.addEventListener('mouseup', () => { isDown = false; });
+    container.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - container.offsetLeft;
+      const walk = (x - startX) * 2;
+      container.scrollLeft = scrollLeft - walk;
+    });
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/sounds.js"></script>
 </body>
+
 </html>
-
-

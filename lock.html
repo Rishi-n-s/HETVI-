@@ -1,78 +1,210 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Love Lock | BAKUDI NI STORY</title>
-<meta name="description" content="Only the key holder may enter."/>
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
-<link rel="apple-touch-icon" href="assets/images/icon-192.png">
-<meta name="theme-color" content="#d12450">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script src="assets/js/theme.js"></script>
-<link rel="stylesheet" href="assets/css/shared.css"/>
-<style>
-  body { overflow-x: hidden; background-color: #faf9f6; }
-  .glass-card { backdrop-filter: blur(16px); background: rgba(255, 249, 246, 0.6); border: 1px solid rgba(255, 255, 255, 0.4); }
-  .heart-beat { animation: heartbeat 1.5s infinite; }
-  @keyframes heartbeat {
-    0% { transform: scale(1); }
-    15% { transform: scale(1.15); }
-    30% { transform: scale(1); }
-    45% { transform: scale(1.15); }
-    60% { transform: scale(1); }
-  }
-  .input-ring:focus { outline: none; box-shadow: 0 0 0 4px rgba(209,36,80,0.2); border-color: #d12450; }
-</style>
-</head>
-<body class="bg-background text-on-surface font-body-main relative flex items-center justify-center min-h-screen overflow-x-hidden">
-
-<!-- Cinematic Background -->
-<div class="fixed inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
-  <div class="w-full h-full bg-cover bg-center scale-105 transform blur-[2px]" style="background-image:url('assets/images/landing_bg_couple.png')"></div>
-  <div class="absolute inset-0 bg-black/30 z-10"></div>
-</div>
-
-<!-- Lock Box -->
-<div class="relative z-10 glass-card rounded-2xl p-10 md:p-14 shadow-2xl flex flex-col items-center max-w-md w-full text-center mx-4">
-  <span class="material-symbols-outlined text-[64px] text-primary mb-4 heart-beat" style="font-variation-settings: 'FILL' 1;">lock</span>
-  <h1 class="font-script text-[48px] text-primary leading-tight mb-2">Love Lock</h1>
-  <p class="font-subtitle-serif italic text-on-surface-variant mb-8 text-lg">Are you my bakudi? Enter the secret key to unlock our memories.</p>
-
-  <form id="lock-form" class="w-full flex flex-col items-center gap-4">
-    <input type="password" id="password" placeholder="Enter password..." class="w-full px-6 py-4 rounded-full border border-surface-variant/50 bg-white/80 font-body-main text-center text-lg input-ring transition-all placeholder:text-on-surface-variant/50" autocomplete="off" required autofocus>
-    <button type="submit" class="w-full bg-primary text-white rounded-full py-4 font-label-caps tracking-widest shadow-lg hover:scale-[1.02] active:scale-95 transition-all glow-button mt-2">UNLOCK HEART</button>
-  </form>
-</div>
-
-<script>
-  document.getElementById('lock-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const pwd = document.getElementById('password').value;
-    
-    // Check password
-    if (pwd === 'H24R4S2007@') {
-      sessionStorage.setItem('unlocked', 'true');
-      
-      // Beautiful unlock animation
-      document.body.style.transition = "opacity 0.8s ease";
-      document.body.style.opacity = "0";
-      
-      setTimeout(() => {
-        window.location.href = 'index.html';
-      }, 800);
-    } else {
-      // Incorrect password -> Rejected page
-      window.location.href = 'rejected.html';
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Love Lock | BAKUDI NI STORY</title>
+  <meta name="description" content="Only Rishi and Bakudi may enter." />
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
+  <link rel="apple-touch-icon" href="assets/images/icon-192.png">
+  <meta name="theme-color" content="#d12450">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@700;800;900&family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600;700&family=Caveat:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="assets/js/theme.js"></script>
+  <link rel="stylesheet" href="assets/css/shared.css" />
+  <link rel="stylesheet" href="assets/css/netflix-intro.css" />
+  <style>
+    body {
+      overflow-x: hidden;
+      background-color: #faf9f6;
     }
-  });
-</script>
+
+    .glass-card {
+      backdrop-filter: blur(16px);
+      background: rgba(255, 249, 246, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .heart-beat {
+      animation: heartbeat 1.5s infinite;
+    }
+
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      15% { transform: scale(1.15); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.15); }
+      50% { transform: scale(1); }
+    }
+
+    .input-ring:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(209, 36, 80, 0.2);
+      border-color: #d12450;
+    }
+
+    .lock-unlocked-pop {
+      animation: unlockPop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      color: #ff2d55 !important;
+    }
+
+    @keyframes unlockPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.4) rotate(-15deg); filter: drop-shadow(0 0 30px #ff2d55); }
+      100% { transform: scale(1.2) rotate(0deg); }
+    }
+  </style>
+</head>
+
+<body
+  class="bg-background text-on-surface font-body-main relative flex items-center justify-center min-h-screen overflow-x-hidden">
+
+  <!-- Cinematic Background -->
+  <div class="fixed inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+    <div class="w-full h-full bg-cover bg-center scale-105 transform blur-[2px]"
+      style="background-image:url('assets/images/landing_bg_couple.png')"></div>
+    <div class="absolute inset-0 bg-black/30 z-10"></div>
+  </div>
+
+  <!-- Lock / Login Box -->
+  <div id="lock-card"
+    class="relative z-10 glass-card rounded-3xl p-8 md:p-12 shadow-2xl flex flex-col items-center max-w-md w-full text-center mx-4 transition-all duration-700">
+    <span id="lock-icon" class="material-symbols-outlined text-[56px] text-primary mb-3 heart-beat transition-all duration-500"
+      style="font-variation-settings: 'FILL' 1;">lock</span>
+    <h1 class="font-script text-[44px] text-primary leading-tight mb-1">Love Lock</h1>
+    <p class="font-subtitle-serif italic text-gray-700 mb-6 text-base">Enter your credentials to unlock our world.</p>
+
+    <!-- Error Alert Box -->
+    <div id="error-box" class="hidden w-full mb-4 p-3 bg-rose-100/90 border border-rose-300 rounded-xl text-rose-700 text-xs font-medium text-left"></div>
+
+    <form id="lock-form" class="w-full flex flex-col items-center gap-3.5">
+      <!-- Email input -->
+      <div class="w-full relative">
+        <input type="email" id="email" placeholder="Email (e.g. rishi@love.com)"
+          class="w-full px-5 py-3.5 rounded-2xl border border-pink-200 bg-white/90 font-sans text-sm input-ring transition-all placeholder:text-gray-400"
+          autocomplete="email" required autofocus>
+      </div>
+
+      <!-- Password input -->
+      <div class="w-full relative">
+        <input type="password" id="password" placeholder="Password"
+          class="w-full px-5 py-3.5 rounded-2xl border border-pink-200 bg-white/90 font-sans text-sm input-ring transition-all placeholder:text-gray-400"
+          autocomplete="current-password" required>
+      </div>
+
+      <!-- Quick Preset Selector for Testing/Ease -->
+      <div class="flex items-center gap-2 w-full justify-center text-xs text-gray-600 my-1">
+        <span>Quick Select:</span>
+        <button type="button" id="fill-rishi" class="px-2.5 py-1 bg-white/60 hover:bg-white text-primary border border-pink-200 rounded-full font-quicksand font-semibold transition-all">Rishi</button>
+        <button type="button" id="fill-bakudi" class="px-2.5 py-1 bg-white/60 hover:bg-white text-primary border border-pink-200 rounded-full font-quicksand font-semibold transition-all">Bakudi</button>
+      </div>
+
+      <button type="submit" id="unlock-btn"
+        class="w-full bg-gradient-to-r from-[#ff758c] to-[#d12450] text-white rounded-2xl py-3.5 font-quicksand font-bold tracking-wider shadow-lg hover:scale-[1.02] active:scale-95 transition-all glow-button mt-1 flex items-center justify-center gap-2">
+        <span>UNLOCK HEART</span>
+        <span class="material-symbols-outlined text-lg">favorite</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- Netflix Intro Script -->
+  <script src="assets/js/netflix-intro.js"></script>
+
+  <!-- Firebase Auth Logic -->
+  <script type="module">
+    import { auth, loginUser, isAuthorizedEmail } from "./assets/js/firebase.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+    const lockForm = document.getElementById('lock-form');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const lockIcon = document.getElementById('lock-icon');
+    const lockCard = document.getElementById('lock-card');
+    const unlockBtn = document.getElementById('unlock-btn');
+    const errorBox = document.getElementById('error-box');
+
+    // Auto-redirect if already signed in
+    onAuthStateChanged(auth, (user) => {
+      if (user && isAuthorizedEmail(user.email)) {
+        console.log("User already signed in:", user.email);
+        triggerUnlockTransition();
+      }
+    });
+
+    // Preset shortcuts
+    document.getElementById('fill-rishi').addEventListener('click', () => {
+      emailInput.value = 'rishisolanki7319@gmail.com';
+      passwordInput.focus();
+    });
+
+    document.getElementById('fill-bakudi').addEventListener('click', () => {
+      emailInput.value = 'hetvidodiya2447@gmail.com';
+      passwordInput.focus();
+    });
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.classList.remove('hidden');
+    }
+
+    function triggerUnlockTransition() {
+      lockIcon.innerText = 'lock_open';
+      lockIcon.classList.remove('heart-beat');
+      lockIcon.classList.add('lock-unlocked-pop');
+      unlockBtn.innerHTML = '<span>ACCESS GRANTED ❤️</span>';
+      unlockBtn.style.background = '#28a745';
+
+      setTimeout(() => {
+        lockCard.style.transform = 'scale(0.85)';
+        lockCard.style.opacity = '0';
+      }, 300);
+
+      setTimeout(() => {
+        if (window.NetflixIntro) {
+          window.NetflixIntro.start('index.html');
+        } else {
+          window.location.href = 'index.html';
+        }
+      }, 450);
+    }
+
+    lockForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      errorBox.classList.add('hidden');
+
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      try {
+        unlockBtn.disabled = true;
+        unlockBtn.innerHTML = `<span>Verifying...</span>`;
+
+        await loginUser(email, password);
+        triggerUnlockTransition();
+      } catch (error) {
+        unlockBtn.disabled = false;
+        unlockBtn.innerHTML = `<span>UNLOCK HEART</span><span class="material-symbols-outlined text-lg">favorite</span>`;
+        
+        let message = error.message;
+        if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+          message = 'Invalid email or password. Please try again.';
+        } else if (error.code === 'auth/invalid-email') {
+          message = 'Please enter a valid email address.';
+        }
+        showError(message);
+      }
+    });
+  </script>
 </body>
+
 </html>

@@ -1,455 +1,503 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Memory Gallery | BAKUDI NI STORY</title>
-<meta name="description" content="Relive your most cherished memories, beautifully captured in our gallery."/>
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
-<link rel="apple-touch-icon" href="assets/images/icon-192.png">
-<meta name="theme-color" content="#d12450">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script src="assets/js/theme.js"></script>
-<link rel="stylesheet" href="assets/css/shared.css"/>
-<style>
-  body { overflow-x: hidden; background-color: #faf9f6; }
-  .polaroid-hover { transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.4s ease; }
-  .polaroid-hover:hover { transform: translateY(-8px) scale(1.02) !important; box-shadow: 20px 20px 40px rgba(74,55,40,0.15) !important; z-index: 50; }
-  .washi-tape {
-    background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, 0.2) 5px, rgba(255, 255, 255, 0.2) 10px);
-  }
-  
-  /* Entrance Animation */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(60px) scale(0.95); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-  .animate-fade-up {
-    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-  }
 
-  /* Gentle Floating Animation */
-  @keyframes gentleFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-  }
-  .animate-float {
-    animation: gentleFloat 6s ease-in-out infinite;
-  }
-  /* Browser Animation */
-  #browser-overlay {
-    backdrop-filter: blur(5px);
-  }
-  
-  .browser {
-    width: 90vw;
-    max-width: 450px;
-    height: 300px;
-    background: lightgrey;
-    border-radius: 7px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 5px 5px 25px rgba(31, 31, 31, 0.4);
-    transform: scale(1.2);
-    transition: all 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-  }
-  
-  .browser.expanded-browser {
-    width: 100vw !important;
-    height: 100vh !important;
-    max-width: 100vw;
-    max-height: 100vh;
-    border-radius: 0 !important;
-    transform: scale(1) !important;
-    box-shadow: none !important;
-  }
-  
-  /* tabs-head */
-  .tabs-head {
-    background-color: #353535;
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    padding-left: 20px;
-  }
-  
-  .tabs-head .tab-open {
-    width: 100px;
-    height: 34px;
-    border-radius: 7px 7px 0 0;
-    background-color: #515151;
-    display: flex;
-    gap: 5px;
-    align-items: start;
-    justify-content: space-between;
-    padding: 4px 8px;
-    position: relative;
-  }
-  
-  .tabs-head .tab-open .close-tab {
-    color: #fff;
-    font-size: 9px;
-    padding: 1px 4px 1px 4px;
-    border-radius: 50%;
-    cursor: default;
-  }
-  .tabs-head .tab-open .close-tab:hover {
-    background-color: #5d5d5d;
-  }
-  
-  .tabs-head .tab-open .rounded-l {
-    position: absolute;
-    background-color: #515151;
-    width: 20px;
-    height: 24px;
-    top: 0;
-    right: 0;
-    transform: translate(100%);
-    overflow: hidden;
-  }
-  .tabs-head .tab-open .rounded-l .mask-round {
-    width: 100%;
-    height: 100%;
-    background-color: #353535;
-    border-radius: 0 0 0 7px;
-  }
-  
-  .tabs-head .tab-open .rounded-r {
-    position: absolute;
-    background-color: #515151;
-    width: 20px;
-    height: 24px;
-    top: 0;
-    left: 0;
-    transform: translate(-100%);
-    overflow: hidden;
-  }
-  
-  .tabs-head .tab-open .rounded-r .mask-round {
-    width: 100%;
-    height: 100%;
-    background-color: #353535;
-    border-radius: 0 0 7px 0;
-  }
-  
-  .tabs-head .tab-open span {
-    color: #fff;
-    font-size: 10px;
-  }
-  
-  .tabs-head .window-opt {
-    display: flex;
-  }
-  
-  .tabs-head .window-opt button {
-    height: 30px;
-    width: 30px;
-    border: none;
-    background-color: transparent;
-    transition: 0.1s ease-out;
-    color: #fff;
-    margin-bottom: 10px;
-  }
-  
-  .tabs-head .window-opt button:hover {
-    background-color: #515151c8;
-  }
-  
-  .tabs-head .window-opt .window-close:hover {
-    background-color: rgb(255, 52, 52);
-  }
-  
-  /* head-browser */
-  .head-browser {
-    position: absolute;
-    top: 30px;
-    width: 100%;
-    height: 40px;
-    background-color: #515151;
-    padding: 7px;
-    display: flex;
-    border-radius: 7px 7px 0 0;
-    gap: 5px;
-  }
-  
-  .head-browser input {
-    background-color: #3b3b3b;
-    border: 2px solid transparent;
-    height: 100%;
-    border-radius: 20px;
-    outline: none;
-    color: #fff;
-    padding: 0 15px;
-    font-size: 14px;
-    flex: 1;
-    transition: 0.2s ease-in-out;
-  }
-  
-  .head-browser input:hover {
-    background-color: #5d5d5d;
-  }
-  
-  .head-browser input:focus {
-    border-color: rgb(173, 214, 255);
-    background-color: #3b3b3b;
-    transition: none;
-  }
-  
-  .head-browser input::placeholder {
-    color: #fff;
-  }
-  
-  .head-browser button {
-    width: 27px;
-    height: 25px;
-    border: none;
-    background-color: transparent;
-    color: #fff;
-    border-radius: 50%;
-    transition: 0.2s ease-in-out;
-  }
-  
-  .head-browser button:disabled {
-    opacity: 0.4;
-  }
-  
-  .head-browser button:hover {
-    background-color: #5d5d5d;
-  }
-  
-  .head-browser button:disabled:hover {
-    background-color: transparent;
-  }
-  
-  .head-browser .star {
-    color: #fff;
-    position: absolute;
-    right: 45px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 15px;
-    opacity: 0.7;
-    height: 18px;
-    width: 19px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: 3px;
-  }
-  
-  .search-content-placeholder {
-    flex: 1;
-    background: transparent;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    padding-top: 40px; /* space for header */
-    transition: all 0.5s ease;
-  }
-  
-  .search-content-placeholder.scrollable {
-    display: block;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-top: 0;
-  }
-</style>
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Memory Gallery | BAKUDI NI STORY</title>
+  <meta name="description" content="Relive your most cherished memories, beautifully captured in our gallery." />
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
+  <link rel="apple-touch-icon" href="assets/images/icon-192.png">
+  <meta name="theme-color" content="#d12450">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="assets/js/theme.js"></script>
+  <link rel="stylesheet" href="assets/css/shared.css" />
+  <style>
+    body {
+      overflow-x: hidden;
+      background-color: #faf9f6;
+    }
+
+    .polaroid-hover {
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    }
+
+    .polaroid-hover:hover {
+      transform: translateY(-8px) scale(1.02) !important;
+      box-shadow: 20px 20px 40px rgba(74, 55, 40, 0.15) !important;
+      z-index: 50;
+    }
+
+    .washi-tape {
+      background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, 0.2) 5px, rgba(255, 255, 255, 0.2) 10px);
+    }
+
+    /* Entrance Animation */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(60px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .animate-fade-up {
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    }
+
+    /* Gentle Floating Animation */
+    @keyframes gentleFloat {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    .animate-float {
+      animation: gentleFloat 6s ease-in-out infinite;
+    }
+
+    /* Browser Animation */
+    #browser-overlay {
+      backdrop-filter: blur(5px);
+    }
+
+    .browser {
+      width: 90vw;
+      max-width: 450px;
+      height: 300px;
+      background: lightgrey;
+      border-radius: 7px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 5px 5px 25px rgba(31, 31, 31, 0.4);
+      transform: scale(1.2);
+      transition: all 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .browser.expanded-browser {
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: 100vw;
+      max-height: 100vh;
+      border-radius: 0 !important;
+      transform: scale(1) !important;
+      box-shadow: none !important;
+    }
+
+    /* tabs-head */
+    .tabs-head {
+      background-color: #353535;
+      height: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      padding-left: 20px;
+    }
+
+    .tabs-head .tab-open {
+      width: 100px;
+      height: 34px;
+      border-radius: 7px 7px 0 0;
+      background-color: #515151;
+      display: flex;
+      gap: 5px;
+      align-items: start;
+      justify-content: space-between;
+      padding: 4px 8px;
+      position: relative;
+    }
+
+    .tabs-head .tab-open .close-tab {
+      color: #fff;
+      font-size: 9px;
+      padding: 1px 4px 1px 4px;
+      border-radius: 50%;
+      cursor: default;
+    }
+
+    .tabs-head .tab-open .close-tab:hover {
+      background-color: #5d5d5d;
+    }
+
+    .tabs-head .tab-open .rounded-l {
+      position: absolute;
+      background-color: #515151;
+      width: 20px;
+      height: 24px;
+      top: 0;
+      right: 0;
+      transform: translate(100%);
+      overflow: hidden;
+    }
+
+    .tabs-head .tab-open .rounded-l .mask-round {
+      width: 100%;
+      height: 100%;
+      background-color: #353535;
+      border-radius: 0 0 0 7px;
+    }
+
+    .tabs-head .tab-open .rounded-r {
+      position: absolute;
+      background-color: #515151;
+      width: 20px;
+      height: 24px;
+      top: 0;
+      left: 0;
+      transform: translate(-100%);
+      overflow: hidden;
+    }
+
+    .tabs-head .tab-open .rounded-r .mask-round {
+      width: 100%;
+      height: 100%;
+      background-color: #353535;
+      border-radius: 0 0 7px 0;
+    }
+
+    .tabs-head .tab-open span {
+      color: #fff;
+      font-size: 10px;
+    }
+
+    .tabs-head .window-opt {
+      display: flex;
+    }
+
+    .tabs-head .window-opt button {
+      height: 30px;
+      width: 30px;
+      border: none;
+      background-color: transparent;
+      transition: 0.1s ease-out;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .tabs-head .window-opt button:hover {
+      background-color: #515151c8;
+    }
+
+    .tabs-head .window-opt .window-close:hover {
+      background-color: rgb(255, 52, 52);
+    }
+
+    /* head-browser */
+    .head-browser {
+      position: absolute;
+      top: 30px;
+      width: 100%;
+      height: 40px;
+      background-color: #515151;
+      padding: 7px;
+      display: flex;
+      border-radius: 7px 7px 0 0;
+      gap: 5px;
+    }
+
+    .head-browser input {
+      background-color: #3b3b3b;
+      border: 2px solid transparent;
+      height: 100%;
+      border-radius: 20px;
+      outline: none;
+      color: #fff;
+      padding: 0 15px;
+      font-size: 14px;
+      flex: 1;
+      transition: 0.2s ease-in-out;
+    }
+
+    .head-browser input:hover {
+      background-color: #5d5d5d;
+    }
+
+    .head-browser input:focus {
+      border-color: rgb(173, 214, 255);
+      background-color: #3b3b3b;
+      transition: none;
+    }
+
+    .head-browser input::placeholder {
+      color: #fff;
+    }
+
+    .head-browser button {
+      width: 27px;
+      height: 25px;
+      border: none;
+      background-color: transparent;
+      color: #fff;
+      border-radius: 50%;
+      transition: 0.2s ease-in-out;
+    }
+
+    .head-browser button:disabled {
+      opacity: 0.4;
+    }
+
+    .head-browser button:hover {
+      background-color: #5d5d5d;
+    }
+
+    .head-browser button:disabled:hover {
+      background-color: transparent;
+    }
+
+    .head-browser .star {
+      color: #fff;
+      position: absolute;
+      right: 45px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 15px;
+      opacity: 0.7;
+      height: 18px;
+      width: 19px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 3px;
+    }
+
+    .search-content-placeholder {
+      flex: 1;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding-top: 40px;
+      /* space for header */
+      transition: all 0.5s ease;
+    }
+
+    .search-content-placeholder.scrollable {
+      display: block;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-top: 0;
+    }
+  </style>
 </head>
+
 <body class="bg-background text-on-surface font-body-main overflow-x-hidden">
 
-<!-- Browser Animation Overlay -->
-<div id="browser-overlay" class="fixed inset-0 bg-background/95 z-[60] flex items-center justify-center transition-opacity duration-1000">
-  <div class="browser" id="fake-browser">
-    <div class="tabs-head">
-      <div class="tabs">
-        <div class="tab-open">
-          <div class="rounded-l"><div class="mask-round"></div></div>
-          <span>Search</span>
-          <div class="close-tab">✕</div>
-          <div class="rounded-r"><div class="mask-round"></div></div>
+  <!-- Browser Animation Overlay -->
+  <div id="browser-overlay"
+    class="fixed inset-0 bg-background/95 z-[60] flex items-center justify-center transition-opacity duration-1000">
+    <div class="browser" id="fake-browser">
+      <div class="tabs-head">
+        <div class="tabs">
+          <div class="tab-open">
+            <div class="rounded-l">
+              <div class="mask-round"></div>
+            </div>
+            <span>Search</span>
+            <div class="close-tab">✕</div>
+            <div class="rounded-r">
+              <div class="mask-round"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="window-opt">
+          <button>-</button>
+          <button>□</button>
+          <button class="window-close">✕</button>
         </div>
       </div>
-  
-      <div class="window-opt">
-        <button>-</button>
-        <button>□</button>
-        <button class="window-close">✕</button>
+
+      <div class="head-browser">
+        <button>←</button>
+        <button disabled="">→</button>
+
+        <input type="text" name="" id="browser-input" placeholder="Search Google or type URL" value="" readonly />
+
+        <button>⋮</button>
+        <button class="star">✰</button>
+      </div>
+
+      <div class="search-content-placeholder">
+        <!-- Google logo fake -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google"
+          style="width: 120px; opacity: 0.2; pointer-events: none;" />
+      </div>
+
+      <!-- Fake cursor -->
+      <div id="fake-cursor" class="absolute z-50 pointer-events-none"
+        style="top: 200px; left: 250px; width: 20px; height: 20px; transition: top 0.8s ease-in-out, left 0.8s ease-in-out;">
+        <svg viewBox="0 0 320 320" fill="white" stroke="black" stroke-width="15">
+          <path d="M 0 0 L 160 320 L 190 220 L 290 190 Z" />
+        </svg>
       </div>
     </div>
-  
-    <div class="head-browser">
-      <button>←</button>
-      <button disabled="">→</button>
-  
-      <input
-        type="text"
-        name=""
-        id="browser-input"
-        placeholder="Search Google or type URL"
-        value=""
-        readonly
-      />
-  
-      <button>⋮</button>
-      <button class="star">✰</button>
-    </div>
-    
-    <div class="search-content-placeholder">
-       <!-- Google logo fake -->
-       <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" style="width: 120px; opacity: 0.2; pointer-events: none;" />
-    </div>
+  </div>
 
-    <!-- Fake cursor -->
-    <div id="fake-cursor" class="absolute z-50 pointer-events-none" style="top: 200px; left: 250px; width: 20px; height: 20px; transition: top 0.8s ease-in-out, left 0.8s ease-in-out;">
-      <svg viewBox="0 0 320 320" fill="white" stroke="black" stroke-width="15"><path d="M 0 0 L 160 320 L 190 220 L 290 190 Z" /></svg>
+  <!-- Background -->
+  <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+    <div class="absolute inset-0 bg-cover bg-center opacity-40 scale-105"
+      style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBm-E1ym0M2GzHooAWb5h8l453TronsIOtuzmAhFuKfIXX2xcPVz5MX1bwj2iD7cLIy5UNmZEOvpkwM1vanzAMG448gtczHA7_nKbSerHp-scbtg23KiSayZ_j8jwGcb5R0pIvfh7x_82FYkjCrzZop95u2ANYPyZMwaJIkbxJrjrukkQEpXN0FvcUV5zWrhEb1YwpBjhQh3bpRzfsquN9uTg_Hwrn6fMPXqYhUQjHI4R8Dg5xyZ5c')">
     </div>
   </div>
-</div>
 
-<!-- Background -->
-<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-  <div class="absolute inset-0 bg-cover bg-center opacity-40 scale-105" style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBm-E1ym0M2GzHooAWb5h8l453TronsIOtuzmAhFuKfIXX2xcPVz5MX1bwj2iD7cLIy5UNmZEOvpkwM1vanzAMG448gtczHA7_nKbSerHp-scbtg23KiSayZ_j8jwGcb5R0pIvfh7x_82FYkjCrzZop95u2ANYPyZMwaJIkbxJrjrukkQEpXN0FvcUV5zWrhEb1YwpBjhQh3bpRzfsquN9uTg_Hwrn6fMPXqYhUQjHI4R8Dg5xyZ5c')"></div>
-</div>
+  <!-- Top AppBar -->
+  <header
+    class="flex justify-between items-center w-full px-6 pt-6 fixed top-0 z-50 bg-transparent pointer-events-none">
+    <span class="font-subtitle-serif text-subtitle-serif italic text-primary drop-shadow-md pointer-events-auto">BAKUDI
+      NI STORY</span>
+    <div class="flex items-center gap-6 pointer-events-auto">
+      <a href="music.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
+          class="material-symbols-outlined">music_note</span></a>
+      <a href="settings.html" class="text-primary hover:opacity-80 drop-shadow-md"><span
+          class="material-symbols-outlined">palette</span></a>
+    </div>
+  </header>
 
-<!-- Top AppBar -->
-<header class="flex justify-between items-center w-full px-6 pt-6 fixed top-0 z-50 bg-transparent pointer-events-none">
-  <span class="font-subtitle-serif text-subtitle-serif italic text-primary drop-shadow-md pointer-events-auto">BAKUDI NI STORY</span>
-  <div class="flex items-center gap-6 pointer-events-auto">
-    <a href="music.html" class="text-primary hover:opacity-80 drop-shadow-md"><span class="material-symbols-outlined">music_note</span></a>
-    <a href="settings.html" class="text-primary hover:opacity-80 drop-shadow-md"><span class="material-symbols-outlined">palette</span></a>
-  </div>
-</header>
+  <!-- Main -->
+  <main class="relative z-10 pt-28 pb-40 px-6 md:px-10 min-h-screen w-full max-w-7xl mx-auto">
+    <div id="gallery-header" class="mb-14 text-center opacity-0 transition-opacity duration-1000">
+      <h1 class="font-headline-xl text-[64px] text-primary drop-shadow-sm mb-4 mt-6"
+        style="font-family:'Playfair Display',serif;font-style:italic;">All Her Memories</h1>
+      <p class="font-handwritten text-3xl text-on-surface-variant/80 max-w-xl mx-auto">A thousand little moments,
+        beautifully captured.</p>
+    </div>
 
-<!-- Main -->
-<main class="relative z-10 pt-28 pb-40 px-6 md:px-10 min-h-screen w-full max-w-7xl mx-auto">
-  <div id="gallery-header" class="mb-14 text-center opacity-0 transition-opacity duration-1000">
-    <h1 class="font-headline-xl text-[64px] text-primary drop-shadow-sm mb-4 mt-6" style="font-family:'Playfair Display',serif;font-style:italic;">All Her Memories</h1>
-    <p class="font-handwritten text-3xl text-on-surface-variant/80 max-w-xl mx-auto">A thousand little moments, beautifully captured.</p>
-  </div>
+    <!-- Dynamic Gallery Grid -->
+    <div id="gallery-grid"
+      class="columns-2 md:columns-3 lg:columns-4 gap-10 md:gap-14 space-y-14 md:space-y-20 w-full pb-32 opacity-0 transition-opacity duration-1000">
+      <!-- Media will be injected here by JavaScript -->
+    </div>
+  </main>
 
-  <!-- Dynamic Gallery Grid -->
-  <div id="gallery-grid" class="columns-2 md:columns-3 lg:columns-4 gap-10 md:gap-14 space-y-14 md:space-y-20 w-full pb-32 opacity-0 transition-opacity duration-1000">
-    <!-- Media will be injected here by JavaScript -->
-  </div>
-</main>
+  <script src="assets/js/media-data.js"></script>
+  <script>
+    // Browser Animation Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const overlay = document.getElementById('browser-overlay');
+      const input = document.getElementById('browser-input');
+      const cursor = document.getElementById('fake-cursor');
+      const grid = document.getElementById('gallery-grid');
+      const header = document.getElementById('gallery-header');
 
-<script src="assets/js/media-data.js"></script>
-<script>
-  // Browser Animation Logic
-  document.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.getElementById('browser-overlay');
-    const input = document.getElementById('browser-input');
-    const cursor = document.getElementById('fake-cursor');
-    const grid = document.getElementById('gallery-grid');
-    const header = document.getElementById('gallery-header');
-    
-    // Prevent scrolling while animation is playing
-    document.body.style.overflow = 'hidden';
+      // Prevent scrolling while animation is playing
+      document.body.style.overflow = 'hidden';
 
-    setTimeout(() => {
-      // 1. Move cursor to input
-      cursor.style.top = '40px';
-      cursor.style.left = '160px';
-      
       setTimeout(() => {
-        // Hide cursor (it's "typing")
-        cursor.style.opacity = '0';
-        
-        // 2. Type text
-        const textToType = "RISHI NI BAKUDI KON CHE ? ❤️";
-        let i = 0;
-        const typeWriter = setInterval(() => {
-          if (i < textToType.length) {
-            input.value += textToType.charAt(i);
-            i++;
-          } else {
-            clearInterval(typeWriter);
-            
-            // 3. Simulate hitting Enter (pause, then expand browser)
-            setTimeout(() => {
-              const browser = document.getElementById('fake-browser');
-              const overlay = document.getElementById('browser-overlay');
-              const searchContent = document.querySelector('.search-content-placeholder');
-              const googleLogo = searchContent.querySelector('img');
-              
-              // Fade out google logo
-              googleLogo.style.transition = 'opacity 0.5s';
-              googleLogo.style.opacity = '0';
-              
-              // Expand the browser window AND fade it out
-              browser.classList.add('expanded-browser');
-              browser.style.opacity = '0';
-              
+        // 1. Move cursor to input
+        cursor.style.top = '40px';
+        cursor.style.left = '160px';
+
+        setTimeout(() => {
+          // Hide cursor (it's "typing")
+          cursor.style.opacity = '0';
+
+          // 2. Type text
+          const textToType = "RISHI NI BAKUDI KON CHE ? ❤️";
+          let i = 0;
+          const typeWriter = setInterval(() => {
+            if (i < textToType.length) {
+              input.value += textToType.charAt(i);
+              i++;
+            } else {
+              clearInterval(typeWriter);
+
+              // 3. Simulate hitting Enter (pause, then expand browser)
               setTimeout(() => {
-                overlay.remove();
-                document.body.style.overflow = 'auto'; // restore scroll
-                
-                // Fade in gallery
-                grid.style.opacity = '1';
-                header.style.opacity = '1';
-                
-                populateGallery();
-              }, 1200); // Wait for expand animation
-            }, 800);
-          }
-        }, 80);
-      }, 1000); // Wait for cursor move
-    }, 600);
-  });
+                const browser = document.getElementById('fake-browser');
+                const overlay = document.getElementById('browser-overlay');
+                const searchContent = document.querySelector('.search-content-placeholder');
+                const googleLogo = searchContent.querySelector('img');
 
-  // Populate the masonry grid with all images/videos, styled as Polaroids
-  function populateGallery() {
-    const grid = document.getElementById('gallery-grid');
-    
-    // Washi tape colors to randomize
-  const tapeColors = ['bg-primary-container/80', 'bg-secondary-container/80', 'bg-tertiary-container/80', 'bg-[#ffb7c5]/80', 'bg-[#baeaff]/80', 'bg-[#e2c6ff]/80'];
-  
-  // Descriptive captions to randomize
-  const captions = ['Beautiful smile', 'Quiet moments', 'Sun-kissed', 'A day to remember', 'Lost in thoughts', 'Laughing out loud', 'Serenity', 'Perfect day', 'Memories', 'Just chilling', 'Golden hour', 'So precious'];
+                // Fade out google logo
+                googleLogo.style.transition = 'opacity 0.5s';
+                googleLogo.style.opacity = '0';
 
-  if (typeof mediaFiles !== 'undefined' && mediaFiles.length > 0) {
-    mediaFiles.forEach((file, index) => {
-      const isVideo = file.toLowerCase().endsWith('.mp4');
-      const srcPath = encodeURI(`./assets/images/images of her/${file}`);
-      
-      // Randomize polaroid styling to make them look messy and unaligned
-      const randomRot = (Math.random() * 14) - 7; // -7 to 7 degrees
-      const randomX = (Math.random() * 80) - 40; // -40px to 40px shift horizontally
-      const randomY = (Math.random() * 80) - 40; // -40px to 40px shift vertically
-      
-      const randomTapeRot = (Math.random() * 16) - 8; // -8 to 8 degrees
-      const tapeColor = tapeColors[index % tapeColors.length];
-      const caption = captions[Math.floor(Math.random() * captions.length)];
-      
-      // Animation timing
-      const entranceDelay = (index % 12) * 0.1; // Staggered entrance
-      const floatDelay = Math.random() * -6; // Negative delay so they don't start in sync
-      const floatDuration = 5 + (Math.random() * 3); // 5s to 8s loop
-      
-      const itemDiv = document.createElement('div');
-      itemDiv.className = `break-inside-avoid w-full relative polaroid-hover group cursor-pointer mb-16 animate-fade-up`;
-      itemDiv.style.animationDelay = `${entranceDelay}s`;
-      
-      // We wrap the transform in another div so the float animation doesn't fight the hover transform
-      let mediaHtml = isVideo ? 
-        `<video class="w-full min-h-[350px] aspect-[4/5] object-cover group-hover:scale-[1.03] transition-transform duration-700 bg-black/10" controls playsinline>
+                // Expand the browser window AND fade it out
+                browser.classList.add('expanded-browser');
+                browser.style.opacity = '0';
+
+                setTimeout(() => {
+                  overlay.remove();
+                  document.body.style.overflow = 'auto'; // restore scroll
+
+                  // Fade in gallery
+                  grid.style.opacity = '1';
+                  header.style.opacity = '1';
+
+                  populateGallery();
+                }, 1200); // Wait for expand animation
+              }, 800);
+            }
+          }, 80);
+        }, 1000); // Wait for cursor move
+      }, 600);
+    });
+
+    // Populate the masonry grid with all images/videos, styled as Polaroids
+    function populateGallery() {
+      const grid = document.getElementById('gallery-grid');
+
+      // Washi tape colors to randomize
+      const tapeColors = ['bg-primary-container/80', 'bg-secondary-container/80', 'bg-tertiary-container/80', 'bg-[#ffb7c5]/80', 'bg-[#baeaff]/80', 'bg-[#e2c6ff]/80'];
+
+      // Descriptive captions to randomize
+      const captions = ['Beautiful smile', 'Quiet moments', 'Sun-kissed', 'A day to remember', 'Lost in thoughts', 'Laughing out loud', 'Serenity', 'Perfect day', 'Memories', 'Just chilling', 'Golden hour', 'So precious'];
+
+      if (typeof mediaFiles !== 'undefined' && mediaFiles.length > 0) {
+        mediaFiles.forEach((file, index) => {
+          const isVideo = file.toLowerCase().endsWith('.mp4');
+          const srcPath = encodeURI(`./assets/images/images of her/${file}`);
+
+          // Randomize polaroid styling to make them look messy and unaligned
+          const randomRot = (Math.random() * 14) - 7; // -7 to 7 degrees
+          const randomX = (Math.random() * 80) - 40; // -40px to 40px shift horizontally
+          const randomY = (Math.random() * 80) - 40; // -40px to 40px shift vertically
+
+          const randomTapeRot = (Math.random() * 16) - 8; // -8 to 8 degrees
+          const tapeColor = tapeColors[index % tapeColors.length];
+          const caption = captions[Math.floor(Math.random() * captions.length)];
+
+          // Animation timing
+          const entranceDelay = (index % 12) * 0.1; // Staggered entrance
+          const floatDelay = Math.random() * -6; // Negative delay so they don't start in sync
+          const floatDuration = 5 + (Math.random() * 3); // 5s to 8s loop
+
+          const itemDiv = document.createElement('div');
+          itemDiv.className = `break-inside-avoid w-full relative polaroid-hover group cursor-pointer mb-16 animate-fade-up`;
+          itemDiv.style.animationDelay = `${entranceDelay}s`;
+
+          // We wrap the transform in another div so the float animation doesn't fight the hover transform
+          let mediaHtml = isVideo ?
+            `<video class="w-full min-h-[350px] aspect-[4/5] object-cover group-hover:scale-[1.03] transition-transform duration-700 bg-black/10" controls playsinline>
           <source src="${srcPath}" type="video/mp4">
           Your browser does not support videos.
-        </video>` : 
-        `<img class="w-full aspect-[4/5] object-cover group-hover:scale-[1.03] transition-transform duration-700" loading="lazy" src="${srcPath}" alt="Memory">`;
-        
-      itemDiv.innerHTML = `
+        </video>` :
+            `<img class="w-full aspect-[4/5] object-cover group-hover:scale-[1.03] transition-transform duration-700" loading="lazy" src="${srcPath}" alt="Memory">`;
+
+          itemDiv.innerHTML = `
         <div class="animate-float" style="animation-delay: ${floatDelay}s; animation-duration: ${floatDuration}s">
           <div class="bg-surface-container-lowest p-3 pb-4 shadow-[10px_10px_20px_rgba(0,0,0,0.06)] border border-surface-variant/40 relative" style="transform: translate(${randomX}px, ${randomY}px) rotate(${randomRot}deg)">
             <!-- Washi tape -->
@@ -469,17 +517,17 @@
           </div>
         </div>
       `;
-      
-      grid.appendChild(itemDiv);
-    });
-  } else {
-    grid.innerHTML = '<p class="text-center w-full col-span-full font-handwritten text-3xl">No media found.</p>';
-  }
-  } // end populateGallery
-</script>
-<script src="assets/js/nav.js"></script>
-<script src="assets/js/sounds.js"></script>
+
+          grid.appendChild(itemDiv);
+        });
+      } else {
+        grid.innerHTML = '<p class="text-center w-full col-span-full font-handwritten text-3xl">No media found.</p>';
+      }
+    } // end populateGallery
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/sounds.js"></script>
 
 </body>
-</html>
 
+</html>

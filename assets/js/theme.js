@@ -1,7 +1,7 @@
-(function() {
+(function () {
   // --- PWA Service Worker Registration ---
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
+    navigator.serviceWorker.register('sw.js').catch(() => { });
   }
 
   // --- Love Lock Security ---
@@ -16,19 +16,19 @@
   const isDark = localStorage.getItem('darkMode') === 'true';
 
   // Apply dark class to HTML for any dark: utility classes
-  if(isDark) {
+  if (isDark) {
     document.documentElement.classList.add('dark');
   } else {
     document.documentElement.classList.remove('dark');
   }
 
   const palettes = {
-    'rose': { primary:"#d12450", "primary-container":"#ffb7c5", "on-primary-container":"#7b4551", secondary:"#0c6780", "secondary-container":"#9ae1ff", tertiary:"#006e20", "tertiary-container":"#7be07d" },
-    'ocean': { primary:"#0c6780", "primary-container":"#9ae1ff", "on-primary-container":"#09657f", secondary:"#d12450", "secondary-container":"#ffb7c5", tertiary:"#7a5a28", "tertiary-container":"#ffdea3" },
-    'lavender': { primary:"#5e4a8a", "primary-container":"#e0d4ff", "on-primary-container":"#422b6e", secondary:"#7a5a28", "secondary-container":"#ffdea3", tertiary:"#0c6780", "tertiary-container":"#9ae1ff" },
-    'amber': { primary:"#7a5a28", "primary-container":"#ffdea3", "on-primary-container":"#5a3f0f", secondary:"#5e4a8a", "secondary-container":"#e0d4ff", tertiary:"#d12450", "tertiary-container":"#ffb7c5" }
+    'rose': { primary: "#d12450", "primary-container": "#ffb7c5", "on-primary-container": "#7b4551", secondary: "#0c6780", "secondary-container": "#9ae1ff", tertiary: "#006e20", "tertiary-container": "#7be07d" },
+    'ocean': { primary: "#0c6780", "primary-container": "#9ae1ff", "on-primary-container": "#09657f", secondary: "#d12450", "secondary-container": "#ffb7c5", tertiary: "#7a5a28", "tertiary-container": "#ffdea3" },
+    'lavender': { primary: "#5e4a8a", "primary-container": "#e0d4ff", "on-primary-container": "#422b6e", secondary: "#7a5a28", "secondary-container": "#ffdea3", tertiary: "#0c6780", "tertiary-container": "#9ae1ff" },
+    'amber': { primary: "#7a5a28", "primary-container": "#ffdea3", "on-primary-container": "#5a3f0f", secondary: "#5e4a8a", "secondary-container": "#e0d4ff", tertiary: "#d12450", "tertiary-container": "#ffb7c5" }
   };
-  
+
   let colors = palettes[theme];
   if (!colors) {
     // Treat as custom hex color
@@ -91,13 +91,13 @@
           ...baseColors
         },
         fontFamily: {
-          "subtitle-serif":["Playfair Display"],
-          "body-main":["Quicksand"],
-          "headline-lg":["Bricolage Grotesque"],
-          "headline-xl":["Bricolage Grotesque"],
-          "label-caps":["Playfair Display"],
-          "body-small":["Quicksand"],
-          "handwritten":["Caveat", "cursive"]
+          "subtitle-serif": ["Playfair Display"],
+          "body-main": ["Quicksand"],
+          "headline-lg": ["Bricolage Grotesque"],
+          "headline-xl": ["Bricolage Grotesque"],
+          "label-caps": ["Playfair Display"],
+          "body-small": ["Quicksand"],
+          "handwritten": ["Caveat", "cursive"]
         }
       }
     }
@@ -106,7 +106,7 @@
   // Handle Paper Texture and Background Music
   document.addEventListener('DOMContentLoaded', () => {
     // Texture
-    if(localStorage.getItem('paperTexture') === 'false') {
+    if (localStorage.getItem('paperTexture') === 'false') {
       const style = document.createElement('style');
       style.innerHTML = '.paper-texture { background-image: none !important; }';
       document.head.appendChild(style);
@@ -134,28 +134,28 @@
     }, 500);
 
     const startAudio = () => {
-      if (window.isLocalMusicPlaying) return; 
+      if (window.isLocalMusicPlaying) return;
       if (sessionStorage.getItem('musicUserPaused') === 'true') return;
-      
+
       const currentPath = window.location.pathname.split('/').pop() || 'index.html';
       const hasStartedBefore = sessionStorage.getItem('musicStarted') === 'true';
-      
+
       // Only start if we are on index.html, OR if it has already been started in a previous page
       if (currentPath === 'index.html' || hasStartedBefore || currentPath === '') {
         bgAudio.play().then(() => {
           sessionStorage.setItem('musicStarted', 'true');
-        }).catch(() => {});
+        }).catch(() => { });
       }
     };
-    
+
     // Aggressively attempt autoplay
     startAudio();
-    
+
     // Play on ANY user interaction, ALWAYS (if not paused by user)
     document.addEventListener('click', startAudio);
     document.addEventListener('keydown', startAudio);
     document.addEventListener('touchstart', startAudio);
-    document.addEventListener('scroll', startAudio, {once:true});
+    document.addEventListener('scroll', startAudio, { once: true });
 
     // Music Control Button
     const musicBtn = document.createElement('button');
@@ -179,7 +179,7 @@
     musicBtn.style.fontSize = '20px';
     musicBtn.style.transition = 'all 0.3s ease';
     document.body.appendChild(musicBtn);
-    
+
     const updateMusicIcon = () => {
       if (bgAudio.paused) {
         musicBtn.innerHTML = '🔇';
@@ -189,12 +189,12 @@
         musicBtn.style.opacity = '1';
       }
     };
-    
+
     bgAudio.addEventListener('play', updateMusicIcon);
     bgAudio.addEventListener('pause', updateMusicIcon);
     // initial set
     setTimeout(updateMusicIcon, 100);
-    
+
     musicBtn.addEventListener('click', (e) => {
       e.stopPropagation(); // prevent document click from triggering autoplay
       if (bgAudio.paused) {
@@ -253,11 +253,11 @@
     // 3. Select elements to animate across the site
     // We target headings, paragraphs, buttons, links, images, and card containers
     const elementsToAnimate = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, img, video:not(#intro-video), form, .bg-white\\/20, .polaroid-hover');
-    
+
     elementsToAnimate.forEach((el, i) => {
       // Exclude elements that shouldn't animate (like nav buttons, overlays)
       if (el.closest('#es-nav-trigger') || el.closest('#es-launchpad') || el.closest('#enter-overlay')) return;
-      
+
       el.classList.add('es-global-animate');
       // Stagger delays slightly for sibling elements
       el.style.transitionDelay = `${(i % 5) * 0.1}s`;

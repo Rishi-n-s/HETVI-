@@ -1,137 +1,182 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Love Letters | BAKUDI NI STORY</title>
-<meta name="description" content="Handwritten love letters, words that live beyond time."/>
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
-<link rel="apple-touch-icon" href="assets/images/icon-192.png">
-<meta name="theme-color" content="#d12450">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script src="assets/js/theme.js"></script>
-<style>
-  body { overflow-x: hidden; background-color: #faf9f6; }
-  .paper-letter { background-image: url("https://www.transparenttextures.com/patterns/notebook.png"); background-color: #fffdf8; }
-  .lined { background-image: linear-gradient(rgba(255,143,163,0.15) 1px, transparent 1px); background-size: 100% 2.5rem; }
-  
-  .letter-hover { transition: transform 0.5s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.5s ease; }
-  .letter-hover:hover { transform: translateY(-8px) scale(1.02) !important; box-shadow: 20px 20px 40px rgba(74,55,40,0.15) !important; z-index: 50; }
-  
-  .washi-tape {
-    background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, 0.2) 5px, rgba(255, 255, 255, 0.2) 10px);
-  }
-  
-  /* Staggered entrance animation for letters */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(40px) scale(0.95); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-  .animate-fade-up {
-    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-  }
-  
-  /* Party Popper Animation for 100 Languages */
-  @keyframes partyPop {
-    0% {
-      opacity: 0;
-      transform: translate(var(--popX), var(--popY)) scale(0.2) rotate(var(--popRot));
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Love Letters | BAKUDI NI STORY</title>
+  <meta name="description" content="Handwritten love letters, words that live beyond time." />
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
+  <link rel="apple-touch-icon" href="assets/images/icon-192.png">
+  <meta name="theme-color" content="#d12450">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="assets/js/theme.js"></script>
+  <style>
+    body {
+      overflow-x: hidden;
+      background-color: #faf9f6;
     }
-    60% {
-      opacity: 1;
-      transform: translate(calc(var(--popX) * 0.5), calc(var(--popY) * 0.5)) scale(1.1) rotate(calc(var(--popRot) * 0.5));
+
+    .paper-letter {
+      background-image: url("https://www.transparenttextures.com/patterns/notebook.png");
+      background-color: #fffdf8;
     }
-    100% {
-      opacity: 1;
-      transform: translate(0, 0) scale(1) rotate(0deg);
+
+    .lined {
+      background-image: linear-gradient(rgba(255, 143, 163, 0.15) 1px, transparent 1px);
+      background-size: 100% 2.5rem;
     }
-  }
-  .animate-party-pop {
-    animation: partyPop 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  }
-</style>
+
+    .letter-hover {
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
+    }
+
+    .letter-hover:hover {
+      transform: translateY(-8px) scale(1.02) !important;
+      box-shadow: 20px 20px 40px rgba(74, 55, 40, 0.15) !important;
+      z-index: 50;
+    }
+
+    .washi-tape {
+      background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255, 255, 255, 0.2) 5px, rgba(255, 255, 255, 0.2) 10px);
+    }
+
+    /* Staggered entrance animation for letters */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .animate-fade-up {
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    }
+
+    /* Party Popper Animation for 100 Languages */
+    @keyframes partyPop {
+      0% {
+        opacity: 0;
+        transform: translate(var(--popX), var(--popY)) scale(0.2) rotate(var(--popRot));
+      }
+
+      60% {
+        opacity: 1;
+        transform: translate(calc(var(--popX) * 0.5), calc(var(--popY) * 0.5)) scale(1.1) rotate(calc(var(--popRot) * 0.5));
+      }
+
+      100% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1) rotate(0deg);
+      }
+    }
+
+    .animate-party-pop {
+      animation: partyPop 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+  </style>
 </head>
+
 <body class="bg-background text-on-surface font-body-main min-h-screen overflow-x-hidden">
 
-<!-- Background Image (Consistent with the rest of the site) -->
-<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-  <div class="absolute inset-0 bg-cover bg-center opacity-40 scale-105" style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBm-E1ym0M2GzHooAWb5h8l453TronsIOtuzmAhFuKfIXX2xcPVz5MX1bwj2iD7cLIy5UNmZEOvpkwM1vanzAMG448gtczHA7_nKbSerHp-scbtg23KiSayZ_j8jwGcb5R0pIvfh7x_82FYkjCrzZop95u2ANYPyZMwaJIkbxJrjrukkQEpXN0FvcUV5zWrhEb1YwpBjhQh3bpRzfsquN9uTg_Hwrn6fMPXqYhUQjHI4R8Dg5xyZ5c')"></div>
-</div>
-
-<!-- Top AppBar -->
-<header class="fixed top-0 left-0 w-full z-40 bg-white/60 backdrop-blur-md border-b border-surface-variant/30">
-  <div class="flex justify-between items-center w-full py-4 px-10">
-    <span class="font-subtitle-serif text-subtitle-serif italic text-primary">BAKUDI NI STORY</span>
-    <div class="flex items-center gap-6">
-      <a href="music.html" class="text-primary hover:opacity-80"><span class="material-symbols-outlined">music_note</span></a>
-      <a href="settings.html" class="text-primary hover:opacity-80"><span class="material-symbols-outlined">palette</span></a>
+  <!-- Background Image (Consistent with the rest of the site) -->
+  <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+    <div class="absolute inset-0 bg-cover bg-center opacity-40 scale-105"
+      style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBm-E1ym0M2GzHooAWb5h8l453TronsIOtuzmAhFuKfIXX2xcPVz5MX1bwj2iD7cLIy5UNmZEOvpkwM1vanzAMG448gtczHA7_nKbSerHp-scbtg23KiSayZ_j8jwGcb5R0pIvfh7x_82FYkjCrzZop95u2ANYPyZMwaJIkbxJrjrukkQEpXN0FvcUV5zWrhEb1YwpBjhQh3bpRzfsquN9uTg_Hwrn6fMPXqYhUQjHI4R8Dg5xyZ5c')">
     </div>
   </div>
-</header>
 
-<!-- Main -->
-<main class="relative z-10 pt-32 pb-40 px-6 md:px-10 min-h-screen flex flex-col items-center">
-  <div class="text-center mb-16">
-    <h1 class="font-headline-xl text-[64px] text-primary text-center drop-shadow-sm mb-4 mt-6" style="font-family:'Playfair Display',serif;font-style:italic;">Words of the Soul</h1>
-    <p class="font-handwritten text-3xl text-on-surface-variant/80 max-w-xl mx-auto text-center">75 pieces of my heart, scattered across time.</p>
-  </div>
-
-  <!-- Letters Grid (Dynamically Populated) -->
-  <div id="letters-grid" class="columns-1 md:columns-2 lg:columns-3 gap-10 space-y-10 max-w-7xl w-full pb-20">
-    <!-- Letters injected here by JS -->
-  </div>
-
-  <!-- Quote and Magic Button -->
-  <div class="mt-16 flex flex-col items-center w-full max-w-4xl">
-    <div class="w-full bg-white/50 backdrop-blur-xl rounded-3xl p-8 border border-white/60 text-center shadow-lg mb-8">
-      <span class="material-symbols-outlined text-primary mb-4 block text-3xl">format_quote</span>
-      <p class="font-subtitle-serif text-2xl italic text-primary">"If I had to live my life again, I'd find you sooner so I could love you longer."</p>
+  <!-- Top AppBar -->
+  <header class="fixed top-0 left-0 w-full z-40 bg-white/60 backdrop-blur-md border-b border-surface-variant/30">
+    <div class="flex justify-between items-center w-full py-4 px-10">
+      <span class="font-subtitle-serif text-subtitle-serif italic text-primary">BAKUDI NI STORY</span>
+      <div class="flex items-center gap-6">
+        <a href="music.html" class="text-primary hover:opacity-80"><span
+            class="material-symbols-outlined">music_note</span></a>
+        <a href="settings.html" class="text-primary hover:opacity-80"><span
+            class="material-symbols-outlined">palette</span></a>
+      </div>
     </div>
-    
-    <button id="magic-btn" onclick="revealLanguages()" class="bg-primary hover:bg-primary-container text-white hover:text-primary-container font-subtitle-serif text-xl italic py-4 px-10 rounded-full shadow-[0_10px_20px_rgba(255,143,163,0.3)] transition-all duration-300 hover:scale-105 active:scale-95 border-2 border-white/50">
-      Click to see a secret...
-    </button>
-    
-    <!-- Container for 100 Languages (Hidden by default) -->
-    <div id="languages-container" class="w-full mt-12 hidden flex-wrap justify-center gap-4 pb-20">
-      <!-- Injected via JS -->
+  </header>
+
+  <!-- Main -->
+  <main class="relative z-10 pt-32 pb-40 px-6 md:px-10 min-h-screen flex flex-col items-center">
+    <div class="text-center mb-16">
+      <h1 class="font-headline-xl text-[64px] text-primary text-center drop-shadow-sm mb-4 mt-6"
+        style="font-family:'Playfair Display',serif;font-style:italic;">Words of the Soul</h1>
+      <p class="font-handwritten text-3xl text-on-surface-variant/80 max-w-xl mx-auto text-center">75 pieces of my
+        heart, scattered across time.</p>
     </div>
+
+    <!-- Letters Grid (Dynamically Populated) -->
+    <div id="letters-grid" class="columns-1 md:columns-2 lg:columns-3 gap-10 space-y-10 max-w-7xl w-full pb-20">
+      <!-- Letters injected here by JS -->
+    </div>
+
+    <!-- Quote and Magic Button -->
+    <div class="mt-16 flex flex-col items-center w-full max-w-4xl">
+      <div
+        class="w-full bg-white/50 backdrop-blur-xl rounded-3xl p-8 border border-white/60 text-center shadow-lg mb-8">
+        <span class="material-symbols-outlined text-primary mb-4 block text-3xl">format_quote</span>
+        <p class="font-subtitle-serif text-2xl italic text-primary">"If I had to live my life again, I'd find you sooner
+          so I could love you longer."</p>
+      </div>
+
+      <button id="magic-btn" onclick="revealLanguages()"
+        class="bg-primary hover:bg-primary-container text-white hover:text-primary-container font-subtitle-serif text-xl italic py-4 px-10 rounded-full shadow-[0_10px_20px_rgba(255,143,163,0.3)] transition-all duration-300 hover:scale-105 active:scale-95 border-2 border-white/50">
+        Click to see a secret...
+      </button>
+
+      <!-- Container for 100 Languages (Hidden by default) -->
+      <div id="languages-container" class="w-full mt-12 hidden flex-wrap justify-center gap-4 pb-20">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <div class="fixed bottom-6 right-10 z-50 flex items-center gap-4">
+    <a href="index.html"
+      class="w-12 h-12 bg-white/70 backdrop-blur-md rounded-full shadow-md border border-white/50 flex items-center justify-center text-primary hover:bg-white hover:scale-105 transition-all"><span
+        class="material-symbols-outlined">home</span></a>
   </div>
-</main>
 
-<!-- Bottom Nav -->
-<div class="fixed bottom-6 right-10 z-50 flex items-center gap-4">
-  <a href="index.html" class="w-12 h-12 bg-white/70 backdrop-blur-md rounded-full shadow-md border border-white/50 flex items-center justify-center text-primary hover:bg-white hover:scale-105 transition-all"><span class="material-symbols-outlined">home</span></a>
-</div>
+  <script src="assets/js/letters-data.js"></script>
+  <script>
+    // Populate the masonry grid with the 75 letters
+    const grid = document.getElementById('letters-grid');
+    const tapeColors = ['bg-primary-container/80', 'bg-secondary-container/80', 'bg-tertiary-container/80', 'bg-[#ffb7c5]/80', 'bg-[#baeaff]/80', 'bg-[#e2c6ff]/80'];
 
-<script src="assets/js/letters-data.js"></script>
-<script>
-  // Populate the masonry grid with the 75 letters
-  const grid = document.getElementById('letters-grid');
-  const tapeColors = ['bg-primary-container/80', 'bg-secondary-container/80', 'bg-tertiary-container/80', 'bg-[#ffb7c5]/80', 'bg-[#baeaff]/80', 'bg-[#e2c6ff]/80'];
-  
-  if (typeof lettersData !== 'undefined' && lettersData.length > 0) {
-    const shuffledLetters = [...lettersData].sort(() => 0.5 - Math.random());
-    
-    shuffledLetters.forEach((letter, index) => {
-      const randomRot = (Math.random() * 6) - 3; 
-      const randomTapeRot = (Math.random() * 16) - 8;
-      const tapeColor = tapeColors[index % tapeColors.length];
-      const entranceDelay = (index % 15) * 0.1;
-      
-      const itemDiv = document.createElement('div');
-      itemDiv.className = `break-inside-avoid w-full relative letter-hover group cursor-pointer mb-10 animate-fade-up`;
-      itemDiv.style.animationDelay = `${entranceDelay}s`;
-      itemDiv.style.transform = `rotate(${randomRot}deg)`;
-      
-      itemDiv.innerHTML = `
+    if (typeof lettersData !== 'undefined' && lettersData.length > 0) {
+      const shuffledLetters = [...lettersData].sort(() => 0.5 - Math.random());
+
+      shuffledLetters.forEach((letter, index) => {
+        const randomRot = (Math.random() * 6) - 3;
+        const randomTapeRot = (Math.random() * 16) - 8;
+        const tapeColor = tapeColors[index % tapeColors.length];
+        const entranceDelay = (index % 15) * 0.1;
+
+        const itemDiv = document.createElement('div');
+        itemDiv.className = `break-inside-avoid w-full relative letter-hover group cursor-pointer mb-10 animate-fade-up`;
+        itemDiv.style.animationDelay = `${entranceDelay}s`;
+        itemDiv.style.transform = `rotate(${randomRot}deg)`;
+
+        itemDiv.innerHTML = `
         <div class="relative paper-letter lined p-8 pt-10 shadow-[20px_20px_40px_rgba(74,55,40,0.08)] border border-outline-variant/30 h-full" onclick="openLetter(this)">
           <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-6 ${tapeColor} washi-tape z-20 shadow-sm" style="transform: translateX(-50%) rotate(${randomTapeRot}deg)"></div>
           <div class="flex justify-between items-start mb-4">
@@ -145,158 +190,158 @@
           </div>
         </div>
       `;
-      grid.appendChild(itemDiv);
-    });
-  } else {
-    grid.innerHTML = '<p class="text-center w-full col-span-full font-handwritten text-3xl">No letters found.</p>';
-  }
+        grid.appendChild(itemDiv);
+      });
+    } else {
+      grid.innerHTML = '<p class="text-center w-full col-span-full font-handwritten text-3xl">No letters found.</p>';
+    }
 
-  function openLetter(el) {
-    el.style.transform = 'scale(1.04)';
-    el.style.boxShadow = '30px 30px 60px rgba(74,55,40,0.15)';
-    setTimeout(() => { el.style.transform = ''; el.style.boxShadow = ''; }, 600);
-  }
+    function openLetter(el) {
+      el.style.transform = 'scale(1.04)';
+      el.style.boxShadow = '30px 30px 60px rgba(74,55,40,0.15)';
+      setTimeout(() => { el.style.transform = ''; el.style.boxShadow = ''; }, 600);
+    }
 
-  // 100 Languages Magic Button Logic
-  const hundredLanguages = [
-    "I love you Hetvi (English)",
-    "Je t'aime Hetvi (French - I love you Hetvi)",
-    "Te amo Hetvi (Spanish - I love you Hetvi)",
-    "Ich liebe dich Hetvi (German - I love you Hetvi)",
-    "Ti amo Hetvi (Italian - I love you Hetvi)",
-    "Eu te amo Hetvi (Portuguese - I love you Hetvi)",
-    "मैं तुमसे प्यार करता हूँ हेतवी (Hindi - I love you Hetvi)",
-    "હું તને પ્રેમ કરું છું હેતવી (Gujarati - I love you Hetvi)",
-    "أنا أحبك هيتفي (Arabic - I love you Hetvi)",
-    "我爱你 Hetvi (Mandarin - I love you Hetvi)",
-    "愛してる ヘトヴィ (Japanese - I love you Hetvi)",
-    "사랑해 헤트비 (Korean - I love you Hetvi)",
-    "Я тебя люблю Хетви (Russian - I love you Hetvi)",
-    "Σ'αγαπώ Hetvi (Greek - I love you Hetvi)",
-    "אני אוהב אותך הטווי (Hebrew - I love you Hetvi)",
-    "Seni seviyorum Hetvi (Turkish - I love you Hetvi)",
-    "Ik hou van jou Hetvi (Dutch - I love you Hetvi)",
-    "Jag älskar dig Hetvi (Swedish - I love you Hetvi)",
-    "Jeg elsker deg Hetvi (Norwegian - I love you Hetvi)",
-    "Jeg elsker dig Hetvi (Danish - I love you Hetvi)",
-    "Rakastan sinua Hetvi (Finnish - I love you Hetvi)",
-    "Kocham Cię Hetvi (Polish - I love you Hetvi)",
-    "Miluji tě Hetvi (Czech - I love you Hetvi)",
-    "Szeretlek Hetvi (Hungarian - I love you Hetvi)",
-    "Te iubesc Hetvi (Romanian - I love you Hetvi)",
-    "Обичам те Хетви (Bulgarian - I love you Hetvi)",
-    "Volim te Hetvi (Croatian - I love you Hetvi)",
-    "Ljubim te Hetvi (Slovenian - I love you Hetvi)",
-    "Milujem ťa Hetvi (Slovak - I love you Hetvi)",
-    "Ma armastan sind Hetvi (Estonian - I love you Hetvi)",
-    "Es tevi mīlu Hetvi (Latvian - I love you Hetvi)",
-    "Aš tave myliu Hetvi (Lithuanian - I love you Hetvi)",
-    "আমি তোমাকে ভালোবাসি হেতভি (Bengali - I love you Hetvi)",
-    "ನಾನು ನಿನ್ನನ್ನು ಪ್ರೀತಿಸುತ್ತೇನೆ ಹೇತ್ವಿ (Kannada - I love you Hetvi)",
-    "నేను నిన్ను ప్రేమిస్తున్నాను హేత్వి (Telugu - I love you Hetvi)",
-    "நான் உன்னை காதலிக்கிறேன் ஹேத்வி (Tamil - I love you Hetvi)",
-    "ഞാൻ നിന്നെ സ്നേഹിക്കുന്നു ഹേത്വി (Malayalam - I love you Hetvi)",
-    "मलाई तिमी मन पर्छ हेत्वी (Nepali - I love you Hetvi)",
-    "මම ඔයාට ආදරෙයි හෙට්වි (Sinhala - I love you Hetvi)",
-    "ผมรักคุณ Hetvi (Thai - I love you Hetvi)",
-    "Anh yêu em Hetvi (Vietnamese - I love you Hetvi)",
-    "Aku cinta kamu Hetvi (Indonesian - I love you Hetvi)",
-    "Saya sayang awak Hetvi (Malay - I love you Hetvi)",
-    "Mahal kita Hetvi (Tagalog - I love you Hetvi)",
-    "Kuv hlub koj Hetvi (Hmong - I love you Hetvi)",
-    "Taim i'ngra leat Hetvi (Irish - I love you Hetvi)",
-    "Rwy'n dy garu di Hetvi (Welsh - I love you Hetvi)",
-    "Tha gaol agam ort Hetvi (Scottish Gaelic - I love you Hetvi)",
-    "T'estimo Hetvi (Catalan - I love you Hetvi)",
-    "Maite zaitut Hetvi (Basque - I love you Hetvi)",
-    "Bihotzez maite zaitut Hetvi (Basque - I love you Hetvi)",
-    "Ti tengu cara Hetvi (Corsican - I love you Hetvi)",
-    "Ngiyakuthanda Hetvi (Zulu - I love you Hetvi)",
-    "Ndiya kuthanda Hetvi (Xhosa - I love you Hetvi)",
-    "Ke a go rata Hetvi (Tswana - I love you Hetvi)",
-    "Ndinokuda Hetvi (Shona - I love you Hetvi)",
-    "Nakupenda Hetvi (Swahili - I love you Hetvi)",
-    "Mi stinmo Hetvi (Esperanto - I love you Hetvi)",
-    "M'bi fe Hetvi (Bambara - I love you Hetvi)",
-    "Mi aime jou Hetvi (Haitian Creole - I love you Hetvi)",
-    "M'ap renmen ou Hetvi (Haitian - I love you Hetvi)",
-    "Mi luv yuh Hetvi (Jamaican Patois - I love you Hetvi)",
-    "Amo te Hetvi (Latin - I love you Hetvi)",
-    "Saranghamnida Hetvi (Korean Formal - I love you Hetvi)",
-    "Ngo oi nei Hetvi (Cantonese - I love you Hetvi)",
-    "Khnhom sralanh anak Hetvi (Khmer - I love you Hetvi)",
-    "Khoi huk chau Hetvi (Lao - I love you Hetvi)",
-    "Kei te aroha au ki a koe Hetvi (Maori - I love you Hetvi)",
-    "Aloha au ia 'oe Hetvi (Hawaiian - I love you Hetvi)",
-    "Ua here vau ia oe Hetvi (Tahitian - I love you Hetvi)",
-    "Ina son ki Hetvi (Hausa - I love you Hetvi)",
-    "Bi chamd khairtai Hetvi (Mongolian - I love you Hetvi)",
-    "Men seni sevaman Hetvi (Uzbek - I love you Hetvi)",
-    "Men seni suyemin Hetvi (Kazakh - I love you Hetvi)",
-    "Men seni sevirem Hetvi (Azerbaijani - I love you Hetvi)",
-    "Mina aashnam Hetvi (Pashto - I love you Hetvi)",
-    "Man tura dust medoram Hetvi (Tajik - I love you Hetvi)",
-    "Yes kez sirum em Hetvi (Armenian - I love you Hetvi)",
-    "Me shen mikvarxar Hetvi (Georgian - I love you Hetvi)",
-    "Ez hej te dikim Hetvi (Kurdish - I love you Hetvi)",
-    "Tora dust daram Hetvi (Persian - I love you Hetvi)",
-    "Te sakam Hetvi (Macedonian - I love you Hetvi)",
-    "Dua te Hetvi (Albanian - I love you Hetvi)",
-    "T'adore Hetvi (French - I love you Hetvi)",
-    "Te quiero Hetvi (Spanish - I love you Hetvi)",
-    "Mi amor Hetvi (Spanish - I love you Hetvi)",
-    "Daisuki Hetvi (Japanese - I love you Hetvi)",
-    "Aishiteru Hetvi (Japanese - I love you Hetvi)",
-    "Gihigugma tika Hetvi (Cebuano - I love you Hetvi)",
-    "Palangga tika Hetvi (Hiligaynon - I love you Hetvi)",
-    "Pinaangga tika Hetvi (Waray - I love you Hetvi)",
-    "Ay-ayaten ka Hetvi (Ilocano - I love you Hetvi)",
-    "Aroha Hetvi (Maori - I love you Hetvi)",
-    "Mutya Hetvi (Kapampangan - I love you Hetvi)",
-    "Amor Hetvi (Portuguese - I love you Hetvi)",
-    "Tresno Hetvi (Javanese - I love you Hetvi)",
-    "Nyaah Hetvi (Sundanese - I love you Hetvi)",
-    "Asih Hetvi (Balinese - I love you Hetvi)",
-    "Me do wo Hetvi (Twi - I love you Hetvi)",
-    "Mo nife re Hetvi (Yoruba - I love you Hetvi)"
-  ];
+    // 100 Languages Magic Button Logic
+    const hundredLanguages = [
+      "I love you Hetvi (English)",
+      "Je t'aime Hetvi (French - I love you Hetvi)",
+      "Te amo Hetvi (Spanish - I love you Hetvi)",
+      "Ich liebe dich Hetvi (German - I love you Hetvi)",
+      "Ti amo Hetvi (Italian - I love you Hetvi)",
+      "Eu te amo Hetvi (Portuguese - I love you Hetvi)",
+      "मैं तुमसे प्यार करता हूँ हेतवी (Hindi - I love you Hetvi)",
+      "હું તને પ્રેમ કરું છું હેતવી (Gujarati - I love you Hetvi)",
+      "أنا أحبك هيتفي (Arabic - I love you Hetvi)",
+      "我爱你 Hetvi (Mandarin - I love you Hetvi)",
+      "愛してる ヘトヴィ (Japanese - I love you Hetvi)",
+      "사랑해 헤트비 (Korean - I love you Hetvi)",
+      "Я тебя люблю Хетви (Russian - I love you Hetvi)",
+      "Σ'αγαπώ Hetvi (Greek - I love you Hetvi)",
+      "אני אוהב אותך הטווי (Hebrew - I love you Hetvi)",
+      "Seni seviyorum Hetvi (Turkish - I love you Hetvi)",
+      "Ik hou van jou Hetvi (Dutch - I love you Hetvi)",
+      "Jag älskar dig Hetvi (Swedish - I love you Hetvi)",
+      "Jeg elsker deg Hetvi (Norwegian - I love you Hetvi)",
+      "Jeg elsker dig Hetvi (Danish - I love you Hetvi)",
+      "Rakastan sinua Hetvi (Finnish - I love you Hetvi)",
+      "Kocham Cię Hetvi (Polish - I love you Hetvi)",
+      "Miluji tě Hetvi (Czech - I love you Hetvi)",
+      "Szeretlek Hetvi (Hungarian - I love you Hetvi)",
+      "Te iubesc Hetvi (Romanian - I love you Hetvi)",
+      "Обичам те Хетви (Bulgarian - I love you Hetvi)",
+      "Volim te Hetvi (Croatian - I love you Hetvi)",
+      "Ljubim te Hetvi (Slovenian - I love you Hetvi)",
+      "Milujem ťa Hetvi (Slovak - I love you Hetvi)",
+      "Ma armastan sind Hetvi (Estonian - I love you Hetvi)",
+      "Es tevi mīlu Hetvi (Latvian - I love you Hetvi)",
+      "Aš tave myliu Hetvi (Lithuanian - I love you Hetvi)",
+      "আমি তোমাকে ভালোবাসি হেতভি (Bengali - I love you Hetvi)",
+      "ನಾನು ನಿನ್ನನ್ನು ಪ್ರೀತಿಸುತ್ತೇನೆ ಹೇತ್ವಿ (Kannada - I love you Hetvi)",
+      "నేను నిన్ను ప్రేమిస్తున్నాను హేత్వి (Telugu - I love you Hetvi)",
+      "நான் உன்னை காதலிக்கிறேன் ஹேத்வி (Tamil - I love you Hetvi)",
+      "ഞാൻ നിന്നെ സ്നേഹിക്കുന്നു ഹേത്വി (Malayalam - I love you Hetvi)",
+      "मलाई तिमी मन पर्छ हेत्वी (Nepali - I love you Hetvi)",
+      "මම ඔයාට ආදරෙයි හෙට්වි (Sinhala - I love you Hetvi)",
+      "ผมรักคุณ Hetvi (Thai - I love you Hetvi)",
+      "Anh yêu em Hetvi (Vietnamese - I love you Hetvi)",
+      "Aku cinta kamu Hetvi (Indonesian - I love you Hetvi)",
+      "Saya sayang awak Hetvi (Malay - I love you Hetvi)",
+      "Mahal kita Hetvi (Tagalog - I love you Hetvi)",
+      "Kuv hlub koj Hetvi (Hmong - I love you Hetvi)",
+      "Taim i'ngra leat Hetvi (Irish - I love you Hetvi)",
+      "Rwy'n dy garu di Hetvi (Welsh - I love you Hetvi)",
+      "Tha gaol agam ort Hetvi (Scottish Gaelic - I love you Hetvi)",
+      "T'estimo Hetvi (Catalan - I love you Hetvi)",
+      "Maite zaitut Hetvi (Basque - I love you Hetvi)",
+      "Bihotzez maite zaitut Hetvi (Basque - I love you Hetvi)",
+      "Ti tengu cara Hetvi (Corsican - I love you Hetvi)",
+      "Ngiyakuthanda Hetvi (Zulu - I love you Hetvi)",
+      "Ndiya kuthanda Hetvi (Xhosa - I love you Hetvi)",
+      "Ke a go rata Hetvi (Tswana - I love you Hetvi)",
+      "Ndinokuda Hetvi (Shona - I love you Hetvi)",
+      "Nakupenda Hetvi (Swahili - I love you Hetvi)",
+      "Mi stinmo Hetvi (Esperanto - I love you Hetvi)",
+      "M'bi fe Hetvi (Bambara - I love you Hetvi)",
+      "Mi aime jou Hetvi (Haitian Creole - I love you Hetvi)",
+      "M'ap renmen ou Hetvi (Haitian - I love you Hetvi)",
+      "Mi luv yuh Hetvi (Jamaican Patois - I love you Hetvi)",
+      "Amo te Hetvi (Latin - I love you Hetvi)",
+      "Saranghamnida Hetvi (Korean Formal - I love you Hetvi)",
+      "Ngo oi nei Hetvi (Cantonese - I love you Hetvi)",
+      "Khnhom sralanh anak Hetvi (Khmer - I love you Hetvi)",
+      "Khoi huk chau Hetvi (Lao - I love you Hetvi)",
+      "Kei te aroha au ki a koe Hetvi (Maori - I love you Hetvi)",
+      "Aloha au ia 'oe Hetvi (Hawaiian - I love you Hetvi)",
+      "Ua here vau ia oe Hetvi (Tahitian - I love you Hetvi)",
+      "Ina son ki Hetvi (Hausa - I love you Hetvi)",
+      "Bi chamd khairtai Hetvi (Mongolian - I love you Hetvi)",
+      "Men seni sevaman Hetvi (Uzbek - I love you Hetvi)",
+      "Men seni suyemin Hetvi (Kazakh - I love you Hetvi)",
+      "Men seni sevirem Hetvi (Azerbaijani - I love you Hetvi)",
+      "Mina aashnam Hetvi (Pashto - I love you Hetvi)",
+      "Man tura dust medoram Hetvi (Tajik - I love you Hetvi)",
+      "Yes kez sirum em Hetvi (Armenian - I love you Hetvi)",
+      "Me shen mikvarxar Hetvi (Georgian - I love you Hetvi)",
+      "Ez hej te dikim Hetvi (Kurdish - I love you Hetvi)",
+      "Tora dust daram Hetvi (Persian - I love you Hetvi)",
+      "Te sakam Hetvi (Macedonian - I love you Hetvi)",
+      "Dua te Hetvi (Albanian - I love you Hetvi)",
+      "T'adore Hetvi (French - I love you Hetvi)",
+      "Te quiero Hetvi (Spanish - I love you Hetvi)",
+      "Mi amor Hetvi (Spanish - I love you Hetvi)",
+      "Daisuki Hetvi (Japanese - I love you Hetvi)",
+      "Aishiteru Hetvi (Japanese - I love you Hetvi)",
+      "Gihigugma tika Hetvi (Cebuano - I love you Hetvi)",
+      "Palangga tika Hetvi (Hiligaynon - I love you Hetvi)",
+      "Pinaangga tika Hetvi (Waray - I love you Hetvi)",
+      "Ay-ayaten ka Hetvi (Ilocano - I love you Hetvi)",
+      "Aroha Hetvi (Maori - I love you Hetvi)",
+      "Mutya Hetvi (Kapampangan - I love you Hetvi)",
+      "Amor Hetvi (Portuguese - I love you Hetvi)",
+      "Tresno Hetvi (Javanese - I love you Hetvi)",
+      "Nyaah Hetvi (Sundanese - I love you Hetvi)",
+      "Asih Hetvi (Balinese - I love you Hetvi)",
+      "Me do wo Hetvi (Twi - I love you Hetvi)",
+      "Mo nife re Hetvi (Yoruba - I love you Hetvi)"
+    ];
 
-  function revealLanguages() {
-    const btn = document.getElementById('magic-btn');
-    const container = document.getElementById('languages-container');
-    
-    // Hide button and show container
-    btn.style.display = 'none';
-    container.style.display = 'flex';
-    
-    // Render each phrase as a beautiful badge with staggered explosion animation
-    hundredLanguages.forEach((phrase, i) => {
-      const badge = document.createElement('div');
-      
-      // Generate explosion coordinates
-      const popX = (Math.random() - 0.5) * 800; // Shoot out up to 400px horizontally
-      const popY = (Math.random() - 1.0) * 800; // Shoot out mostly upwards
-      const popRot = (Math.random() - 0.5) * 720; // Spin wildly
-      
-      badge.style.setProperty('--popX', `${popX}px`);
-      badge.style.setProperty('--popY', `${popY}px`);
-      badge.style.setProperty('--popRot', `${popRot}deg`);
-      
-      badge.className = 'bg-white/95 backdrop-blur-sm border border-primary/40 text-primary font-handwritten text-[28px] leading-none px-6 py-3 rounded-full shadow-[0_5px_15px_rgba(209,36,80,0.15)] animate-party-pop opacity-0 z-50';
-      badge.style.animationDelay = `${i * 0.02}s`; // Faster stagger for explosion effect
-      badge.style.animationFillMode = 'forwards';
-      badge.textContent = phrase;
-      container.appendChild(badge);
-    });
-    
-    // Auto scroll down slowly as they generate
-    setTimeout(() => {
-      window.scrollBy({ top: 500, behavior: 'smooth' });
-    }, 500);
-  }
-</script>
-<script src="assets/js/nav.js"></script>
-<script src="assets/js/sounds.js"></script>
+    function revealLanguages() {
+      const btn = document.getElementById('magic-btn');
+      const container = document.getElementById('languages-container');
+
+      // Hide button and show container
+      btn.style.display = 'none';
+      container.style.display = 'flex';
+
+      // Render each phrase as a beautiful badge with staggered explosion animation
+      hundredLanguages.forEach((phrase, i) => {
+        const badge = document.createElement('div');
+
+        // Generate explosion coordinates
+        const popX = (Math.random() - 0.5) * 800; // Shoot out up to 400px horizontally
+        const popY = (Math.random() - 1.0) * 800; // Shoot out mostly upwards
+        const popRot = (Math.random() - 0.5) * 720; // Spin wildly
+
+        badge.style.setProperty('--popX', `${popX}px`);
+        badge.style.setProperty('--popY', `${popY}px`);
+        badge.style.setProperty('--popRot', `${popRot}deg`);
+
+        badge.className = 'bg-white/95 backdrop-blur-sm border border-primary/40 text-primary font-handwritten text-[28px] leading-none px-6 py-3 rounded-full shadow-[0_5px_15px_rgba(209,36,80,0.15)] animate-party-pop opacity-0 z-50';
+        badge.style.animationDelay = `${i * 0.02}s`; // Faster stagger for explosion effect
+        badge.style.animationFillMode = 'forwards';
+        badge.textContent = phrase;
+        container.appendChild(badge);
+      });
+
+      // Auto scroll down slowly as they generate
+      setTimeout(() => {
+        window.scrollBy({ top: 500, behavior: 'smooth' });
+      }, 500);
+    }
+  </script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/sounds.js"></script>
 </body>
-</html>
 
+</html>

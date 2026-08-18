@@ -53,7 +53,7 @@
     if (window.speechSynthesis) {
       // Cancel any currently playing speech to ensure only ONE sound comes out at a time
       window.speechSynthesis.cancel();
-      
+
       const utterance = new SpeechSynthesisUtterance("I love you");
       utterance.pitch = 2.0; // Very high pitch like a baby
       utterance.rate = 1.2; // Slightly fast

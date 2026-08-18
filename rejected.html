@@ -1,48 +1,67 @@
 <!DOCTYPE html>
 <html class="light" lang="en">
+
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Access Denied</title>
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
-<link rel="apple-touch-icon" href="assets/images/icon-192.png">
-<meta name="theme-color" content="#d12450">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script src="assets/js/theme.js"></script>
-<link rel="stylesheet" href="assets/css/shared.css"/>
-<style>
-  body { overflow-x: hidden; background-color: #faf9f6; }
-  .glass-card { backdrop-filter: blur(16px); background: rgba(255, 249, 246, 0.85); border: 1px solid rgba(209, 36, 80, 0.2); }
-</style>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Access Denied</title>
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/jpeg" href="assets/images/main.jpeg">
+  <link rel="apple-touch-icon" href="assets/images/icon-192.png">
+  <meta name="theme-color" content="#d12450">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Bakudi ❤️">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600&family=Caveat:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="assets/js/theme.js"></script>
+  <link rel="stylesheet" href="assets/css/shared.css" />
+  <style>
+    body {
+      overflow-x: hidden;
+      background-color: #faf9f6;
+    }
+
+    .glass-card {
+      backdrop-filter: blur(16px);
+      background: rgba(255, 249, 246, 0.85);
+      border: 1px solid rgba(209, 36, 80, 0.2);
+    }
+  </style>
 </head>
-<body class="bg-background text-on-surface font-body-main relative flex items-center justify-center min-h-screen overflow-x-hidden">
 
-<!-- Darker Background -->
-<div class="fixed inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
-  <div class="w-full h-full bg-cover bg-center scale-105 transform blur-[8px]" style="background-image:url('assets/images/landing_bg_couple.png')"></div>
-  <div class="absolute inset-0 bg-black/70 z-10"></div>
-</div>
+<body
+  class="bg-background text-on-surface font-body-main relative flex items-center justify-center min-h-screen overflow-x-hidden">
 
-<!-- Rejection Box -->
-<div class="relative z-10 glass-card rounded-2xl p-10 md:p-14 shadow-[0_20px_50px_rgba(209,36,80,0.3)] flex flex-col items-center max-w-lg w-full text-center mx-4">
-  <span class="material-symbols-outlined text-[80px] text-primary mb-6" style="font-variation-settings: 'FILL' 1;">heart_broken</span>
-  <h1 class="font-script text-[42px] text-primary leading-tight mb-6 text-red-600">Access Denied!</h1>
-  
-  <p class="font-subtitle-serif italic text-on-surface-variant mb-10 text-xl leading-relaxed">
-    You are not my bakudi! You can't see anything in this site.
-  </p>
+  <!-- Darker Background -->
+  <div class="fixed inset-0 w-full h-full z-0 overflow-hidden pointer-events-none">
+    <div class="w-full h-full bg-cover bg-center scale-105 transform blur-[8px]"
+      style="background-image:url('assets/images/landing_bg_couple.png')"></div>
+    <div class="absolute inset-0 bg-black/70 z-10"></div>
+  </div>
 
-  <button onclick="window.location.href='lock.html'" class="w-full bg-surface-variant/20 border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-full py-4 font-label-caps tracking-widest shadow-sm transition-all mt-2 font-bold">
-    TRY AGAIN
-  </button>
-</div>
+  <!-- Rejection Box -->
+  <div
+    class="relative z-10 glass-card rounded-2xl p-10 md:p-14 shadow-[0_20px_50px_rgba(209,36,80,0.3)] flex flex-col items-center max-w-lg w-full text-center mx-4">
+    <span class="material-symbols-outlined text-[80px] text-primary mb-6"
+      style="font-variation-settings: 'FILL' 1;">heart_broken</span>
+    <h1 class="font-script text-[42px] text-primary leading-tight mb-6 text-red-600">Access Denied!</h1>
+
+    <p class="font-subtitle-serif italic text-on-surface-variant mb-10 text-xl leading-relaxed">
+      You are not my bakudi! You can't see anything in this site.
+    </p>
+
+    <button onclick="window.location.href='lock.html'"
+      class="w-full bg-surface-variant/20 border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-full py-4 font-label-caps tracking-widest shadow-sm transition-all mt-2 font-bold">
+      TRY AGAIN
+    </button>
+  </div>
 
 </body>
+
 </html>
