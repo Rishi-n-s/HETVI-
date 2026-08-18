@@ -40,6 +40,8 @@ let isCaller = false;
 let activeCallType = "video"; // "video" | "audio"
 let isMicMuted = false;
 let isCameraOff = false;
+let isLocalMirrored = localStorage.getItem("webrtc_mirror_local") === "true"; // False by default = normal non-mirror view
+let isRemoteMirrored = false;
 let currentFacingMode = "user";
 let iceCandidateQueue = [];
 
@@ -89,6 +91,9 @@ let callToggleMicBtn = null;
 let callToggleMicIcon = null;
 let callToggleCamBtn = null;
 let callToggleCamIcon = null;
+let callToggleMirrorBtn = null;
+let callToggleMirrorIcon = null;
+let localMirrorBtn = null;
 let callSwitchCamBtn = null;
 let callHangupBtn = null;
 
@@ -103,6 +108,7 @@ export function initWebRTC(user, profile, firestoreDb, showToast) {
 
     bindDOMElements();
     bindEventHandlers();
+    applyMirrorStyles();
     listenForIncomingCalls();
 
     // Initialize Watch Together Engine
@@ -150,6 +156,9 @@ function bindDOMElements() {
     callToggleMicIcon = document.getElementById("call-toggle-mic-icon");
     callToggleCamBtn = document.getElementById("call-toggle-cam-btn");
     callToggleCamIcon = document.getElementById("call-toggle-cam-icon");
+    callToggleMirrorBtn = document.getElementById("call-toggle-mirror-btn");
+    callToggleMirrorIcon = document.getElementById("call-toggle-mirror-icon");
+    localMirrorBtn = document.getElementById("local-mirror-btn");
     callSwitchCamBtn = document.getElementById("call-switch-cam-btn");
     callHangupBtn = document.getElementById("call-hangup-btn");
 }
@@ -161,6 +170,11 @@ function bindEventHandlers() {
 
     if (callToggleMicBtn) callToggleMicBtn.addEventListener("click", toggleMicrophone);
     if (callToggleCamBtn) callToggleCamBtn.addEventListener("click", toggleCamera);
+    if (callToggleMirrorBtn) callToggleMirrorBtn.addEventListener("click", toggleLocalMirror);
+    if (localMirrorBtn) localMirrorBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleLocalMirror();
+    });
     if (callSwitchCamBtn) callSwitchCamBtn.addEventListener("click", switchCameraDevice);
 }
 
@@ -283,6 +297,7 @@ export async function startCall(type = "video") {
         localStream = await navigator.mediaDevices.getUserMedia(constraints);
         if (localVideo) {
             localVideo.srcObject = localStream;
+            applyMirrorStyles();
         }
 
         // 2. Setup RTCPeerConnection
@@ -446,7 +461,10 @@ async function acceptIncomingCall() {
         };
 
         localStream = await navigator.mediaDevices.getUserMedia(constraints);
-        if (localVideo) localVideo.srcObject = localStream;
+        if (localVideo) {
+            localVideo.srcObject = localStream;
+            applyMirrorStyles();
+        }
 
         // 2. Setup RTCPeerConnection
         peerConnection = new RTCPeerConnection(RTC_CONFIG);
@@ -661,6 +679,36 @@ function toggleCamera() {
     }
 }
 
+function toggleLocalMirror() {
+    isLocalMirrored = !isLocalMirrored;
+    localStorage.setItem("webrtc_mirror_local", isLocalMirrored ? "true" : "false");
+    applyMirrorStyles();
+    showToastFn(
+        isLocalMirrored ? "Mirror mode enabled" : "Normal view (mirror removed)",
+        "info",
+        1500
+    );
+}
+
+function applyMirrorStyles() {
+    if (localVideo) {
+        localVideo.classList.toggle("mirrored", isLocalMirrored && currentFacingMode === "user");
+    }
+    if (remoteVideo) {
+        remoteVideo.classList.toggle("mirrored", isRemoteMirrored);
+    }
+    if (callToggleMirrorBtn) {
+        callToggleMirrorBtn.classList.toggle("bg-pink-600", isLocalMirrored);
+        callToggleMirrorBtn.classList.toggle("hover:bg-pink-700", isLocalMirrored);
+        callToggleMirrorBtn.classList.toggle("bg-white/20", !isLocalMirrored);
+        callToggleMirrorBtn.classList.toggle("hover:bg-white/30", !isLocalMirrored);
+    }
+    if (localMirrorBtn) {
+        localMirrorBtn.classList.toggle("bg-pink-600", isLocalMirrored);
+        localMirrorBtn.classList.toggle("bg-black/60", !isLocalMirrored);
+    }
+}
+
 async function switchCameraDevice() {
     if (!localStream || activeCallType !== "video") return;
 
@@ -686,8 +734,11 @@ async function switchCameraDevice() {
         oldVideoTrack.stop();
         localStream.addTrack(newVideoTrack);
 
-        if (localVideo) localVideo.srcObject = localStream;
-        showToastFn("Camera flipped", "info", 1500);
+        if (localVideo) {
+            localVideo.srcObject = localStream;
+            applyMirrorStyles();
+        }
+        showToastFn(currentFacingMode === "user" ? "Front Camera" : "Back Camera", "info", 1500);
 
     } catch (err) {
         console.warn("Could not switch camera:", err);
@@ -716,7 +767,10 @@ function showActiveCallUI(partnerName, statusText) {
     if (localVideoContainer) localVideoContainer.classList.toggle("hidden", !isVideo);
     if (audioCallStage) audioCallStage.classList.toggle("hidden", isVideo);
     if (callToggleCamBtn) callToggleCamBtn.classList.toggle("hidden", !isVideo);
+    if (callToggleMirrorBtn) callToggleMirrorBtn.classList.toggle("hidden", !isVideo);
     if (callSwitchCamBtn) callSwitchCamBtn.classList.toggle("hidden", !isVideo);
+
+    applyMirrorStyles();
 
     if (audioStageName) audioStageName.textContent = partnerName;
 
