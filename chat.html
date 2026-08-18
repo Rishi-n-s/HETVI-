@@ -22,11 +22,10 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Quicksand:wght@500;600;700&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;700&display=swap"
     rel="stylesheet" />
-
-  <!-- Material Symbols Icons -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+  <!-- Material Symbols & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
     rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -61,13 +60,35 @@
   <!-- Theme Script & Shared Styles -->
   <script src="assets/js/theme.js"></script>
   <link rel="stylesheet" href="assets/css/shared.css" />
+  <link rel="stylesheet" href="assets/css/transitions.css">
 
   <style>
+    /* Robust Material Symbols & Icons display on all mobile & desktop viewports */
+    .material-symbols-outlined,
+    .material-icons {
+      font-family: 'Material Symbols Outlined', 'Material Icons' !important;
+      font-weight: normal;
+      font-style: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+      vertical-align: middle;
+    }
+
     body {
       background-color: #faf9f6;
       background-image: radial-gradient(circle at 10% 20%, rgba(255, 183, 197, 0.25) 0%, transparent 40%),
-                        radial-gradient(circle at 90% 80%, rgba(186, 234, 255, 0.2) 0%, transparent 40%),
-                        url("https://www.transparenttextures.com/patterns/natural-paper.png");
+        radial-gradient(circle at 90% 80%, rgba(186, 234, 255, 0.2) 0%, transparent 40%),
+        url("https://www.transparenttextures.com/patterns/natural-paper.png");
       overflow-x: hidden;
     }
 
@@ -114,13 +135,16 @@
     .chat-scroll::-webkit-scrollbar {
       width: 5px;
     }
+
     .chat-scroll::-webkit-scrollbar-track {
       background: transparent;
     }
+
     .chat-scroll::-webkit-scrollbar-thumb {
       background: rgba(134, 78, 90, 0.2);
       border-radius: 10px;
     }
+
     .chat-scroll::-webkit-scrollbar-thumb:hover {
       background: rgba(134, 78, 90, 0.4);
     }
@@ -135,6 +159,7 @@
         opacity: 0;
         transform: translateY(8px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -227,6 +252,7 @@
         opacity: 0;
         transform: translateY(-16px) scale(0.92);
       }
+
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -347,10 +373,12 @@
         transform: scale(0.95);
         box-shadow: 0 0 0 0 rgba(209, 36, 80, 0.6);
       }
+
       70% {
         transform: scale(1.05);
         box-shadow: 0 0 0 25px rgba(209, 36, 80, 0);
       }
+
       100% {
         transform: scale(0.95);
         box-shadow: 0 0 0 0 rgba(209, 36, 80, 0);
@@ -371,26 +399,34 @@
   </style>
 </head>
 
-<body class="font-sans antialiased text-[#4a3b32] h-screen h-[100dvh] overflow-hidden flex flex-col pt-16 md:pt-20 pb-3 md:pb-5 px-3 md:px-8">
+<body
+  class="font-sans antialiased text-[#4a3b32] h-screen h-[100dvh] overflow-hidden flex flex-col pt-16 md:pt-20 pb-3 md:pb-5 px-3 md:px-8">
 
   <!-- Chat Container -->
-  <main class="max-w-6xl w-full mx-auto flex-1 flex flex-col h-full min-h-0 rounded-3xl overflow-hidden glass-chat-panel border border-white/60 shadow-2xl relative">
-    
+  <main
+    class="max-w-6xl w-full mx-auto flex-1 flex flex-col h-full min-h-0 rounded-3xl overflow-hidden glass-chat-panel border border-white/60 shadow-2xl relative">
+
     <div class="flex flex-1 h-full min-h-0 overflow-hidden">
-      
+
       <!-- ========================================== -->
       <!-- 1. LEFT SIDEBAR: Chat List & Search       -->
       <!-- ========================================== -->
-      <aside class="w-full md:w-80 lg:w-96 flex flex-col h-full min-h-0 glass-chat-sidebar transition-all duration-300 z-10" id="chat-sidebar">
-        
+      <aside
+        class="w-full md:w-80 lg:w-96 flex flex-col h-full min-h-0 glass-chat-sidebar transition-all duration-300 z-10"
+        id="chat-sidebar">
+
         <!-- Sidebar Header -->
         <div class="p-4 md:p-5 border-b border-white/40 flex-shrink-0 flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-pink-300 to-rose-400 p-[2px] shadow-sm flex-shrink-0">
-              <img src="assets/images/main.jpeg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'" alt="My Profile" class="w-full h-full object-cover rounded-full" />
+            <div
+              class="w-10 h-10 rounded-full bg-gradient-to-tr from-pink-300 to-rose-400 p-[2px] shadow-sm flex-shrink-0">
+              <img src="assets/images/main.jpeg"
+                onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80'"
+                alt="My Profile" class="w-full h-full object-cover rounded-full" />
             </div>
             <div>
-              <h2 class="font-quicksand font-bold text-lg text-primary-dark tracking-tight leading-none">Sweet Messages</h2>
+              <h2 class="font-quicksand font-bold text-lg text-primary-dark tracking-tight leading-none">Sweet Messages
+              </h2>
               <span class="text-xs text-primary font-medium flex items-center gap-1 mt-0.5">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Online
               </span>
@@ -399,10 +435,12 @@
 
           <!-- Authenticated User Profile & Sign Out -->
           <div class="flex items-center gap-1.5 flex-shrink-0">
-            <span id="current-user-name" class="px-2.5 py-1 text-xs font-quicksand font-semibold bg-white/70 text-primary-dark rounded-full border border-pink-200 shadow-xs">
+            <span id="current-user-name"
+              class="px-2.5 py-1 text-xs font-quicksand font-semibold bg-white/70 text-primary-dark rounded-full border border-pink-200 shadow-xs">
               Loading...
             </span>
-            <button id="sign-out-btn" title="Sign Out" class="p-1.5 text-xs font-quicksand bg-white/60 hover:bg-rose-100 text-rose-600 rounded-full border border-pink-200 transition-all flex items-center justify-center">
+            <button id="sign-out-btn" title="Sign Out"
+              class="p-1.5 text-xs font-quicksand bg-white/60 hover:bg-rose-100 text-rose-600 rounded-full border border-pink-200 transition-all flex items-center justify-center">
               <span class="material-symbols-outlined text-[16px]">logout</span>
             </button>
           </div>
@@ -411,26 +449,28 @@
         <!-- Search Bar -->
         <div class="p-3.5 border-b border-white/30 flex-shrink-0">
           <div class="relative flex items-center">
-            <span class="material-symbols-outlined absolute left-3 text-gray-400 text-lg pointer-events-none">search</span>
-            <input 
-              type="text" 
-              id="search-input"
-              placeholder="Search conversations..." 
-              class="w-full pl-9 pr-4 py-2 text-sm bg-white/70 hover:bg-white/90 focus:bg-white border border-pink-100 rounded-full focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all placeholder:text-gray-400 font-sans"
-            />
+            <span
+              class="material-symbols-outlined absolute left-3 text-gray-400 text-lg pointer-events-none">search</span>
+            <input type="text" id="search-input" placeholder="Search conversations..."
+              class="w-full pl-9 pr-4 py-2 text-sm bg-white/70 hover:bg-white/90 focus:bg-white border border-pink-100 rounded-full focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all placeholder:text-gray-400 font-sans" />
           </div>
         </div>
 
         <!-- Chat List Items -->
         <div class="flex-1 min-h-0 overflow-y-auto chat-scroll p-2 space-y-1" id="conversations-list">
-          
+
           <!-- Conversation 1 (Default Active) -->
-          <div class="chat-item active flex items-center gap-3 p-3 rounded-2xl cursor-pointer hover:bg-white/50 transition-all border border-transparent" data-chat-id="our_story_room" data-chat-name="Bakudi ❤️" data-chat-status="Always in my heart">
+          <div
+            class="chat-item active flex items-center gap-3 p-3 rounded-2xl cursor-pointer hover:bg-white/50 transition-all border border-transparent"
+            data-chat-id="our_story_room" data-chat-name="Bakudi ❤️" data-chat-status="Always in my heart">
             <div class="relative flex-shrink-0">
               <div class="w-12 h-12 rounded-full overflow-hidden shadow-sm border border-white">
-                <img src="assets/images/main.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=120&auto=format&fit=crop&q=80'" alt="Bakudi" class="w-full h-full object-cover" />
+                <img src="assets/images/main.jpeg"
+                  onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=120&auto=format&fit=crop&q=80'"
+                  alt="Bakudi" class="w-full h-full object-cover" />
               </div>
-              <span class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white"></span>
+              <span
+                class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-white"></span>
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex justify-between items-baseline mb-0.5">
@@ -442,9 +482,12 @@
           </div>
 
           <!-- Conversation 2 -->
-          <div class="chat-item flex items-center gap-3 p-3 rounded-2xl cursor-pointer hover:bg-white/50 transition-all border border-transparent" data-chat-id="test" data-chat-name="Test Firestore Room" data-chat-status="Live Sync">
+          <div
+            class="chat-item flex items-center gap-3 p-3 rounded-2xl cursor-pointer hover:bg-white/50 transition-all border border-transparent"
+            data-chat-id="test" data-chat-name="Test Firestore Room" data-chat-status="Live Sync">
             <div class="relative flex-shrink-0">
-              <div class="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-tr from-purple-200 to-pink-200 flex items-center justify-center text-primary font-bold shadow-sm border border-white">
+              <div
+                class="w-12 h-12 rounded-full overflow-hidden bg-gradient-to-tr from-purple-200 to-pink-200 flex items-center justify-center text-primary font-bold shadow-sm border border-white">
                 <span class="material-symbols-outlined text-xl">cloud_sync</span>
               </div>
             </div>
@@ -467,26 +510,33 @@
       <section class="flex-1 flex flex-col h-full min-h-0 bg-white/40 overflow-hidden relative" id="chat-main-area">
 
         <!-- Chat Header (Fixed at top) -->
-        <div class="p-3.5 md:p-4 border-b border-white/50 flex-shrink-0 flex items-center justify-between bg-white/40 backdrop-blur-md z-10" id="chat-header">
+        <div
+          class="p-3.5 md:p-4 border-b border-white/50 flex-shrink-0 flex items-center justify-between bg-white/40 backdrop-blur-md z-10"
+          id="chat-header">
           <div class="flex items-center gap-3">
             <!-- Mobile back button to view sidebar -->
-            <button id="mobile-back-btn" class="md:hidden p-1.5 text-gray-600 hover:text-primary rounded-full hover:bg-white/60 transition-all">
+            <button id="mobile-back-btn"
+              class="md:hidden p-1.5 text-gray-600 hover:text-primary rounded-full hover:bg-white/60 transition-all">
               <span class="material-symbols-outlined text-2xl">arrow_back</span>
             </button>
 
             <div class="relative">
               <div class="w-10 h-10 rounded-full overflow-hidden shadow-sm border border-white flex-shrink-0">
-                <img id="chat-header-avatar" src="assets/images/main.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=120&auto=format&fit=crop&q=80'" alt="Active User" class="w-full h-full object-cover" />
+                <img id="chat-header-avatar" src="assets/images/main.jpeg"
+                  onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=120&auto=format&fit=crop&q=80'"
+                  alt="Active User" class="w-full h-full object-cover" />
               </div>
             </div>
 
             <div>
-              <h2 id="chat-header-title" class="font-quicksand font-bold text-base md:text-lg text-gray-800 leading-tight">Bakudi ❤️</h2>
+              <h2 id="chat-header-title"
+                class="font-quicksand font-bold text-base md:text-lg text-gray-800 leading-tight">Bakudi ❤️</h2>
               <p id="chat-header-subtitle" class="text-xs text-emerald-600 font-medium flex items-center gap-1">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Connected in Real-time
               </p>
               <!-- Typing Status Indicator -->
-              <p id="typing-indicator" class="hidden text-xs text-primary font-semibold animate-pulse flex items-center gap-1">
+              <p id="typing-indicator"
+                class="hidden text-xs text-primary font-semibold animate-pulse flex items-center gap-1">
                 <span class="inline-flex gap-0.5 items-center">
                   <span class="w-1.5 h-1.5 bg-primary rounded-full animate-bounce"></span>
                   <span class="w-1.5 h-1.5 bg-primary rounded-full animate-bounce" style="animation-delay:0.2s"></span>
@@ -497,22 +547,30 @@
             </div>
           </div>
 
-          <!-- Header Actions -->
-          <div class="flex items-center gap-1 md:gap-2 text-primary-dark">
-            <button type="button" id="audio-call-btn" class="p-2 rounded-full hover:bg-white/60 transition-all text-primary-dark hover:text-primary" title="Start Audio Call">
-              <span class="material-symbols-outlined text-xl">call</span>
+          <!-- Header Actions (Fully Responsive) -->
+          <div class="flex items-center gap-0.5 sm:gap-1 md:gap-2 text-primary-dark flex-shrink-0">
+            <button type="button" id="audio-call-btn"
+              class="p-1.5 sm:p-2 flex-shrink-0 rounded-full hover:bg-white/60 active:scale-95 transition-all text-primary-dark hover:text-primary flex items-center justify-center"
+              title="Start Audio Call">
+              <span class="material-symbols-outlined text-lg sm:text-xl">call</span>
             </button>
-            <button type="button" id="video-call-btn" class="p-2 rounded-full hover:bg-white/60 transition-all text-primary-dark hover:text-primary" title="Start Video Call">
-              <span class="material-symbols-outlined text-xl">videocam</span>
+            <button type="button" id="video-call-btn"
+              class="p-1.5 sm:p-2 flex-shrink-0 rounded-full hover:bg-white/60 active:scale-95 transition-all text-primary-dark hover:text-primary flex items-center justify-center"
+              title="Start Video Call">
+              <span class="material-symbols-outlined text-lg sm:text-xl">videocam</span>
             </button>
-            <button type="button" id="poll-btn" class="p-2 rounded-full hover:bg-white/60 transition-all text-primary-dark hover:text-primary" title="Create Love Poll">
-              <span class="material-symbols-outlined text-xl">how_to_vote</span>
+            <button type="button" id="poll-btn"
+              class="p-1.5 sm:p-2 flex-shrink-0 rounded-full hover:bg-white/60 active:scale-95 transition-all text-primary-dark hover:text-primary flex items-center justify-center"
+              title="Create Love Poll">
+              <span class="material-symbols-outlined text-lg sm:text-xl">how_to_vote</span>
             </button>
-            <button type="button" class="p-2 rounded-full hover:bg-white/60 transition-all" title="Favorite">
-              <span class="material-symbols-outlined text-xl text-primary" style="font-variation-settings: 'FILL' 1;">favorite</span>
+            <button type="button" class="p-1.5 sm:p-2 flex-shrink-0 rounded-full hover:bg-white/60 active:scale-95 transition-all flex items-center justify-center" title="Favorite">
+              <span class="material-symbols-outlined text-lg sm:text-xl text-primary"
+                style="font-variation-settings: 'FILL' 1;">favorite</span>
             </button>
-            <a href="gallery.html" class="p-2 rounded-full hover:bg-white/60 transition-all no-underline text-inherit" title="Open Memories">
-              <span class="material-symbols-outlined text-xl">photo_library</span>
+            <a href="gallery.html" class="p-1.5 sm:p-2 flex-shrink-0 rounded-full hover:bg-white/60 active:scale-95 transition-all no-underline text-inherit flex items-center justify-center"
+              title="Open Memories">
+              <span class="material-symbols-outlined text-lg sm:text-xl">photo_library</span>
             </a>
           </div>
         </div>
@@ -522,24 +580,30 @@
           <!-- Messages will be rendered here dynamically via onSnapshot -->
           <div class="flex items-center justify-center h-full text-center p-6 sm:p-8" id="empty-state">
             <div class="max-w-sm flex flex-col items-center">
-              <div class="w-16 h-16 rounded-full bg-pink-100/80 text-primary flex items-center justify-center mb-3 shadow-inner">
+              <div
+                class="w-16 h-16 rounded-full bg-pink-100/80 text-primary flex items-center justify-center mb-3 shadow-inner">
                 <span class="material-symbols-outlined text-3xl">favorite</span>
               </div>
               <h3 class="font-display font-medium text-lg text-primary-dark mb-1">Our Story Chat</h3>
-              <p class="text-xs text-gray-500 leading-relaxed font-sans mb-4">Start a sweet conversation or share a memory together.</p>
-              
+              <p class="text-xs text-gray-500 leading-relaxed font-sans mb-4">Start a sweet conversation or share a
+                memory together.</p>
+
               <!-- Interactive Suggestion Pills -->
               <div class="flex flex-wrap gap-2 justify-center">
-                <button type="button" class="chat-prompt-pill px-3 py-1.5 bg-white/80 hover:bg-pink-100/80 border border-pink-200/80 text-xs font-quicksand font-semibold text-primary-dark rounded-full shadow-xs hover:scale-105 transition-all">
+                <button type="button"
+                  class="chat-prompt-pill px-3 py-1.5 bg-white/80 hover:bg-pink-100/80 border border-pink-200/80 text-xs font-quicksand font-semibold text-primary-dark rounded-full shadow-xs hover:scale-105 transition-all">
                   I miss you! ❤️
                 </button>
-                <button type="button" class="chat-prompt-pill px-3 py-1.5 bg-white/80 hover:bg-pink-100/80 border border-pink-200/80 text-xs font-quicksand font-semibold text-primary-dark rounded-full shadow-xs hover:scale-105 transition-all">
+                <button type="button"
+                  class="chat-prompt-pill px-3 py-1.5 bg-white/80 hover:bg-pink-100/80 border border-pink-200/80 text-xs font-quicksand font-semibold text-primary-dark rounded-full shadow-xs hover:scale-105 transition-all">
                   Thinking of you ✨
                 </button>
-                <button type="button" class="chat-prompt-pill px-3 py-1.5 bg-white/80 hover:bg-pink-100/80 border border-pink-200/80 text-xs font-quicksand font-semibold text-primary-dark rounded-full shadow-xs hover:scale-105 transition-all">
+                <button type="button"
+                  class="chat-prompt-pill px-3 py-1.5 bg-white/80 hover:bg-pink-100/80 border border-pink-200/80 text-xs font-quicksand font-semibold text-primary-dark rounded-full shadow-xs hover:scale-105 transition-all">
                   How was your day? 🌸
                 </button>
-                <button type="button" class="chat-prompt-pill px-3 py-1.5 bg-white/80 hover:bg-pink-100/80 border border-pink-200/80 text-xs font-quicksand font-semibold text-primary-dark rounded-full shadow-xs hover:scale-105 transition-all">
+                <button type="button"
+                  class="chat-prompt-pill px-3 py-1.5 bg-white/80 hover:bg-pink-100/80 border border-pink-200/80 text-xs font-quicksand font-semibold text-primary-dark rounded-full shadow-xs hover:scale-105 transition-all">
                   Send a photo 📸
                 </button>
               </div>
@@ -551,50 +615,65 @@
         <button id="scroll-bottom-btn" type="button" title="Jump to latest message">
           <span class="material-symbols-outlined text-base">arrow_downward</span>
           <span>New Messages</span>
-          <span id="unread-count-badge" class="hidden px-1.5 py-0.5 bg-[#d12450] text-white text-[10px] rounded-full font-bold">1</span>
+          <span id="unread-count-badge"
+            class="hidden px-1.5 py-0.5 bg-[#d12450] text-white text-[10px] rounded-full font-bold">1</span>
         </button>
 
         <!-- Uploading Progress Bar (Hidden by default) -->
-        <div id="upload-progress-container" class="hidden px-4 py-2 bg-pink-50/90 border-t border-pink-200 flex items-center justify-between gap-3 text-xs text-primary font-quicksand font-semibold flex-shrink-0">
+        <div id="upload-progress-container"
+          class="hidden px-4 py-2 bg-pink-50/90 border-t border-pink-200 flex items-center justify-between gap-3 text-xs text-primary font-quicksand font-semibold flex-shrink-0">
           <div class="flex items-center gap-2">
             <span class="material-symbols-outlined text-base animate-spin">sync</span>
             <span id="upload-progress-text">Uploading media... 0%</span>
           </div>
           <div class="w-32 bg-pink-200 rounded-full h-2 overflow-hidden">
-            <div id="upload-progress-fill" class="bg-primary h-full rounded-full transition-all duration-200" style="width: 0%"></div>
+            <div id="upload-progress-fill" class="bg-primary h-full rounded-full transition-all duration-200"
+              style="width: 0%"></div>
           </div>
         </div>
 
         <!-- Typing / Quick Emoji Bar (Fixed above input) -->
-        <div class="px-4 py-1.5 flex items-center gap-2 overflow-x-auto flex-shrink-0 bg-white/20 border-t border-white/30 text-sm">
+        <div
+          class="px-4 py-1.5 flex items-center gap-2 overflow-x-auto flex-shrink-0 bg-white/20 border-t border-white/30 text-sm">
           <span class="text-xs text-gray-400 font-quicksand font-semibold pr-1">Quick Love:</span>
-          <button type="button" class="quick-emoji px-2 py-0.5 bg-white/60 hover:bg-white text-base rounded-full shadow-xs transition-transform hover:scale-110">❤️</button>
-          <button type="button" class="quick-emoji px-2 py-0.5 bg-white/60 hover:bg-white text-base rounded-full shadow-xs transition-transform hover:scale-110">😘</button>
-          <button type="button" class="quick-emoji px-2 py-0.5 bg-white/60 hover:bg-white text-base rounded-full shadow-xs transition-transform hover:scale-110">🌹</button>
-          <button type="button" class="quick-emoji px-2 py-0.5 bg-white/60 hover:bg-white text-base rounded-full shadow-xs transition-transform hover:scale-110">✨</button>
-          <button type="button" class="quick-emoji px-2 py-0.5 bg-white/60 hover:bg-white text-base rounded-full shadow-xs transition-transform hover:scale-110">🧸</button>
-          <button type="button" class="quick-emoji px-2 py-0.5 bg-white/60 hover:bg-white text-base rounded-full shadow-xs transition-transform hover:scale-110">🥰</button>
+          <button type="button"
+            class="quick-emoji px-2 py-0.5 bg-white/60 hover:bg-white text-base rounded-full shadow-xs transition-transform hover:scale-110">❤️</button>
+          <button type="button"
+            class="quick-emoji px-2 py-0.5 bg-white/60 hover:bg-white text-base rounded-full shadow-xs transition-transform hover:scale-110">😘</button>
+          <button type="button"
+            class="quick-emoji px-2 py-0.5 bg-white/60 hover:bg-white text-base rounded-full shadow-xs transition-transform hover:scale-110">🌹</button>
+          <button type="button"
+            class="quick-emoji px-2 py-0.5 bg-white/60 hover:bg-white text-base rounded-full shadow-xs transition-transform hover:scale-110">✨</button>
+          <button type="button"
+            class="quick-emoji px-2 py-0.5 bg-white/60 hover:bg-white text-base rounded-full shadow-xs transition-transform hover:scale-110">🧸</button>
+          <button type="button"
+            class="quick-emoji px-2 py-0.5 bg-white/60 hover:bg-white text-base rounded-full shadow-xs transition-transform hover:scale-110">🥰</button>
         </div>
 
         <!-- Audio Recording Overlay Bar (Hidden by default) -->
-        <div id="recording-bar" class="hidden p-3 md:p-4 bg-white/95 border-t border-rose-200 backdrop-blur-md items-center gap-3 flex-shrink-0 shadow-lg z-20">
+        <div id="recording-bar"
+          class="hidden p-3 md:p-4 bg-white/95 border-t border-rose-200 backdrop-blur-md items-center gap-3 flex-shrink-0 shadow-lg z-20">
           <div class="flex items-center gap-2 flex-shrink-0">
             <span class="w-3 h-3 rounded-full bg-rose-500 animate-ping"></span>
             <span id="record-timer" class="font-quicksand font-bold text-sm text-rose-600 tracking-wider">00:00</span>
           </div>
-          
-          <div class="flex-1 h-8 flex items-center justify-center overflow-hidden bg-rose-50/70 rounded-xl px-2 border border-rose-100">
+
+          <div
+            class="flex-1 h-8 flex items-center justify-center overflow-hidden bg-rose-50/70 rounded-xl px-2 border border-rose-100">
             <canvas id="record-canvas" class="w-full h-full" height="32"></canvas>
           </div>
 
           <div class="flex items-center gap-2 flex-shrink-0">
-            <button type="button" id="record-pause-btn" title="Pause / Resume" class="p-2 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-xl transition-all flex items-center justify-center">
+            <button type="button" id="record-pause-btn" title="Pause / Resume"
+              class="p-2 bg-rose-100 hover:bg-rose-200 text-rose-700 rounded-xl transition-all flex items-center justify-center">
               <span class="material-symbols-outlined text-lg" id="record-pause-icon">pause</span>
             </button>
-            <button type="button" id="record-cancel-btn" title="Cancel & Discard" class="p-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl transition-all flex items-center justify-center">
+            <button type="button" id="record-cancel-btn" title="Cancel & Discard"
+              class="p-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-xl transition-all flex items-center justify-center">
               <span class="material-symbols-outlined text-lg">delete</span>
             </button>
-            <button type="button" id="record-send-btn" title="Send Voice Note" class="px-4 py-2 bg-gradient-to-r from-[#ff758c] to-[#d12450] text-white rounded-xl font-quicksand font-semibold text-xs shadow-md hover:scale-105 transition-all flex items-center gap-1">
+            <button type="button" id="record-send-btn" title="Send Voice Note"
+              class="px-4 py-2 bg-gradient-to-r from-[#ff758c] to-[#d12450] text-white rounded-xl font-quicksand font-semibold text-xs shadow-md hover:scale-105 transition-all flex items-center gap-1">
               <span>Send</span>
               <span class="material-symbols-outlined text-base">send</span>
             </button>
@@ -602,47 +681,32 @@
         </div>
 
         <!-- Message Input Form (Fixed at bottom) -->
-        <form id="chat-form" class="p-3 md:p-4 bg-white/60 border-t border-white/50 backdrop-blur-md flex items-center gap-2 md:gap-3 flex-shrink-0">
-          
+        <form id="chat-form"
+          class="p-3 md:p-4 bg-white/60 border-t border-white/50 backdrop-blur-md flex items-center gap-2 md:gap-3 flex-shrink-0">
+
           <!-- Hidden File Upload Input -->
           <input type="file" id="media-upload-input" accept="image/*,video/*" class="hidden" />
 
           <!-- Attachment Trigger Button -->
-          <button 
-            type="button" 
-            id="attach-btn" 
-            title="Attach Photo or Video" 
-            class="p-2.5 bg-white/80 hover:bg-white text-primary-dark hover:text-primary rounded-2xl border border-pink-100 shadow-xs transition-all flex items-center justify-center flex-shrink-0"
-          >
+          <button type="button" id="attach-btn" title="Attach Photo or Video"
+            class="p-2.5 bg-white/80 hover:bg-white text-primary-dark hover:text-primary rounded-2xl border border-pink-100 shadow-xs transition-all flex items-center justify-center flex-shrink-0">
             <span class="material-symbols-outlined text-xl">attach_file</span>
           </button>
 
           <!-- Voice Record Button -->
-          <button 
-            type="button" 
-            id="mic-btn" 
-            title="Record Voice Note" 
-            class="p-2.5 bg-white/80 hover:bg-rose-50 text-primary-dark hover:text-primary rounded-2xl border border-pink-100 shadow-xs transition-all flex items-center justify-center flex-shrink-0"
-          >
+          <button type="button" id="mic-btn" title="Record Voice Note"
+            class="p-2.5 bg-white/80 hover:bg-rose-50 text-primary-dark hover:text-primary rounded-2xl border border-pink-100 shadow-xs transition-all flex items-center justify-center flex-shrink-0">
             <span class="material-symbols-outlined text-xl">mic</span>
           </button>
 
           <div class="relative flex-1">
-            <input 
-              type="text" 
-              id="message-input" 
-              placeholder="Type your sweet message..." 
-              autocomplete="off"
-              class="w-full px-4 py-3 bg-white/80 focus:bg-white border border-pink-100 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all font-sans placeholder:text-gray-400 pr-10 shadow-inner"
-            />
+            <input type="text" id="message-input" placeholder="Type your sweet message..." autocomplete="off"
+              class="w-full px-4 py-3 bg-white/80 focus:bg-white border border-pink-100 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all font-sans placeholder:text-gray-400 pr-10 shadow-inner" />
           </div>
 
           <!-- Send Button -->
-          <button 
-            type="submit" 
-            id="send-btn"
-            class="px-5 py-3 bg-gradient-to-r from-[#ff758c] to-[#d12450] text-white rounded-2xl font-quicksand font-semibold text-sm shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:pointer-events-none flex-shrink-0"
-          >
+          <button type="submit" id="send-btn"
+            class="px-5 py-3 bg-gradient-to-r from-[#ff758c] to-[#d12450] text-white rounded-2xl font-quicksand font-semibold text-sm shadow-md hover:shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 disabled:pointer-events-none flex-shrink-0">
             <span>Send</span>
             <span class="material-symbols-outlined text-lg">send</span>
           </button>
@@ -655,13 +719,15 @@
 
   <!-- Love Poll Creation Modal -->
   <div id="poll-modal" class="fixed inset-0 z-[95] bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-white/95 rounded-3xl max-w-md w-full overflow-hidden shadow-2xl border border-white/60 flex flex-col max-h-[90vh]">
+    <div
+      class="bg-white/95 rounded-3xl max-w-md w-full overflow-hidden shadow-2xl border border-white/60 flex flex-col max-h-[90vh]">
       <!-- Header -->
       <div class="p-4 border-b border-pink-100 flex items-center justify-between bg-pink-50/60">
         <h3 class="font-quicksand font-bold text-base text-primary-dark flex items-center gap-2">
           <span class="material-symbols-outlined text-primary">how_to_vote</span> Create Love Poll
         </h3>
-        <button type="button" id="poll-close-btn" class="p-1 text-gray-500 hover:text-rose-600 rounded-full hover:bg-white transition-all">
+        <button type="button" id="poll-close-btn"
+          class="p-1 text-gray-500 hover:text-rose-600 rounded-full hover:bg-white transition-all">
           <span class="material-symbols-outlined text-xl">close</span>
         </button>
       </div>
@@ -671,25 +737,24 @@
         <!-- Question -->
         <div>
           <label class="block text-xs font-quicksand font-bold text-gray-700 mb-1.5">Question / Topic ❤️</label>
-          <input 
-            type="text" 
-            id="poll-question-input" 
-            required 
-            placeholder="e.g., Where should we go on our date this weekend?" 
-            class="w-full px-4 py-2.5 bg-pink-50/40 border border-pink-100 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 font-sans"
-          />
+          <input type="text" id="poll-question-input" required
+            placeholder="e.g., Where should we go on our date this weekend?"
+            class="w-full px-4 py-2.5 bg-pink-50/40 border border-pink-100 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 font-sans" />
         </div>
 
         <!-- Optional Media Attachment -->
         <div>
-          <label class="block text-xs font-quicksand font-semibold text-gray-500 mb-1">Attach Photo/Video/Audio (Optional)</label>
+          <label class="block text-xs font-quicksand font-semibold text-gray-500 mb-1">Attach Photo/Video/Audio
+            (Optional)</label>
           <div class="flex items-center gap-2">
             <input type="file" id="poll-media-input" accept="image/*,video/*,audio/*" class="hidden" />
-            <button type="button" id="poll-media-btn" class="px-3 py-1.5 bg-white border border-pink-200 text-xs font-quicksand font-semibold text-primary rounded-xl hover:bg-pink-50 transition-all flex items-center gap-1.5 shadow-xs">
+            <button type="button" id="poll-media-btn"
+              class="px-3 py-1.5 bg-white border border-pink-200 text-xs font-quicksand font-semibold text-primary rounded-xl hover:bg-pink-50 transition-all flex items-center gap-1.5 shadow-xs">
               <span class="material-symbols-outlined text-base">attach_file</span>
               <span id="poll-media-label">Choose Media</span>
             </button>
-            <button type="button" id="poll-media-clear-btn" class="hidden text-xs text-rose-500 hover:underline">Remove</button>
+            <button type="button" id="poll-media-clear-btn"
+              class="hidden text-xs text-rose-500 hover:underline">Remove</button>
           </div>
         </div>
 
@@ -698,25 +763,32 @@
           <label class="block text-xs font-quicksand font-bold text-gray-700 mb-1.5">Poll Options (2 to 6)</label>
           <div id="poll-options-list" class="space-y-2.5">
             <div class="flex items-center gap-2 option-row">
-              <span class="w-6 h-6 rounded-full bg-pink-100 text-primary font-bold text-xs flex items-center justify-center flex-shrink-0">1</span>
-              <input type="text" required placeholder="Option 1..." class="flex-1 px-3 py-2 bg-pink-50/30 border border-pink-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 font-sans" />
+              <span
+                class="w-6 h-6 rounded-full bg-pink-100 text-primary font-bold text-xs flex items-center justify-center flex-shrink-0">1</span>
+              <input type="text" required placeholder="Option 1..."
+                class="flex-1 px-3 py-2 bg-pink-50/30 border border-pink-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 font-sans" />
             </div>
             <div class="flex items-center gap-2 option-row">
-              <span class="w-6 h-6 rounded-full bg-pink-100 text-primary font-bold text-xs flex items-center justify-center flex-shrink-0">2</span>
-              <input type="text" required placeholder="Option 2..." class="flex-1 px-3 py-2 bg-pink-50/30 border border-pink-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 font-sans" />
+              <span
+                class="w-6 h-6 rounded-full bg-pink-100 text-primary font-bold text-xs flex items-center justify-center flex-shrink-0">2</span>
+              <input type="text" required placeholder="Option 2..."
+                class="flex-1 px-3 py-2 bg-pink-50/30 border border-pink-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 font-sans" />
             </div>
           </div>
-          <button type="button" id="poll-add-option-btn" class="mt-2 text-xs font-quicksand font-bold text-primary hover:text-primary-dark flex items-center gap-1">
+          <button type="button" id="poll-add-option-btn"
+            class="mt-2 text-xs font-quicksand font-bold text-primary hover:text-primary-dark flex items-center gap-1">
             <span class="material-symbols-outlined text-sm">add_circle</span> Add Another Option
           </button>
         </div>
 
         <!-- Actions -->
         <div class="flex items-center justify-between pt-3 border-t border-pink-100 mt-2">
-          <button type="button" id="poll-cancel-btn" class="px-4 py-2 text-xs font-quicksand font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-gray-100 transition-all">
+          <button type="button" id="poll-cancel-btn"
+            class="px-4 py-2 text-xs font-quicksand font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-gray-100 transition-all">
             Cancel
           </button>
-          <button type="submit" id="poll-submit-btn" class="px-6 py-2.5 bg-gradient-to-r from-[#ff758c] to-[#d12450] text-white rounded-2xl font-quicksand font-semibold text-sm shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5">
+          <button type="submit" id="poll-submit-btn"
+            class="px-6 py-2.5 bg-gradient-to-r from-[#ff758c] to-[#d12450] text-white rounded-2xl font-quicksand font-semibold text-sm shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5">
             <span>Launch Poll</span>
             <span class="material-symbols-outlined text-base">send</span>
           </button>
@@ -726,39 +798,41 @@
   </div>
 
   <!-- Media Upload Preview & Caption Modal (WhatsApp-style) -->
-  <div id="media-preview-modal" class="fixed inset-0 z-[90] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-white/95 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-white/60 flex flex-col max-h-[90vh]">
+  <div id="media-preview-modal"
+    class="fixed inset-0 z-[90] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div
+      class="bg-white/95 rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl border border-white/60 flex flex-col max-h-[90vh]">
       <!-- Header -->
       <div class="p-4 border-b border-pink-100 flex items-center justify-between bg-pink-50/60">
         <h3 class="font-quicksand font-bold text-base text-primary-dark flex items-center gap-2">
           <span class="material-symbols-outlined text-primary">image</span> Send Media
         </h3>
         <span id="preview-media-info" class="text-xs font-sans text-gray-500"></span>
-        <button id="media-preview-close-btn" class="p-1 text-gray-500 hover:text-rose-600 rounded-full hover:bg-white transition-all">
+        <button id="media-preview-close-btn"
+          class="p-1 text-gray-500 hover:text-rose-600 rounded-full hover:bg-white transition-all">
           <span class="material-symbols-outlined text-xl">close</span>
         </button>
       </div>
 
       <!-- Preview Box -->
       <div class="flex-1 min-h-0 p-4 flex items-center justify-center bg-black/5 overflow-hidden">
-        <div id="media-preview-display" class="max-h-72 w-full flex items-center justify-center rounded-2xl overflow-hidden shadow-inner bg-black/10">
+        <div id="media-preview-display"
+          class="max-h-72 w-full flex items-center justify-center rounded-2xl overflow-hidden shadow-inner bg-black/10">
           <!-- img or video rendered here -->
         </div>
       </div>
 
       <!-- Caption & Actions -->
       <div class="p-4 bg-white border-t border-pink-100 flex flex-col gap-3">
-        <input 
-          type="text" 
-          id="media-preview-caption" 
-          placeholder="Add a sweet caption..." 
-          class="w-full px-4 py-2.5 bg-pink-50/50 border border-pink-100 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 font-sans"
-        />
+        <input type="text" id="media-preview-caption" placeholder="Add a sweet caption..."
+          class="w-full px-4 py-2.5 bg-pink-50/50 border border-pink-100 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 font-sans" />
         <div class="flex items-center justify-between">
-          <button type="button" id="media-preview-cancel-btn" class="px-4 py-2 text-xs font-quicksand font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-gray-100 transition-all">
+          <button type="button" id="media-preview-cancel-btn"
+            class="px-4 py-2 text-xs font-quicksand font-semibold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-gray-100 transition-all">
             Cancel
           </button>
-          <button type="button" id="media-preview-send-btn" class="px-6 py-2.5 bg-gradient-to-r from-[#ff758c] to-[#d12450] text-white rounded-2xl font-quicksand font-semibold text-sm shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5">
+          <button type="button" id="media-preview-send-btn"
+            class="px-6 py-2.5 bg-gradient-to-r from-[#ff758c] to-[#d12450] text-white rounded-2xl font-quicksand font-semibold text-sm shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5">
             <span>Send Now</span>
             <span class="material-symbols-outlined text-base">send</span>
           </button>
@@ -768,67 +842,149 @@
   </div>
 
   <!-- Fullscreen Media Lightbox Modal -->
-  <div id="media-lightbox" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 md:p-8">
+  <div id="media-lightbox"
+    class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 md:p-8">
     <!-- Lightbox Controls -->
     <div class="absolute top-4 right-4 sm:top-6 sm:right-6 flex items-center gap-3 z-30">
-      <a id="lightbox-download-btn" href="#" target="_blank" download class="w-11 h-11 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition-all backdrop-blur-md" title="Download">
+      <a id="lightbox-download-btn" href="#" target="_blank" download
+        class="w-11 h-11 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition-all backdrop-blur-md"
+        title="Download">
         <span class="material-symbols-outlined text-xl">download</span>
       </a>
-      <button id="lightbox-close-btn" class="w-11 h-11 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition-all backdrop-blur-md" title="Close (Esc)">
+      <button id="lightbox-close-btn"
+        class="w-11 h-11 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center transition-all backdrop-blur-md"
+        title="Close (Esc)">
         <span class="material-symbols-outlined text-2xl">close</span>
       </button>
     </div>
-    
+
     <div class="relative max-w-5xl max-h-[88vh] w-full flex items-center justify-center" id="lightbox-content">
       <!-- Media dynamically inserted by chat.js -->
     </div>
   </div>
 
   <!-- Delete Message Confirmation Modal -->
-  <div id="delete-modal" class="fixed inset-0 z-[110] bg-black/60 backdrop-blur-xs hidden items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-pink-100 flex flex-col items-center text-center animate-bounce-short">
+  <div id="delete-modal"
+    class="fixed inset-0 z-[110] bg-black/60 backdrop-blur-xs hidden items-center justify-center p-4">
+    <div
+      class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-pink-100 flex flex-col items-center text-center animate-bounce-short">
       <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mb-3">
         <span class="material-symbols-outlined text-2xl">delete</span>
       </div>
       <h3 class="font-quicksand font-bold text-lg text-gray-800 mb-1">Delete Message?</h3>
-      <p class="text-xs text-gray-500 mb-6 font-sans">This message and its media will be permanently deleted for both of you.</p>
+      <p class="text-xs text-gray-500 mb-6 font-sans">This message and its media will be permanently deleted for both of
+        you.</p>
       <div class="flex items-center gap-3 w-full">
-        <button id="delete-cancel-btn" type="button" class="flex-1 py-2.5 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-quicksand font-semibold text-xs transition-all">
+        <button id="delete-cancel-btn" type="button"
+          class="flex-1 py-2.5 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-700 font-quicksand font-semibold text-xs transition-all">
           Cancel
         </button>
-        <button id="delete-confirm-btn" type="button" class="flex-1 py-2.5 rounded-2xl bg-gradient-to-r from-rose-500 to-red-600 text-white font-quicksand font-semibold text-xs shadow-md hover:scale-105 transition-all">
+        <button id="delete-confirm-btn" type="button"
+          class="flex-1 py-2.5 rounded-2xl bg-gradient-to-r from-rose-500 to-red-600 text-white font-quicksand font-semibold text-xs shadow-md hover:scale-105 transition-all">
           Delete
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Incoming WebRTC Call Modal -->
-  <div id="incoming-call-modal" class="fixed inset-0 z-[120] bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
-    <div class="bg-white/95 rounded-3xl max-w-sm w-full p-8 shadow-2xl border border-white/60 flex flex-col items-center text-center animate-bounce-short">
+  <!-- Watch Together Source Selection Modal -->
+  <div id="watch-together-modal"
+    class="fixed inset-0 z-[125] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div
+      class="bg-white/95 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-pink-100 flex flex-col animate-bounce-short">
       
+      <div class="flex items-center justify-between pb-3 border-b border-pink-100">
+        <div class="flex items-center gap-2 text-primary-dark">
+          <span class="material-symbols-outlined text-2xl text-primary animate-pulse">movie</span>
+          <h3 class="font-quicksand font-bold text-lg">Watch Together ❤️</h3>
+        </div>
+        <button id="wt-modal-close-btn" type="button" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition-all">
+          <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+      </div>
+
+      <!-- Mode Selector Tabs -->
+      <div class="flex items-center gap-2 mt-4 p-1 bg-pink-50 rounded-2xl border border-pink-100">
+        <button id="wt-tab-yt" type="button" class="flex-1 py-2 rounded-xl text-xs font-quicksand font-bold bg-white text-primary shadow-xs transition-all flex items-center justify-center gap-1">
+          <span class="material-symbols-outlined text-base text-red-500">smart_display</span> YouTube
+        </button>
+        <button id="wt-tab-local" type="button" class="flex-1 py-2 rounded-xl text-xs font-quicksand font-bold text-gray-600 hover:text-primary transition-all flex items-center justify-center gap-1">
+          <span class="material-symbols-outlined text-base text-pink-500">video_file</span> Local Video
+        </button>
+      </div>
+
+      <!-- YouTube Input Panel -->
+      <div id="wt-panel-yt" class="mt-4 space-y-3">
+        <label class="text-xs font-quicksand font-semibold text-gray-700 block">Paste YouTube Link or Video ID:</label>
+        <div class="relative">
+          <span class="material-symbols-outlined absolute left-3 top-2.5 text-red-500 text-lg">link</span>
+          <input type="text" id="wt-yt-url-input" placeholder="e.g. https://www.youtube.com/watch?v=..." class="w-full pl-9 pr-3 py-2 text-xs bg-pink-50/50 border border-pink-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+        </div>
+        <div class="flex flex-wrap gap-1.5 pt-1">
+          <span class="text-[10px] text-gray-400 font-sans block w-full">Quick suggestions:</span>
+          <button type="button" class="wt-quick-yt px-2.5 py-1 rounded-full bg-pink-100/70 hover:bg-pink-200 text-[10px] font-sans text-primary-dark transition-all" data-yt-id="jfKfPfyJRdk">
+            🎧 Lofi Romance
+          </button>
+          <button type="button" class="wt-quick-yt px-2.5 py-1 rounded-full bg-pink-100/70 hover:bg-pink-200 text-[10px] font-sans text-primary-dark transition-all" data-yt-id="5qap5aO4i9A">
+            🎶 Romantic Beats
+          </button>
+        </div>
+      </div>
+
+      <!-- Local Video Input Panel -->
+      <div id="wt-panel-local" class="mt-4 space-y-3 hidden">
+        <label class="text-xs font-quicksand font-semibold text-gray-700 block">Choose Video File from Device:</label>
+        <input type="file" id="wt-local-file-input" accept="video/mp4,video/webm,video/ogg" class="hidden" />
+        <label for="wt-local-file-input" class="w-full py-4 border-2 border-dashed border-pink-300 hover:border-primary rounded-2xl flex flex-col items-center justify-center gap-1 cursor-pointer bg-pink-50/40 hover:bg-pink-50 transition-all">
+          <span class="material-symbols-outlined text-2xl text-primary">upload_file</span>
+          <span id="wt-local-file-label" class="text-xs font-sans text-gray-600 font-medium">Click to select MP4 / WebM video</span>
+        </label>
+        <p class="text-[10px] text-gray-400 text-center font-sans">For synchronized playback, both partners should select the same file or stream.</p>
+      </div>
+
+      <!-- Start Button -->
+      <button id="wt-start-btn" type="button" class="w-full mt-5 py-3 rounded-2xl bg-gradient-to-r from-primary to-primary-dark text-white font-quicksand font-bold text-xs shadow-lg hover:scale-102 active:scale-98 transition-all flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-lg">play_circle</span> Start Watching Together ❤️
+      </button>
+    </div>
+  </div>
+
+  <!-- Incoming WebRTC Call Modal -->
+  <div id="incoming-call-modal"
+    class="fixed inset-0 z-[120] bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
+    <div
+      class="bg-white/95 rounded-3xl max-w-sm w-full p-8 shadow-2xl border border-white/60 flex flex-col items-center text-center animate-bounce-short">
+
       <!-- Pulsing Avatar -->
       <div class="relative mb-6">
         <div class="w-24 h-24 rounded-full overflow-hidden shadow-xl border-4 border-pink-300 call-avatar-pulse">
-          <img id="incoming-caller-avatar" src="assets/images/main.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80'" class="w-full h-full object-cover" alt="Caller Avatar" />
+          <img id="incoming-caller-avatar" src="assets/images/main.jpeg"
+            onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80'"
+            class="w-full h-full object-cover" alt="Caller Avatar" />
         </div>
-        <div class="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-gradient-to-r from-[#ff758c] to-[#d12450] text-white flex items-center justify-center shadow-md">
+        <div
+          class="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-gradient-to-r from-[#ff758c] to-[#d12450] text-white flex items-center justify-center shadow-md">
           <span id="incoming-call-icon" class="material-symbols-outlined text-lg">videocam</span>
         </div>
       </div>
 
       <h3 id="incoming-caller-name" class="font-quicksand font-bold text-xl text-gray-900 mb-1">Bakudi ❤️</h3>
-      <p id="incoming-call-type-label" class="text-xs text-primary font-semibold font-sans mb-8 animate-pulse">Incoming Video Call...</p>
+      <p id="incoming-call-type-label" class="text-xs text-primary font-semibold font-sans mb-8 animate-pulse">Incoming
+        Video Call...</p>
 
       <!-- Action Buttons -->
-      <div class="flex items-center justify-center gap-8 w-full">
+      <div class="flex items-center justify-center gap-6 sm:gap-8 w-full">
         <!-- Decline -->
-        <button id="decline-call-btn" type="button" class="w-14 h-14 rounded-full bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all" title="Decline Call">
+        <button id="decline-call-btn" type="button"
+          class="w-14 h-14 flex-shrink-0 rounded-full bg-rose-500 hover:bg-rose-600 text-white flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all"
+          title="Decline Call">
           <span class="material-symbols-outlined text-2xl">call_end</span>
         </button>
 
         <!-- Accept -->
-        <button id="accept-call-btn" type="button" class="w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all" title="Accept Call">
+        <button id="accept-call-btn" type="button"
+          class="w-14 h-14 flex-shrink-0 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all"
+          title="Accept Call">
           <span id="accept-call-icon" class="material-symbols-outlined text-2xl">call</span>
         </button>
       </div>
@@ -836,16 +992,21 @@
   </div>
 
   <!-- Active / Outgoing WebRTC Call Screen Overlay -->
-  <div id="active-call-modal" class="fixed inset-0 z-[115] bg-gray-950 text-white hidden flex-col justify-between p-4 sm:p-6 overflow-hidden">
-    
+  <div id="active-call-modal"
+    class="fixed inset-0 z-[115] bg-gray-950 text-white hidden flex-col justify-between p-3 sm:p-5 overflow-hidden">
+
     <!-- Top Call Bar -->
-    <div class="flex items-center justify-between z-20 bg-black/40 backdrop-blur-md px-4 py-3 rounded-2xl border border-white/10">
+    <div
+      class="flex items-center justify-between z-20 bg-black/40 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-white/10">
       <div class="flex items-center gap-3">
         <div class="w-9 h-9 rounded-full overflow-hidden border border-pink-400/50 flex-shrink-0">
-          <img id="active-call-avatar" src="assets/images/main.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80'" class="w-full h-full object-cover" alt="Partner" />
+          <img id="active-call-avatar" src="assets/images/main.jpeg"
+            onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80'"
+            class="w-full h-full object-cover" alt="Partner" />
         </div>
         <div>
-          <h4 id="active-call-partner-name" class="font-quicksand font-bold text-sm leading-tight text-pink-100">Bakudi ❤️</h4>
+          <h4 id="active-call-partner-name" class="font-quicksand font-bold text-sm leading-tight text-pink-100">Bakudi
+            ❤️</h4>
           <span id="active-call-status-label" class="text-xs text-emerald-400 font-sans flex items-center gap-1">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
             <span id="active-call-timer">Calling...</span>
@@ -854,22 +1015,27 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <span id="active-call-type-badge" class="px-2.5 py-1 bg-white/10 rounded-full text-[11px] font-quicksand font-semibold text-pink-200 border border-white/10 flex items-center gap-1">
+        <span id="active-call-type-badge"
+          class="px-2.5 py-1 bg-white/10 rounded-full text-[11px] font-quicksand font-semibold text-pink-200 border border-white/10 flex items-center gap-1">
           <span class="material-symbols-outlined text-sm">videocam</span> Video Call
         </span>
       </div>
     </div>
 
-    <!-- Center Stage: Remote Video or Audio Avatar -->
-    <div class="relative flex-1 my-3 flex items-center justify-center overflow-hidden rounded-3xl bg-gray-900 border border-white/10 shadow-2xl">
-      
-      <!-- Remote Video Stream -->
+    <!-- Center Stage: Standard Video vs Shared Theater Stage -->
+    <div
+      class="relative flex-1 my-2 sm:my-3 flex items-center justify-center overflow-hidden rounded-3xl bg-gray-900 border border-white/10 shadow-2xl">
+
+      <!-- 1. Remote Video Stream (Standard Call Mode) -->
       <video id="remote-video" autoplay playsinline class="w-full h-full object-cover rounded-3xl"></video>
 
-      <!-- Audio Call Placeholder Stage (Hidden during video calls) -->
+      <!-- 2. Audio Call Placeholder Stage (Hidden during video calls) -->
       <div id="audio-call-stage" class="hidden flex-col items-center justify-center p-6 text-center z-10">
-        <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-pink-400/60 shadow-2xl call-avatar-pulse mb-4">
-          <img id="audio-stage-avatar" src="assets/images/main.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=250&auto=format&fit=crop&q=80'" class="w-full h-full object-cover" alt="Audio Call" />
+        <div
+          class="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-pink-400/60 shadow-2xl call-avatar-pulse mb-4">
+          <img id="audio-stage-avatar" src="assets/images/main.jpeg"
+            onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=250&auto=format&fit=crop&q=80'"
+            class="w-full h-full object-cover" alt="Audio Call" />
         </div>
         <p class="font-quicksand font-bold text-lg text-pink-200" id="audio-stage-name">Bakudi ❤️</p>
         <span class="text-xs text-pink-300/80 font-sans mt-1 flex items-center gap-1">
@@ -877,33 +1043,106 @@
         </span>
       </div>
 
-      <!-- Local Video PIP Stream (Picture In Picture) -->
-      <div id="local-video-container" class="absolute top-4 right-4 w-28 h-40 sm:w-36 sm:h-48 rounded-2xl overflow-hidden border-2 border-pink-400/60 shadow-2xl z-20 bg-gray-950 cursor-pointer">
+      <!-- 3. Shared Theater Stage (Watch Together Mode) -->
+      <div id="watch-together-stage" class="absolute inset-0 bg-black z-15 hidden flex-col justify-between overflow-hidden">
+        
+        <!-- Theater Header Bar -->
+        <div class="flex items-center justify-between p-3 bg-gradient-to-b from-black/80 to-transparent z-30">
+          <div class="flex items-center gap-2 text-pink-200">
+            <span class="material-symbols-outlined text-primary text-xl animate-pulse">movie</span>
+            <span id="wt-stage-title" class="font-quicksand font-bold text-xs sm:text-sm truncate max-w-[200px] sm:max-w-xs">Watching Together ❤️</span>
+          </div>
+          <button id="wt-stage-exit-btn" type="button" class="px-3 py-1 bg-white/20 hover:bg-rose-500/80 rounded-full text-xs font-quicksand font-semibold text-white backdrop-blur-md transition-all flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">close</span> Exit Theater
+          </button>
+        </div>
+
+        <!-- Theater Video Frame -->
+        <div class="relative flex-1 flex items-center justify-center bg-black overflow-hidden">
+          <!-- YouTube IFrame Container -->
+          <div id="wt-yt-container" class="w-full h-full flex items-center justify-center hidden">
+            <div id="yt-player" class="w-full h-full aspect-video"></div>
+          </div>
+          <!-- HTML5 Local Video Player -->
+          <div id="wt-local-container" class="w-full h-full flex items-center justify-center hidden">
+            <video id="synced-local-video" playsinline class="w-full h-full object-contain"></video>
+          </div>
+        </div>
+
+        <!-- Synced HTML5 Video Controls Overlay -->
+        <div id="wt-video-controls" class="flex items-center gap-2 sm:gap-3 p-3 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-30 w-full">
+          <button id="wt-ctrl-play-btn" type="button" class="w-9 h-9 flex-shrink-0 rounded-full bg-primary hover:bg-primary-dark active:scale-95 text-white flex items-center justify-center shadow-md">
+            <span id="wt-ctrl-play-icon" class="material-symbols-outlined text-xl">play_arrow</span>
+          </button>
+          
+          <span id="wt-ctrl-current-time" class="text-xs font-sans text-gray-300 min-w-[32px] sm:min-w-[36px] flex-shrink-0">0:00</span>
+          
+          <input type="range" id="wt-ctrl-timeline" min="0" max="100" value="0" step="0.1" class="flex-1 accent-primary h-1.5 bg-white/20 rounded-lg cursor-pointer min-w-0" />
+          
+          <span id="wt-ctrl-duration" class="text-xs font-sans text-gray-400 min-w-[32px] sm:min-w-[36px] flex-shrink-0">0:00</span>
+          
+          <!-- Speed Selector -->
+          <select id="wt-ctrl-speed" class="bg-black/60 border border-white/20 text-white rounded-lg text-xs px-1.5 py-1 focus:outline-none flex-shrink-0">
+            <option value="1">1.0x</option>
+            <option value="1.25">1.25x</option>
+            <option value="1.5">1.5x</option>
+            <option value="2">2.0x</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 4. Floating Remote Partner PIP (Active during Watch Together) -->
+      <div id="remote-video-pip-container"
+        class="absolute top-4 left-4 w-28 h-36 sm:w-36 sm:h-44 rounded-2xl overflow-hidden border-2 border-primary/80 shadow-2xl z-25 bg-gray-950 hidden">
+        <video id="remote-pip-video" autoplay playsinline class="w-full h-full object-cover"></video>
+        <div class="absolute bottom-1 left-1.5 px-1.5 py-0.5 bg-black/70 rounded text-[9px] font-sans text-pink-200">
+          Partner ❤️</div>
+      </div>
+
+      <!-- 5. Floating Local Video PIP Stream -->
+      <div id="local-video-container"
+        class="absolute top-4 right-4 w-28 h-36 sm:w-36 sm:h-44 rounded-2xl overflow-hidden border-2 border-pink-400/60 shadow-2xl z-25 bg-gray-950 cursor-pointer transition-all">
         <video id="local-video" autoplay playsinline muted class="w-full h-full object-cover"></video>
-        <div class="absolute bottom-1 right-1.5 px-1.5 py-0.5 bg-black/60 rounded text-[9px] font-sans text-white/80">You</div>
+        <div class="absolute bottom-1 right-1.5 px-1.5 py-0.5 bg-black/60 rounded text-[9px] font-sans text-white/80">
+          You</div>
       </div>
     </div>
 
-    <!-- Bottom Controls Toolbar -->
-    <div class="flex items-center justify-center gap-4 sm:gap-6 z-20 py-2">
+    <!-- Bottom Controls Toolbar (Fully Responsive on all screen sizes) -->
+    <div class="flex items-center justify-center gap-2 sm:gap-4 md:gap-6 z-30 py-2 w-full max-w-lg mx-auto px-2">
+      <!-- Watch Together Trigger -->
+      <button id="call-watch-together-btn" type="button"
+        class="w-11 h-11 sm:w-14 sm:h-14 flex-shrink-0 rounded-full bg-gradient-to-tr from-pink-600 to-rose-500 hover:scale-105 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all"
+        title="Watch Movie / YouTube Together ❤️">
+        <span class="material-symbols-outlined text-xl sm:text-2xl">movie</span>
+      </button>
+
       <!-- Toggle Microphone -->
-      <button id="call-toggle-mic-btn" type="button" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all" title="Mute / Unmute Mic">
-        <span id="call-toggle-mic-icon" class="material-symbols-outlined text-2xl">mic</span>
+      <button id="call-toggle-mic-btn" type="button"
+        class="w-11 h-11 sm:w-14 sm:h-14 flex-shrink-0 rounded-full bg-white/20 hover:bg-white/30 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all"
+        title="Mute / Unmute Mic">
+        <span id="call-toggle-mic-icon" class="material-symbols-outlined text-xl sm:text-2xl">mic</span>
       </button>
 
       <!-- Toggle Camera -->
-      <button id="call-toggle-cam-btn" type="button" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all" title="Turn Camera Off / On">
-        <span id="call-toggle-cam-icon" class="material-symbols-outlined text-2xl">videocam</span>
+      <button id="call-toggle-cam-btn" type="button"
+        class="w-11 h-11 sm:w-14 sm:h-14 flex-shrink-0 rounded-full bg-white/20 hover:bg-white/30 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all"
+        title="Turn Camera Off / On">
+        <span id="call-toggle-cam-icon" class="material-symbols-outlined text-xl sm:text-2xl">videocam</span>
       </button>
 
       <!-- Switch Camera (Mobile) -->
-      <button id="call-switch-cam-btn" type="button" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all" title="Flip Camera">
-        <span class="material-symbols-outlined text-2xl">flip_camera_ios</span>
+      <button id="call-switch-cam-btn" type="button"
+        class="w-11 h-11 sm:w-14 sm:h-14 flex-shrink-0 rounded-full bg-white/20 hover:bg-white/30 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all"
+        title="Flip Camera">
+        <span class="material-symbols-outlined text-xl sm:text-2xl">flip_camera_ios</span>
       </button>
 
       <!-- End Call / Hangup -->
-      <button id="call-hangup-btn" type="button" class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-rose-600 hover:bg-rose-700 text-white flex items-center justify-center shadow-xl hover:scale-110 active:scale-95 transition-all" title="End Call">
-        <span class="material-symbols-outlined text-3xl">call_end</span>
+      <button id="call-hangup-btn" type="button"
+        class="w-13 h-13 sm:w-16 sm:h-16 flex-shrink-0 rounded-full bg-rose-600 hover:bg-rose-700 active:scale-95 text-white flex items-center justify-center shadow-xl hover:scale-110 transition-all"
+        title="End Call">
+        <span class="material-symbols-outlined text-2xl sm:text-3xl">call_end</span>
       </button>
     </div>
 

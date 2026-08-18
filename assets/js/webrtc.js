@@ -3,17 +3,22 @@
 // Pure Peer-to-Peer Media Streams + Cloud Firestore Signaling (Offer/Answer/ICE)
 // ==========================================================
 
-import { 
-    doc, 
-    setDoc, 
-    updateDoc, 
-    onSnapshot, 
-    collection, 
-    addDoc, 
-    serverTimestamp, 
-    query, 
-    where 
+import {
+    doc,
+    setDoc,
+    updateDoc,
+    onSnapshot,
+    collection,
+    addDoc,
+    serverTimestamp,
+    query,
+    where
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+import { 
+    initWatchTogether, 
+    connectWatchTogetherToCall, 
+    cleanupWatchTogether 
+} from "./watch-together.js";
 
 // STUN Configuration (Google High-Availability Public STUN Servers)
 const RTC_CONFIG = {
@@ -36,6 +41,7 @@ let activeCallType = "video"; // "video" | "audio"
 let isMicMuted = false;
 let isCameraOff = false;
 let currentFacingMode = "user";
+let iceCandidateQueue = [];
 
 // Signaling Listeners & Timers
 let unsubscribeCallDoc = null;
@@ -99,6 +105,21 @@ export function initWebRTC(user, profile, firestoreDb, showToast) {
     bindEventHandlers();
     listenForIncomingCalls();
 
+    // Initialize Watch Together Engine
+    initWatchTogether(currentUser, currentProfile, db, showToastFn);
+
+    // Auto cleanup call if page is closed or refreshed
+    window.addEventListener("beforeunload", () => {
+        if (currentCallId) {
+            endActiveCall(true);
+        }
+    });
+    window.addEventListener("pagehide", () => {
+        if (currentCallId) {
+            endActiveCall(true);
+        }
+    });
+
     console.log("[WebRTC] Initialized successfully for user:", currentUser.email);
 }
 
@@ -150,19 +171,16 @@ function listenForIncomingCalls() {
     if (!currentUser || !db) return;
     if (unsubscribeIncomingCalls) unsubscribeIncomingCalls();
 
-    const partnerEmail = currentUser.email.toLowerCase().includes("rishi") ? 
-                         "hetvidodiya2447@gmail.com" : "rishisolanki7319@gmail.com";
-
     const cleanCalleeEmail = (currentUser.email || "").toLowerCase().trim();
     const callsCol = collection(db, "calls");
     const q = query(
-        callsCol, 
-        where("callee.email", "==", cleanCalleeEmail), 
+        callsCol,
+        where("callee.email", "==", cleanCalleeEmail),
         where("status", "==", "calling")
     );
 
     unsubscribeIncomingCalls = onSnapshot(
-        q, 
+        q,
         (snapshot) => {
             if (snapshot.empty) {
                 if (incomingCallModal && !incomingCallModal.classList.contains("hidden")) {
@@ -215,6 +233,21 @@ function hideIncomingCallModal() {
     }
 }
 
+/**
+ * Flush any queued ICE candidates once remote description is set
+ */
+async function flushQueuedIceCandidates() {
+    if (!peerConnection || !peerConnection.remoteDescription) return;
+    while (iceCandidateQueue.length > 0) {
+        const candidate = iceCandidateQueue.shift();
+        try {
+            await peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+        } catch (e) {
+            console.warn("[WebRTC] Error adding queued ICE candidate:", e);
+        }
+    }
+}
+
 // ==========================================================
 // 2. Start Outgoing Call (Caller Workflow)
 // ==========================================================
@@ -233,11 +266,12 @@ export async function startCall(type = "video") {
     isCaller = true;
     isMicMuted = false;
     isCameraOff = false;
+    iceCandidateQueue = [];
 
     pauseBackgroundMusic();
 
-    const partnerName = currentProfile.name.toLowerCase().includes("rishi") ? "Bakudi ❤️" : "Rishi ❤️";
-    const partnerEmail = currentUser.email.toLowerCase().includes("rishi") ? "hetvidodiya2447@gmail.com" : "rishisolanki7319@gmail.com";
+    const partnerName = (currentProfile.name || "").toLowerCase().includes("rishi") ? "Bakudi ❤️" : "Rishi ❤️";
+    const partnerEmail = (currentUser.email || "").toLowerCase().includes("rishi") ? "hetvidodiya2447@gmail.com" : "rishisolanki7319@gmail.com";
 
     try {
         // 1. Get Local Media Stream
@@ -266,9 +300,16 @@ export async function startCall(type = "video") {
         // Pull remote tracks
         peerConnection.ontrack = (event) => {
             console.log("[WebRTC] Remote track received:", event.track.kind);
-            event.streams[0].getTracks().forEach((track) => {
-                remoteStream.addTrack(track);
-            });
+            if (event.streams && event.streams[0]) {
+                event.streams[0].getTracks().forEach((track) => {
+                    remoteStream.addTrack(track);
+                });
+            } else if (event.track) {
+                remoteStream.addTrack(event.track);
+            }
+            if (remoteVideo && remoteVideo.srcObject !== remoteStream) {
+                remoteVideo.srcObject = remoteStream;
+            }
         };
 
         // 3. Create Firestore Call Document
@@ -296,11 +337,11 @@ export async function startCall(type = "video") {
             status: "calling",
             caller: {
                 uid: currentUser.uid,
-                email: currentUser.email,
+                email: currentUser.email.toLowerCase().trim(),
                 name: currentProfile.name
             },
             callee: {
-                email: partnerEmail,
+                email: partnerEmail.toLowerCase().trim(),
                 name: partnerName
             },
             offer: {
@@ -317,8 +358,8 @@ export async function startCall(type = "video") {
 
         // 6. Listen for Remote Answer & Status Updates
         unsubscribeCallDoc = onSnapshot(
-            currentCallDocRef, 
-            (docSnap) => {
+            currentCallDocRef,
+            async (docSnap) => {
                 const data = docSnap.data();
                 if (!data) return;
 
@@ -328,28 +369,41 @@ export async function startCall(type = "video") {
                 } else if (data.status === "ended") {
                     showToastFn("Call ended.", "info");
                     endActiveCall(false);
-                } else if (data.status === "connected" && data.answer && !peerConnection.currentRemoteDescription) {
-                    const answerDesc = new RTCSessionDescription(data.answer);
-                    peerConnection.setRemoteDescription(answerDesc).then(() => {
+                } else if (data.status === "connected" && data.answer && (!peerConnection || !peerConnection.currentRemoteDescription)) {
+                    try {
+                        const answerDesc = new RTCSessionDescription(data.answer);
+                        await peerConnection.setRemoteDescription(answerDesc);
                         console.log("[WebRTC] Remote Answer description set successfully.");
+                        await flushQueuedIceCandidates();
                         startCallDurationTimer();
                         if (activeCallStatusLabel) activeCallStatusLabel.textContent = "Connected";
-                    }).catch(console.error);
+                        connectWatchTogetherToCall(currentCallId, remoteStream);
+                    } catch (sdpErr) {
+                        console.error("[WebRTC] Error setting remote answer:", sdpErr);
+                    }
                 }
             },
             (err) => console.warn("[WebRTC] Call doc listener notice:", err.message)
         );
 
-        // 7. Listen for Callee ICE Candidates
+        // 7. Listen for Callee ICE Candidates (with queueing)
         unsubscribeCalleeCandidates = onSnapshot(
-            calleeCandidatesCol, 
-            (snapshot) => {
-                snapshot.docChanges().forEach((change) => {
+            calleeCandidatesCol,
+            async (snapshot) => {
+                for (const change of snapshot.docChanges()) {
                     if (change.type === "added") {
                         const candidateData = change.doc.data();
-                        peerConnection.addIceCandidate(new RTCIceCandidate(candidateData)).catch(console.warn);
+                        if (peerConnection && peerConnection.remoteDescription) {
+                            try {
+                                await peerConnection.addIceCandidate(new RTCIceCandidate(candidateData));
+                            } catch (e) {
+                                console.warn("[WebRTC] Error adding callee candidate:", e);
+                            }
+                        } else {
+                            iceCandidateQueue.push(candidateData);
+                        }
                     }
-                });
+                }
             },
             (err) => console.warn("[WebRTC] Callee candidates notice:", err.message)
         );
@@ -405,9 +459,16 @@ async function acceptIncomingCall() {
 
         peerConnection.ontrack = (event) => {
             console.log("[WebRTC] Remote track received on callee:", event.track.kind);
-            event.streams[0].getTracks().forEach((track) => {
-                remoteStream.addTrack(track);
-            });
+            if (event.streams && event.streams[0]) {
+                event.streams[0].getTracks().forEach((track) => {
+                    remoteStream.addTrack(track);
+                });
+            } else if (event.track) {
+                remoteStream.addTrack(event.track);
+            }
+            if (remoteVideo && remoteVideo.srcObject !== remoteStream) {
+                remoteVideo.srcObject = remoteStream;
+            }
         };
 
         const calleeCandidatesCol = collection(db, "calls", callId, "calleeCandidates");
@@ -421,6 +482,7 @@ async function acceptIncomingCall() {
 
         // 3. Set Remote Offer & Create SDP Answer
         await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+        await flushQueuedIceCandidates();
         const answer = await peerConnection.createAnswer();
         await peerConnection.setLocalDescription(answer);
 
@@ -437,10 +499,11 @@ async function acceptIncomingCall() {
         // 5. Update UI
         showActiveCallUI(caller ? caller.name : "Your Love", "Connected");
         startCallDurationTimer();
+        connectWatchTogetherToCall(currentCallId, remoteStream);
 
         // 6. Listen for Caller Candidates
         unsubscribeCallerCandidates = onSnapshot(
-            callerCandidatesCol, 
+            callerCandidatesCol,
             (snapshot) => {
                 snapshot.docChanges().forEach((change) => {
                     if (change.type === "added") {
@@ -454,7 +517,7 @@ async function acceptIncomingCall() {
 
         // 7. Listen for Call Status (Hangup by caller)
         unsubscribeCallDoc = onSnapshot(
-            currentCallDocRef, 
+            currentCallDocRef,
             (docSnap) => {
                 const data = docSnap.data();
                 if (data && data.status === "ended") {
@@ -494,12 +557,15 @@ async function rejectIncomingCall() {
 export async function endActiveCall(shouldUpdateFirestore = true) {
     console.log("[WebRTC] Ending active call and cleaning up resources...");
 
+    // 0. Cleanup Watch Together if active
+    cleanupWatchTogether();
+
     // 1. Update Firestore status if initiated by user
     if (shouldUpdateFirestore && currentCallDocRef) {
         try {
-            await updateDoc(currentCallDocRef, { 
+            await updateDoc(currentCallDocRef, {
                 status: "ended",
-                endedAt: serverTimestamp() 
+                endedAt: serverTimestamp()
             });
         } catch (e) {
             console.warn("Could not update call ended status in Firestore:", e);
@@ -544,6 +610,8 @@ export async function endActiveCall(shouldUpdateFirestore = true) {
         activeCallModal.classList.remove("flex");
     }
 
+    stopRingingSound();
+    iceCandidateQueue = [];
     currentCallId = null;
     currentCallDocRef = null;
     isCaller = false;
@@ -597,7 +665,7 @@ async function switchCameraDevice() {
     if (!localStream || activeCallType !== "video") return;
 
     currentFacingMode = currentFacingMode === "user" ? "environment" : "user";
-    
+
     try {
         const newStream = await navigator.mediaDevices.getUserMedia({
             audio: false,
@@ -703,7 +771,7 @@ function stopRingingSound() {
     clearInterval(ringOscillatorInterval);
     ringOscillatorInterval = null;
     if (ringAudioCtx && ringAudioCtx.state !== 'closed') {
-        ringAudioCtx.close().catch(() => {});
+        ringAudioCtx.close().catch(() => { });
         ringAudioCtx = null;
     }
 }
@@ -720,6 +788,6 @@ function resumeBackgroundMusic() {
     window.isLocalMusicPlaying = false;
     const bgAudio = document.getElementById("global-bg-audio");
     if (bgAudio && sessionStorage.getItem('musicUserPaused') !== 'true') {
-        bgAudio.play().catch(() => {});
+        bgAudio.play().catch(() => { });
     }
 }

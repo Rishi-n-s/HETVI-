@@ -1,7 +1,7 @@
 // BAKUDI NI STORY — Service Worker
 // Cache-first strategy for offline support
 
-const CACHE_NAME = 'bakudi-v3';
+const CACHE_NAME = 'bakudi-v6';
 
 // Core assets to pre-cache on install
 const PRECACHE_ASSETS = [
@@ -26,6 +26,7 @@ const PRECACHE_ASSETS = [
   './assets/js/sounds.js',
   './assets/js/chat.js',
   './assets/js/webrtc.js',
+  './assets/js/watch-together.js',
   './assets/js/firebase.js',
   './assets/js/supabase.js',
   './assets/js/media-data.js',
@@ -82,7 +83,7 @@ self.addEventListener('fetch', (event) => {
               });
             }
             return response;
-          }).catch(() => {});
+          }).catch(() => { });
           return cached;
         }
 

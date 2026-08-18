@@ -1528,6 +1528,16 @@ if (attachBtn && mediaUploadInput) {
     });
 }
 
+// Enter key support for media caption
+if (mediaPreviewCaption) {
+    mediaPreviewCaption.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            if (mediaPreviewSendBtn) mediaPreviewSendBtn.click();
+        }
+    });
+}
+
 // Confirm Media Send via Supabase Storage
 if (mediaPreviewSendBtn) {
     mediaPreviewSendBtn.addEventListener("click", async () => {
