@@ -2,7 +2,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Helper: Verify user is authenticated with one of the two exact allowed emails
+    // Helper: Verify user is authenticated as one of the two exact allowed emails
     function isAllowedUser() {
       return request.auth != null && (
         request.auth.token.email == 'rishisolanki7319@gmail.com' ||
@@ -10,23 +10,32 @@ service cloud.firestore {
       );
     }
 
-    // Helper: Validate incoming message fields
+    // Helper: Validate incoming message payload (Text, Image, Video)
     function isValidMessage() {
       let data = request.resource.data;
       return data.uid == request.auth.uid
         && data.email == request.auth.token.email
         && data.displayName is string
         && data.displayName.size() > 0
-        && data.message is string
-        && data.message.size() >= 1
-        && data.message.size() <= 2000;
+        && (
+          // Text message validation
+          (!('mediaUrl' in data) && data.message is string && data.message.size() >= 1 && data.message.size() <= 2000)
+          ||
+          // Media (Image or Video) message validation
+          ('mediaUrl' in data && data.mediaUrl is string && data.mediaUrl.size() > 0 && data.mediaType in ['image', 'video'])
+        );
     }
 
-    // Protect only /our_story_room collection
+    // Protect /our_story_room collection
     match /our_story_room/{messageId} {
       allow read: if isAllowedUser();
       allow create: if isAllowedUser() && isValidMessage();
       allow update, delete: if false;
+    }
+
+    // Real-time typing status tracking
+    match /typing_status/{userId} {
+      allow read, write: if isAllowedUser();
     }
 
     // Deny all other database access

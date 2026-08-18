@@ -13,10 +13,13 @@ import {
 import { 
     getFirestore, 
     collection, 
+    doc,
+    setDoc,
+    deleteDoc,
     addDoc,
     onSnapshot, 
     query, 
-    orderBy,
+    orderBy, 
     serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
@@ -33,18 +36,17 @@ const firebaseConfig = {
 };
 
 // ==========================================
-// 3. Initialize Firebase App, Auth & Firestore
+// 3. Initialize Firebase Services
 // ==========================================
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-console.log("Firebase App, Auth & Firestore initialized successfully");
+console.log("Firebase App, Auth & Firestore initialized successfully (Storage handled by Supabase)");
 
 // ==========================================
 // 4. Authorized Users Whitelist (Rishi & Bakudi)
 // ==========================================
-// Map exact authorized emails to their respective display names and partner names
 const ALLOWED_ACCOUNTS = {
     "rishisolanki7319@gmail.com": { name: "Rishi", partner: "Bakudi ❤️", role: "rishi" },
     "hetvidodiya2447@gmail.com": { name: "Bakudi", partner: "Rishi ❤️", role: "bakudi" }
@@ -58,7 +60,7 @@ const ALLOWED_ACCOUNTS = {
 function isAuthorizedEmail(email) {
     if (!email) return false;
     const cleanEmail = email.trim().toLowerCase();
-    return cleanEmail in ALLOWED_ACCOUNTS || cleanEmail.includes("rishi") || cleanEmail.includes("bakudi") || cleanEmail.includes("hetvi");
+    return cleanEmail in ALLOWED_ACCOUNTS || cleanEmail.includes("rishi") || cleanEmail.includes("hetvi");
 }
 
 /**
@@ -95,7 +97,6 @@ async function loginUser(email, password) {
         throw new Error("Access restricted: Only Rishi and Bakudi accounts are authorized to enter.");
     }
 
-    // Set local persistence so user remains signed in
     await setPersistence(auth, browserLocalPersistence);
     const userCredential = await signInWithEmailAndPassword(auth, cleanEmail, password);
     return userCredential.user;
@@ -133,6 +134,9 @@ export {
     app, 
     auth, 
     db,
+    doc,
+    setDoc,
+    deleteDoc,
     ALLOWED_ACCOUNTS,
     isAuthorizedEmail,
     getUserProfile,
