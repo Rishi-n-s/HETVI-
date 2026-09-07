@@ -197,12 +197,22 @@ requireAuth((user, profile) => {
     showToast(`Welcome back, ${currentProfile.name}! ❤️`, "success", 2500);
 });
 
-// Hook WebRTC Call Triggers
+// Hook WebRTC Call Triggers with Debounce Protection
+let lastCallClickTime = 0;
+function safeStartCall(type) {
+    const now = Date.now();
+    if (now - lastCallClickTime < 1500) {
+        return; // Prevent duplicate rapid taps
+    }
+    lastCallClickTime = now;
+    startCall(type);
+}
+
 if (audioCallBtn) {
-    audioCallBtn.addEventListener("click", () => startCall("audio"));
+    audioCallBtn.addEventListener("click", () => safeStartCall("audio"));
 }
 if (videoCallBtn) {
-    videoCallBtn.addEventListener("click", () => startCall("video"));
+    videoCallBtn.addEventListener("click", () => safeStartCall("video"));
 }
 
 // Hook Sign Out

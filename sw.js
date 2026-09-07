@@ -1,7 +1,7 @@
 // BAKUDI NI STORY — Service Worker
 // Cache-first strategy for offline support
 
-const CACHE_NAME = 'bakudi-v6';
+const CACHE_NAME = 'bakudi-v7';
 
 // Core assets to pre-cache on install
 const PRECACHE_ASSETS = [
