@@ -623,6 +623,11 @@
               title="Create Love Poll">
               <span class="material-symbols-outlined text-lg sm:text-xl">how_to_vote</span>
             </button>
+            <button type="button" id="header-watch-together-btn"
+              class="p-1.5 sm:p-2 flex-shrink-0 rounded-full hover:bg-white/60 active:scale-95 transition-all text-primary-dark hover:text-primary flex items-center justify-center"
+              title="Watch Together & Screen Share ❤️">
+              <span class="material-symbols-outlined text-lg sm:text-xl text-primary animate-pulse">movie</span>
+            </button>
             <button type="button" class="p-1.5 sm:p-2 flex-shrink-0 rounded-full hover:bg-white/60 active:scale-95 transition-all flex items-center justify-center" title="Favorite">
               <span class="material-symbols-outlined text-lg sm:text-xl text-primary"
                 style="font-variation-settings: 'FILL' 1;">favorite</span>
@@ -962,10 +967,13 @@
         </button>
       </div>
 
-      <!-- Mode Selector Tabs -->
-      <div class="flex items-center gap-2 mt-4 p-1 bg-pink-50 rounded-2xl border border-pink-100">
+      <!-- Mode Selector Tabs (3-Way) -->
+      <div class="flex items-center gap-1.5 mt-4 p-1 bg-pink-50/80 rounded-2xl border border-pink-100">
         <button id="wt-tab-yt" type="button" class="flex-1 py-2 rounded-xl text-xs font-quicksand font-bold bg-white text-primary shadow-xs transition-all flex items-center justify-center gap-1">
           <span class="material-symbols-outlined text-base text-red-500">smart_display</span> YouTube
+        </button>
+        <button id="wt-tab-screen" type="button" class="flex-1 py-2 rounded-xl text-xs font-quicksand font-bold text-gray-600 hover:text-primary transition-all flex items-center justify-center gap-1">
+          <span class="material-symbols-outlined text-base text-indigo-500">screen_share</span> Screen Share
         </button>
         <button id="wt-tab-local" type="button" class="flex-1 py-2 rounded-xl text-xs font-quicksand font-bold text-gray-600 hover:text-primary transition-all flex items-center justify-center gap-1">
           <span class="material-symbols-outlined text-base text-pink-500">video_file</span> Local Video
@@ -974,20 +982,52 @@
 
       <!-- YouTube Input Panel -->
       <div id="wt-panel-yt" class="mt-4 space-y-3">
-        <label class="text-xs font-quicksand font-semibold text-gray-700 block">Paste YouTube Link or Video ID:</label>
+        <label class="text-xs font-quicksand font-semibold text-gray-700 block">Paste YouTube Link, Shorts, or Video ID:</label>
         <div class="relative">
           <span class="material-symbols-outlined absolute left-3 top-2.5 text-red-500 text-lg">link</span>
-          <input type="text" id="wt-yt-url-input" placeholder="e.g. https://www.youtube.com/watch?v=..." class="w-full pl-9 pr-3 py-2 text-xs bg-pink-50/50 border border-pink-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
+          <input type="text" id="wt-yt-url-input" placeholder="e.g. https://www.youtube.com/watch?v=... or shorts" class="w-full pl-9 pr-3 py-2 text-xs bg-pink-50/50 border border-pink-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/30" />
         </div>
         <div class="flex flex-wrap gap-1.5 pt-1">
-          <span class="text-[10px] text-gray-400 font-sans block w-full">Quick suggestions:</span>
+          <span class="text-[10px] text-gray-400 font-sans block w-full">Romantic Picks:</span>
           <button type="button" class="wt-quick-yt px-2.5 py-1 rounded-full bg-pink-100/70 hover:bg-pink-200 text-[10px] font-sans text-primary-dark transition-all" data-yt-id="jfKfPfyJRdk">
             🎧 Lofi Romance
           </button>
           <button type="button" class="wt-quick-yt px-2.5 py-1 rounded-full bg-pink-100/70 hover:bg-pink-200 text-[10px] font-sans text-primary-dark transition-all" data-yt-id="5qap5aO4i9A">
             🎶 Romantic Beats
           </button>
+          <button type="button" class="wt-quick-yt px-2.5 py-1 rounded-full bg-pink-100/70 hover:bg-pink-200 text-[10px] font-sans text-primary-dark transition-all" data-yt-id="kJQP7kiw5Fk">
+            ✨ Despacito / Pop
+          </button>
         </div>
+        <button id="wt-start-yt-btn" type="button" class="w-full mt-2 py-3 rounded-2xl bg-gradient-to-r from-primary to-primary-dark text-white font-quicksand font-bold text-xs shadow-lg hover:scale-102 active:scale-98 transition-all flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-lg">play_circle</span> Start YouTube Sync ❤️
+        </button>
+      </div>
+
+      <!-- Screen Share with System Audio Panel -->
+      <div id="wt-panel-screen" class="mt-4 space-y-3.5 hidden">
+        <div class="bg-gradient-to-br from-indigo-50 to-pink-50 p-3.5 rounded-2xl border border-indigo-100/80 text-left">
+          <div class="flex items-center gap-2 text-indigo-700 font-quicksand font-bold text-xs mb-1.5">
+            <span class="material-symbols-outlined text-base">cast_connected</span>
+            <span>Stream Movies, Netflix & Anime with Sound</span>
+          </div>
+          <p class="text-[11px] font-sans text-gray-600 leading-relaxed">
+            Share any browser tab, Netflix, YouTube, or VLC window. Your partner will watch in real-time with full synchronized <b>System Audio</b> while seeing your reactions!
+          </p>
+        </div>
+
+        <!-- Audio Guidance Box -->
+        <div class="bg-amber-50/90 border border-amber-200/80 rounded-2xl p-3 flex items-start gap-2 text-left">
+          <span class="material-symbols-outlined text-amber-600 text-lg flex-shrink-0 mt-0.5">campaign</span>
+          <div class="text-[11px] font-sans text-amber-900 leading-tight">
+            <span class="font-bold block mb-0.5 font-quicksand text-xs">For Crystal-Clear Movie Sound:</span>
+            In the browser share dialog, choose <b>Entire Screen</b> or a <b>Tab</b> and ensure <b>"Also share system audio"</b> is toggled on! 🔊
+          </div>
+        </div>
+
+        <button id="wt-start-screen-btn" type="button" class="w-full py-3 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-quicksand font-bold text-xs shadow-lg hover:scale-102 active:scale-98 transition-all flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-lg">screen_share</span> Start Screen Share with Audio 🎬
+        </button>
       </div>
 
       <!-- Local Video Input Panel -->
@@ -998,13 +1038,13 @@
           <span class="material-symbols-outlined text-2xl text-primary">upload_file</span>
           <span id="wt-local-file-label" class="text-xs font-sans text-gray-600 font-medium">Click to select MP4 / WebM video</span>
         </label>
-        <p class="text-[10px] text-gray-400 text-center font-sans">For synchronized playback, both partners should select the same file or stream.</p>
+        <div class="bg-pink-50/70 p-2.5 rounded-xl border border-pink-100 text-[10px] text-gray-600 font-sans leading-relaxed">
+          💡 <b>Tip:</b> If your partner does not have the exact video file, use the <b>Screen Share</b> tab above to stream it directly to them with full system audio!
+        </div>
+        <button id="wt-start-local-btn" type="button" class="w-full py-3 rounded-2xl bg-gradient-to-r from-primary to-primary-dark text-white font-quicksand font-bold text-xs shadow-lg hover:scale-102 active:scale-98 transition-all flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-lg">movie</span> Start Local Video Sync ❤️
+        </button>
       </div>
-
-      <!-- Start Button -->
-      <button id="wt-start-btn" type="button" class="w-full mt-5 py-3 rounded-2xl bg-gradient-to-r from-primary to-primary-dark text-white font-quicksand font-bold text-xs shadow-lg hover:scale-102 active:scale-98 transition-all flex items-center justify-center gap-2">
-        <span class="material-symbols-outlined text-lg">play_circle</span> Start Watching Together ❤️
-      </button>
     </div>
   </div>
 
@@ -1169,13 +1209,16 @@
         </span>
       </div>
 
+      <!-- Dedicated Remote Audio Receiver (Ensures uninterrupted system/mic audio in all modes) -->
+      <audio id="remote-audio-receiver" autoplay playsinline class="hidden"></audio>
+
       <!-- 3. Shared Theater Stage (Watch Together Mode) -->
-      <div id="watch-together-stage" class="absolute inset-0 bg-black z-15 hidden flex-col justify-between overflow-hidden">
+      <div id="watch-together-stage" class="absolute inset-0 bg-black z-[20] hidden flex-col justify-between overflow-hidden">
         
         <!-- Theater Header Bar -->
         <div class="flex items-center justify-between p-3 bg-gradient-to-b from-black/80 to-transparent z-30">
           <div class="flex items-center gap-2 text-pink-200">
-            <span class="material-symbols-outlined text-primary text-xl animate-pulse">movie</span>
+            <span class="material-symbols-outlined text-primary text-xl animate-pulse" id="wt-stage-icon">movie</span>
             <span id="wt-stage-title" class="font-quicksand font-bold text-xs sm:text-sm truncate max-w-[200px] sm:max-w-xs">Watching Together ❤️</span>
           </div>
           <button id="wt-stage-exit-btn" type="button" class="px-3 py-1 bg-white/20 hover:bg-rose-500/80 rounded-full text-xs font-quicksand font-semibold text-white backdrop-blur-md transition-all flex items-center gap-1">
@@ -1187,7 +1230,17 @@
         <div class="relative flex-1 flex items-center justify-center bg-black overflow-hidden">
           <!-- YouTube IFrame Container -->
           <div id="wt-yt-container" class="w-full h-full flex items-center justify-center hidden">
-            <div id="yt-player" class="w-full h-full aspect-video"></div>
+            <div id="wt-yt-wrapper" class="w-full h-full flex items-center justify-center">
+              <div id="yt-player" class="w-full h-full aspect-video"></div>
+            </div>
+          </div>
+          <!-- Screen Share Video Container (with System Audio support) -->
+          <div id="wt-screen-container" class="w-full h-full flex items-center justify-center hidden relative bg-black">
+            <video id="synced-screen-video" autoplay playsinline class="w-full h-full object-contain"></video>
+            <div id="wt-screen-audio-badge" class="absolute top-3 left-3 bg-black/75 backdrop-blur-md text-pink-200 text-xs px-2.5 py-1 rounded-full border border-pink-400/30 flex items-center gap-1.5 shadow-md z-30">
+              <span class="material-symbols-outlined text-sm text-emerald-400 animate-pulse">volume_up</span>
+              <span id="wt-screen-audio-text">System Audio Live</span>
+            </div>
           </div>
           <!-- HTML5 Local Video Player -->
           <div id="wt-local-container" class="w-full h-full flex items-center justify-center hidden">
@@ -1219,7 +1272,7 @@
 
       <!-- 4. Floating Remote Partner PIP (Active during Watch Together) -->
       <div id="remote-video-pip-container"
-        class="absolute top-4 left-4 w-28 h-36 sm:w-36 sm:h-44 rounded-2xl overflow-hidden border-2 border-primary/80 shadow-2xl z-25 bg-gray-950 hidden">
+        class="absolute top-4 left-4 w-28 h-36 sm:w-36 sm:h-44 rounded-2xl overflow-hidden border-2 border-primary/80 shadow-2xl z-[35] bg-gray-950 hidden">
         <video id="remote-pip-video" autoplay playsinline class="w-full h-full object-cover"></video>
         <div class="absolute bottom-1 left-1.5 px-1.5 py-0.5 bg-black/70 rounded text-[9px] font-sans text-pink-200">
           Partner ❤️</div>
@@ -1227,7 +1280,7 @@
 
       <!-- 5. Floating Local Video PIP Stream (Draggable & Corner-snapping) -->
       <div id="local-video-container"
-        class="absolute top-4 right-4 w-28 h-40 sm:w-36 sm:h-48 rounded-2xl overflow-hidden border-2 border-pink-400/60 shadow-2xl z-25 bg-gray-950 cursor-grab transition-all group">
+        class="absolute top-4 right-4 w-28 h-40 sm:w-36 sm:h-48 rounded-2xl overflow-hidden border-2 border-pink-400/60 shadow-2xl z-[35] bg-gray-950 cursor-grab transition-all group">
         <video id="local-video" autoplay playsinline muted class="w-full h-full object-cover"></video>
 
         <!-- Local Camera Off Placeholder -->
@@ -1284,6 +1337,13 @@
         class="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 rounded-full bg-gradient-to-tr from-pink-600 to-rose-500 hover:scale-105 active:scale-95 text-white flex items-center justify-center shadow-lg transition-all focus:outline-none"
         title="Watch Movie / YouTube Together ❤️">
         <span class="material-symbols-outlined text-xl sm:text-2xl">movie</span>
+      </button>
+
+      <!-- Screen Share with System Audio Trigger -->
+      <button id="call-screen-share-btn" type="button" aria-label="Share Screen"
+        class="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 rounded-full bg-white/15 hover:bg-white/25 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all focus:outline-none"
+        title="Share Screen with System Audio 🖥️">
+        <span id="call-screen-share-icon" class="material-symbols-outlined text-xl sm:text-2xl">screen_share</span>
       </button>
 
       <!-- Toggle Microphone -->

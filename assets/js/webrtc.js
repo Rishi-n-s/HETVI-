@@ -113,6 +113,17 @@ let isLocalMirrored = localStorage.getItem("webrtc_mirror_local") === "true";
 let isRemoteMirrored = false;
 let isInitiatingCall = false;
 
+// Screen Sharing State with System Audio
+let isScreenSharing = false;
+let screenStream = null;
+let originalCameraTrack = null;
+let originalMicTrack = null;
+let audioContext = null;
+let mixedAudioDestination = null;
+let callScreenShareBtn = null;
+let callScreenShareIcon = null;
+let remoteAudioReceiver = null;
+
 // Candidate Buffering & Deduplication
 let iceCandidateQueue = [];
 let processedCandidates = new Set();
@@ -223,7 +234,16 @@ export function initWebRTC(user, profile, firestoreDb, showToast) {
     listenForIncomingCalls();
 
     // Initialize Watch Together Engine
-    initWatchTogether(currentUser, currentProfile, db, showToastFn);
+    initWatchTogether(currentUser, currentProfile, db, showToastFn, {
+        startScreenShare,
+        stopScreenShare,
+        isSharingScreen: () => isScreenSharing
+    });
+    window.webrtcScreenShare = {
+        startScreenShare,
+        stopScreenShare,
+        isSharingScreen: () => isScreenSharing
+    };
 
     // Auto cleanup call if page is closed or refreshed
     window.addEventListener("beforeunload", () => {
@@ -302,6 +322,10 @@ function bindDOMElements() {
     localSwitchCamBtn = document.getElementById("local-switch-cam-btn");
     callHangupBtn = document.getElementById("call-hangup-btn");
 
+    callScreenShareBtn = document.getElementById("call-screen-share-btn");
+    callScreenShareIcon = document.getElementById("call-screen-share-icon");
+    remoteAudioReceiver = document.getElementById("remote-audio-receiver");
+
     // Debug elements
     callDebugToggleBtn = document.getElementById("call-debug-toggle-btn");
     webrtcDebugHud = document.getElementById("webrtc-debug-hud");
@@ -320,6 +344,7 @@ function bindEventHandlers() {
     if (acceptCallBtn) acceptCallBtn.addEventListener("click", acceptIncomingCall);
     if (outgoingCancelBtn) outgoingCancelBtn.addEventListener("click", () => endActiveCall(true));
     if (callHangupBtn) callHangupBtn.addEventListener("click", () => endActiveCall(true));
+    if (callScreenShareBtn) callScreenShareBtn.addEventListener("click", toggleScreenShare);
 
     if (callToggleMicBtn) callToggleMicBtn.addEventListener("click", toggleMicrophone);
     if (callToggleCamBtn) callToggleCamBtn.addEventListener("click", toggleCamera);
@@ -1117,6 +1142,12 @@ function handleRemoteTrackEvent(event) {
         remoteVideo.srcObject = remoteStream;
     }
 
+    // Connect to dedicated hidden audio receiver so audio never cuts out when remote-video is hidden in theater mode
+    if (remoteAudioReceiver && remoteAudioReceiver.srcObject !== remoteStream) {
+        remoteAudioReceiver.srcObject = remoteStream;
+        remoteAudioReceiver.play().catch(() => {});
+    }
+
     // Defensive autoplay policy handling for iOS Safari / Chrome
     if (remoteVideo) {
         remoteVideo.play().catch((err) => {
@@ -1124,6 +1155,7 @@ function handleRemoteTrackEvent(event) {
             // Retry on next user interaction if blocked
             const retryPlay = () => {
                 remoteVideo.play().catch(() => {});
+                if (remoteAudioReceiver) remoteAudioReceiver.play().catch(() => {});
                 window.removeEventListener("click", retryPlay);
                 window.removeEventListener("touchstart", retryPlay);
             };
@@ -1141,7 +1173,12 @@ export async function endActiveCall(shouldUpdateFirestore = true) {
 
     isInitiatingCall = false;
 
-    // 0. Cleanup Watch Together
+    // 0. Stop Screen Sharing if active
+    if (isScreenSharing) {
+        await stopScreenShare(false);
+    }
+
+    // 0.1 Cleanup Watch Together
     cleanupWatchTogether();
 
     // 1. Update Firestore Status
@@ -1389,6 +1426,180 @@ async function switchCameraDevice() {
         console.warn("[WebRTC] Could not switch camera:", err);
         showToastFn("Camera switch not supported on this device.", "info", 2000);
     }
+}
+
+// ==========================================================
+// 13.5 Screen Sharing with System Audio Engine
+// ==========================================================
+export async function toggleScreenShare() {
+    if (isScreenSharing) {
+        await stopScreenShare(true);
+    } else {
+        await startScreenShare();
+    }
+}
+
+export async function startScreenShare() {
+    if (!currentCallId || !peerConnection) {
+        showToastFn("Start or join a call first to share your screen ❤️", "info", 3000);
+        return;
+    }
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+        showToastFn("Screen sharing with system audio is supported on Desktop browsers (Chrome, Edge, Firefox, Brave).", "info", 4000);
+        return;
+    }
+
+    try {
+        // Request screen capture with system audio preference
+        screenStream = await navigator.mediaDevices.getDisplayMedia({
+            video: {
+                cursor: "always",
+                displaySurface: "monitor",
+                frameRate: { ideal: 30, max: 60 },
+                width: { ideal: 1920, max: 2560 },
+                height: { ideal: 1080, max: 1440 }
+            },
+            audio: {
+                echoCancellation: false,
+                noiseSuppression: false,
+                autoGainControl: false,
+                suppressLocalAudioPlayback: false
+            },
+            systemAudio: "include"
+        });
+
+        const screenVideoTrack = screenStream.getVideoTracks()[0];
+        if (!screenVideoTrack) {
+            throw new Error("No video track captured.");
+        }
+
+        const screenAudioTracks = screenStream.getAudioTracks();
+        const hasSystemAudio = screenAudioTracks.length > 0;
+
+        // 1. Replace Video Track on WebRTC Sender seamlessly
+        originalCameraTrack = localStream ? localStream.getVideoTracks()[0] : null;
+        const videoSender = peerConnection.getSenders().find((s) => s.track && s.track.kind === "video");
+        if (videoSender) {
+            await videoSender.replaceTrack(screenVideoTrack);
+        }
+
+        // 2. Mix Microphone + System Audio so partner hears both without echo
+        originalMicTrack = localStream ? localStream.getAudioTracks()[0] : null;
+        const audioSender = peerConnection.getSenders().find((s) => s.track && s.track.kind === "audio");
+
+        if (hasSystemAudio && audioSender) {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                mixedAudioDestination = audioContext.createMediaStreamDestination();
+
+                if (originalMicTrack) {
+                    const micSource = audioContext.createMediaStreamSource(new MediaStream([originalMicTrack]));
+                    micSource.connect(mixedAudioDestination);
+                }
+
+                const sysSource = audioContext.createMediaStreamSource(new MediaStream([screenAudioTracks[0]]));
+                sysSource.connect(mixedAudioDestination);
+
+                const mixedAudioTrack = mixedAudioDestination.stream.getAudioTracks()[0];
+                await audioSender.replaceTrack(mixedAudioTrack);
+            } catch (audioErr) {
+                console.warn("[WebRTC] Audio mixing notice:", audioErr);
+            }
+        }
+
+        isScreenSharing = true;
+
+        // 3. Handle user clicking the native "Stop Sharing" floating browser pill
+        screenVideoTrack.onended = () => {
+            console.log("[WebRTC] User stopped screen share via browser controls.");
+            stopScreenShare(true);
+        };
+
+        // 4. Update Screen Share button state in Call Toolbar
+        if (callScreenShareBtn) {
+            callScreenShareBtn.classList.remove("bg-white/15");
+            callScreenShareBtn.classList.add("bg-pink-600", "shadow-pink-500/50");
+        }
+        if (callScreenShareIcon) {
+            callScreenShareIcon.textContent = "stop_screen_share";
+        }
+
+        // 5. Connect local preview & open Theater Mode via Watch Together engine
+        const sharerName = currentProfile && currentProfile.name ? currentProfile.name : "Your Love";
+        const title = `${sharerName}'s Screen 🖥️`;
+        
+        // Notify watch-together engine to display screen share stage
+        if (window.handleScreenShareStarted) {
+            window.handleScreenShareStarted(screenStream, title, hasSystemAudio);
+        }
+
+        if (hasSystemAudio) {
+            showToastFn("Screen & System Audio sharing live! 🎬🔊", "info", 3500);
+        } else {
+            showToastFn("Screen sharing live. (Tip: select a Tab or Entire Screen with 'Share system audio' to share movie sound) 💡", "info", 4500);
+        }
+
+    } catch (err) {
+        if (err.name === "NotAllowedError") {
+            console.log("[WebRTC] Screen sharing cancelled by user.");
+            return;
+        }
+        console.error("[WebRTC] Screen Share error:", err);
+        showToastFn("Could not start screen sharing: " + err.message, "error", 3500);
+    }
+}
+
+export async function stopScreenShare(notifyRemote = true) {
+    if (!isScreenSharing && !screenStream) return;
+    console.log("[WebRTC] Stopping screen share...");
+
+    isScreenSharing = false;
+
+    // 1. Restore Camera Video Track on WebRTC Sender
+    if (peerConnection && originalCameraTrack) {
+        const videoSender = peerConnection.getSenders().find((s) => s.track && s.track.kind === "video");
+        if (videoSender) {
+            await videoSender.replaceTrack(originalCameraTrack).catch(console.warn);
+        }
+    }
+
+    // 2. Restore Original Microphone Track on WebRTC Sender
+    if (peerConnection && originalMicTrack) {
+        const audioSender = peerConnection.getSenders().find((s) => s.track && s.track.kind === "audio");
+        if (audioSender) {
+            await audioSender.replaceTrack(originalMicTrack).catch(console.warn);
+        }
+    }
+
+    // 3. Close AudioContext
+    if (audioContext) {
+        audioContext.close().catch(() => {});
+        audioContext = null;
+        mixedAudioDestination = null;
+    }
+
+    // 4. Stop all screen capture tracks
+    if (screenStream) {
+        screenStream.getTracks().forEach((track) => track.stop());
+        screenStream = null;
+    }
+
+    // 5. Reset Toolbar Button
+    if (callScreenShareBtn) {
+        callScreenShareBtn.classList.remove("bg-pink-600", "shadow-pink-500/50");
+        callScreenShareBtn.classList.add("bg-white/15");
+    }
+    if (callScreenShareIcon) {
+        callScreenShareIcon.textContent = "screen_share";
+    }
+
+    // 6. Notify watch-together engine to exit theater mode
+    if (window.handleScreenShareStopped) {
+        window.handleScreenShareStopped(notifyRemote);
+    }
+
+    showToastFn("Screen share ended.", "info", 2000);
 }
 
 // ==========================================================

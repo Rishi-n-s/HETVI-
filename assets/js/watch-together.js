@@ -1,6 +1,6 @@
 // ==========================================================
 // watch-together.js — 1-to-1 "Watch Together" Synchronization Engine
-// YouTube & Local Video Real-Time Play/Pause/Seek/Speed Sync + Dual Floating PIP Webcams
+// YouTube & Screen Share (with System Audio) & Local Video Real-Time Sync
 // ==========================================================
 
 import { doc, setDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
@@ -12,33 +12,52 @@ let currentProfile = null;
 let currentCallId = null;
 let showToastFn = null;
 let unsubscribeWatchTogether = null;
+let screenShareBridge = null;
+let activeRemoteStream = null;
 
 let isRemoteSync = false;
 let isTheaterActive = false;
-let currentMode = "youtube"; // "youtube" | "local"
+let currentMode = "youtube"; // "youtube" | "screenshare" | "local"
+let isLocalSharer = false;
 let ytPlayer = null;
 let isYTReady = false;
+let ytReadyPromise = null;
 let localVideoUrl = null;
 let activeVideoDuration = 0;
+
+// Loopback and ping-pong prevention
+let lastRemoteActionTimestamp = 0;
+let lastBroadcastState = null;
+let lastBroadcastTime = 0;
 
 // DOM Elements
 let watchTogetherModal = null;
 let wtModalCloseBtn = null;
 let wtTabYT = null;
+let wtTabScreen = null;
 let wtTabLocal = null;
 let wtPanelYT = null;
+let wtPanelScreen = null;
 let wtPanelLocal = null;
 let wtYTUrlInput = null;
+let wtStartYtBtn = null;
+let wtStartScreenBtn = null;
 let wtLocalFileInput = null;
 let wtLocalFileLabel = null;
-let wtStartBtn = null;
+let wtStartLocalBtn = null;
 let wtQuickButtons = [];
 
 // Theater Stage DOM
 let watchTogetherStage = null;
 let wtStageTitle = null;
+let wtStageIcon = null;
 let wtStageExitBtn = null;
 let wtYTContainer = null;
+let wtYTWrapper = null;
+let wtScreenContainer = null;
+let syncedScreenVideo = null;
+let wtScreenAudioBadge = null;
+let wtScreenAudioText = null;
 let wtLocalContainer = null;
 let syncedLocalVideo = null;
 let wtVideoControls = null;
@@ -60,19 +79,29 @@ function bindWatchTogetherDOM() {
     watchTogetherModal = document.getElementById("watch-together-modal");
     wtModalCloseBtn = document.getElementById("wt-modal-close-btn");
     wtTabYT = document.getElementById("wt-tab-yt");
+    wtTabScreen = document.getElementById("wt-tab-screen");
     wtTabLocal = document.getElementById("wt-tab-local");
     wtPanelYT = document.getElementById("wt-panel-yt");
+    wtPanelScreen = document.getElementById("wt-panel-screen");
     wtPanelLocal = document.getElementById("wt-panel-local");
     wtYTUrlInput = document.getElementById("wt-yt-url-input");
+    wtStartYtBtn = document.getElementById("wt-start-yt-btn");
+    wtStartScreenBtn = document.getElementById("wt-start-screen-btn");
     wtLocalFileInput = document.getElementById("wt-local-file-input");
     wtLocalFileLabel = document.getElementById("wt-local-file-label");
-    wtStartBtn = document.getElementById("wt-start-btn");
+    wtStartLocalBtn = document.getElementById("wt-start-local-btn");
     wtQuickButtons = document.querySelectorAll(".wt-quick-yt");
 
     watchTogetherStage = document.getElementById("watch-together-stage");
     wtStageTitle = document.getElementById("wt-stage-title");
+    wtStageIcon = document.getElementById("wt-stage-icon");
     wtStageExitBtn = document.getElementById("wt-stage-exit-btn");
     wtYTContainer = document.getElementById("wt-yt-container");
+    wtYTWrapper = document.getElementById("wt-yt-wrapper");
+    wtScreenContainer = document.getElementById("wt-screen-container");
+    syncedScreenVideo = document.getElementById("synced-screen-video");
+    wtScreenAudioBadge = document.getElementById("wt-screen-audio-badge");
+    wtScreenAudioText = document.getElementById("wt-screen-audio-text");
     wtLocalContainer = document.getElementById("wt-local-container");
     syncedLocalVideo = document.getElementById("synced-local-video");
     wtVideoControls = document.getElementById("wt-video-controls");
@@ -93,16 +122,56 @@ function bindWatchTogetherDOM() {
 /**
  * Initialize Watch Together Engine
  */
-export function initWatchTogether(user, profile, db, showToast) {
+export function initWatchTogether(user, profile, db, showToast, screenShareController = null) {
     currentAuthUser = user;
     currentProfile = profile;
     firestoreDb = db;
     showToastFn = showToast || console.log;
+    screenShareBridge = screenShareController || window.webrtcScreenShare;
 
     bindWatchTogetherDOM();
     setupModalEvents();
     setupTheaterControls();
     loadYouTubeIFrameAPI();
+
+    // Register global bridge callbacks from WebRTC engine for screen sharing
+    window.handleScreenShareStarted = (screenStream, title, hasSystemAudio) => {
+        isLocalSharer = true;
+        enterTheaterMode("screenshare", title || "Your Shared Screen 🖥️");
+        
+        if (syncedScreenVideo) {
+            syncedScreenVideo.srcObject = screenStream;
+            // Mute local video preview to avoid echo of the user's own system audio
+            syncedScreenVideo.muted = true;
+            syncedScreenVideo.play().catch(console.warn);
+        }
+
+        if (wtScreenAudioBadge) {
+            wtScreenAudioBadge.classList.remove("hidden");
+            if (wtScreenAudioText) {
+                wtScreenAudioText.textContent = hasSystemAudio ? "System Audio Live 🔊" : "Screen Only (No Audio)";
+            }
+        }
+
+        broadcastSyncState({
+            active: true,
+            mode: "screenshare",
+            title: title || "Shared Screen 🖥️",
+            hasSystemAudio: !!hasSystemAudio,
+            sharerUid: currentAuthUser.uid,
+            state: "sharing"
+        });
+    };
+
+    window.handleScreenShareStopped = (notifyRemote = true) => {
+        if (syncedScreenVideo && isLocalSharer) {
+            syncedScreenVideo.srcObject = null;
+        }
+        isLocalSharer = false;
+        if (isTheaterActive && currentMode === "screenshare") {
+            exitTheaterMode(notifyRemote);
+        }
+    };
 }
 
 /**
@@ -110,6 +179,8 @@ export function initWatchTogether(user, profile, db, showToast) {
  */
 export function connectWatchTogetherToCall(callId, remoteStream) {
     currentCallId = callId;
+    activeRemoteStream = remoteStream;
+
     if (remotePipVideo && remoteStream) {
         remotePipVideo.srcObject = remoteStream;
     }
@@ -126,6 +197,9 @@ export function cleanupWatchTogether() {
     }
     exitTheaterMode(false);
     currentCallId = null;
+    activeRemoteStream = null;
+    isLocalSharer = false;
+
     if (localVideoUrl) {
         URL.revokeObjectURL(localVideoUrl);
         localVideoUrl = null;
@@ -133,25 +207,65 @@ export function cleanupWatchTogether() {
 }
 
 // ==========================================================
-// 1. YouTube IFrame API Loader
+// 1. YouTube IFrame API Loader (Safe & Promisified)
 // ==========================================================
 function loadYouTubeIFrameAPI() {
     if (window.YT && window.YT.Player) {
         isYTReady = true;
         return;
     }
-    if (!document.getElementById("yt-iframe-script")) {
-        const tag = document.createElement("script");
-        tag.id = "yt-iframe-script";
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName("script")[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        window.onYouTubeIframeAPIReady = () => {
-            console.log("[WatchTogether] YouTube IFrame API Ready");
-            isYTReady = true;
-        };
+    if (!ytReadyPromise) {
+        ytReadyPromise = new Promise((resolve) => {
+            if (window.YT && window.YT.Player) {
+                isYTReady = true;
+                return resolve();
+            }
+
+            const existingScript = document.getElementById("yt-iframe-script");
+            if (!existingScript) {
+                const tag = document.createElement("script");
+                tag.id = "yt-iframe-script";
+                tag.src = "https://www.youtube.com/iframe_api";
+                const firstScriptTag = document.getElementsByTagName("script")[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            }
+
+            const prevOnReady = window.onYouTubeIframeAPIReady;
+            window.onYouTubeIframeAPIReady = () => {
+                if (typeof prevOnReady === "function") prevOnReady();
+                console.log("[WatchTogether] YouTube IFrame API Ready");
+                isYTReady = true;
+                resolve();
+            };
+
+            // Fallback poll in case onYouTubeIframeAPIReady already fired
+            const checkInterval = setInterval(() => {
+                if (window.YT && window.YT.Player) {
+                    clearInterval(checkInterval);
+                    isYTReady = true;
+                    resolve();
+                }
+            }, 150);
+
+            setTimeout(() => {
+                clearInterval(checkInterval);
+                resolve();
+            }, 10000);
+        });
     }
+}
+
+async function ensureYouTubeReady() {
+    if (window.YT && window.YT.Player) {
+        isYTReady = true;
+        return true;
+    }
+    loadYouTubeIFrameAPI();
+    if (ytReadyPromise) {
+        await ytReadyPromise;
+    }
+    return !!(window.YT && window.YT.Player);
 }
 
 // ==========================================================
@@ -175,7 +289,7 @@ function listenToWatchTogetherState() {
 
         if (!data.active) {
             if (isTheaterActive) {
-                if (showToastFn) showToastFn("Partner closed Watch Together.", "info");
+                if (showToastFn) showToastFn("Partner closed Watch Together.", "info", 2500);
                 exitTheaterMode(false);
             }
             return;
@@ -208,6 +322,7 @@ async function broadcastSyncState(updates = {}) {
  */
 function applyRemoteSyncState(data) {
     isRemoteSync = true;
+    lastRemoteActionTimestamp = Date.now();
 
     // If theater not opened yet, enter theater mode
     if (!isTheaterActive) {
@@ -216,30 +331,49 @@ function applyRemoteSyncState(data) {
 
     if (data.mode === "youtube") {
         syncYouTubeRemoteState(data);
+    } else if (data.mode === "screenshare") {
+        syncScreenShareRemoteState(data);
     } else if (data.mode === "local") {
         syncLocalVideoRemoteState(data);
     }
 
     setTimeout(() => {
         isRemoteSync = false;
-    }, 400);
+    }, 1200);
 }
 
 // ==========================================================
-// 3. YouTube Player Controller
+// 3. YouTube Player Controller & Loopback Protection
 // ==========================================================
-function createOrLoadYouTubePlayer(videoId, autoPlay = true) {
+async function createOrLoadYouTubePlayer(videoId, autoPlay = true) {
     if (wtYTContainer) wtYTContainer.classList.remove("hidden");
+    if (wtScreenContainer) wtScreenContainer.classList.add("hidden");
     if (wtLocalContainer) wtLocalContainer.classList.add("hidden");
-    if (wtVideoControls) wtVideoControls.classList.add("hidden"); // YouTube handles its own controls
+    if (wtVideoControls) wtVideoControls.classList.add("hidden");
 
-    if (ytPlayer && typeof ytPlayer.loadVideoById === "function") {
-        ytPlayer.loadVideoById({
-            videoId: videoId,
-            startSeconds: 0
-        });
-        if (autoPlay) ytPlayer.playVideo();
+    const ready = await ensureYouTubeReady();
+    if (!ready) {
+        if (showToastFn) showToastFn("Loading YouTube player... please retry in a moment.", "info", 2000);
         return;
+    }
+
+    // Reset iframe container if player doesn't exist
+    if (ytPlayer && typeof ytPlayer.loadVideoById === "function") {
+        try {
+            ytPlayer.loadVideoById({
+                videoId: videoId,
+                startSeconds: 0
+            });
+            if (autoPlay) ytPlayer.playVideo();
+            return;
+        } catch (e) {
+            console.warn("[WatchTogether] Reloading YouTube player instance:", e);
+        }
+    }
+
+    // Ensure pristine target div exists inside wrapper
+    if (wtYTWrapper) {
+        wtYTWrapper.innerHTML = '<div id="yt-player" class="w-full h-full aspect-video"></div>';
     }
 
     ytPlayer = new window.YT.Player("yt-player", {
@@ -253,7 +387,13 @@ function createOrLoadYouTubePlayer(videoId, autoPlay = true) {
         },
         events: {
             onReady: (event) => {
-                if (autoPlay) event.target.playVideo();
+                if (autoPlay) {
+                    try {
+                        event.target.playVideo();
+                    } catch (e) {
+                        console.warn("[WatchTogether] Autoplay deferred by browser policy.");
+                    }
+                }
             },
             onStateChange: onYouTubeStateChange
         }
@@ -263,17 +403,30 @@ function createOrLoadYouTubePlayer(videoId, autoPlay = true) {
 function onYouTubeStateChange(event) {
     if (isRemoteSync || !isTheaterActive) return;
 
+    // Suppress loopback echoes within 1.5s of remote action
+    if (Date.now() - lastRemoteActionTimestamp < 1500) return;
+
     const playerState = event.data;
-    const currentTime = ytPlayer.getCurrentTime ? ytPlayer.getCurrentTime() : 0;
-    const playbackRate = ytPlayer.getPlaybackRate ? ytPlayer.getPlaybackRate() : 1.0;
+    const currentTime = ytPlayer && ytPlayer.getCurrentTime ? ytPlayer.getCurrentTime() : 0;
+    const playbackRate = ytPlayer && ytPlayer.getPlaybackRate ? ytPlayer.getPlaybackRate() : 1.0;
 
     if (playerState === window.YT.PlayerState.PLAYING) {
+        if (lastBroadcastState === "playing" && Math.abs(currentTime - lastBroadcastTime) < 1.0) {
+            return;
+        }
+        lastBroadcastState = "playing";
+        lastBroadcastTime = currentTime;
+
         broadcastSyncState({
             state: "playing",
             currentTime: currentTime,
             playbackRate: playbackRate
         });
     } else if (playerState === window.YT.PlayerState.PAUSED) {
+        if (lastBroadcastState === "paused") return;
+        lastBroadcastState = "paused";
+        lastBroadcastTime = currentTime;
+
         broadcastSyncState({
             state: "paused",
             currentTime: currentTime,
@@ -283,20 +436,23 @@ function onYouTubeStateChange(event) {
 }
 
 function syncYouTubeRemoteState(data) {
-    if (!ytPlayer) {
+    lastRemoteActionTimestamp = Date.now();
+
+    if (!ytPlayer || !ytPlayer.getPlayerState) {
         createOrLoadYouTubePlayer(data.src, data.state === "playing");
         return;
     }
 
     // Check if video source changed
     const currentUrl = ytPlayer.getVideoUrl ? ytPlayer.getVideoUrl() : "";
-    if (!currentUrl.includes(data.src)) {
+    if (data.src && !currentUrl.includes(data.src)) {
         createOrLoadYouTubePlayer(data.src, data.state === "playing");
+        return;
     }
 
-    // Time Seek Sync (threshold > 1.8s to avoid stutter)
+    // Time Seek Sync (threshold > 2.0s to avoid minor jitter)
     const localTime = ytPlayer.getCurrentTime ? ytPlayer.getCurrentTime() : 0;
-    if (typeof data.currentTime === "number" && Math.abs(localTime - data.currentTime) > 1.8) {
+    if (typeof data.currentTime === "number" && Math.abs(localTime - data.currentTime) > 2.0) {
         ytPlayer.seekTo(data.currentTime, true);
     }
 
@@ -306,18 +462,46 @@ function syncYouTubeRemoteState(data) {
     }
 
     // Play / Pause Sync
-    if (data.state === "playing" && ytPlayer.getPlayerState() !== window.YT.PlayerState.PLAYING) {
+    const currentState = ytPlayer.getPlayerState();
+    if (data.state === "playing" && currentState !== window.YT.PlayerState.PLAYING && currentState !== window.YT.PlayerState.BUFFERING) {
         ytPlayer.playVideo();
-    } else if (data.state === "paused" && ytPlayer.getPlayerState() !== window.YT.PlayerState.PAUSED) {
+    } else if (data.state === "paused" && currentState !== window.YT.PlayerState.PAUSED) {
         ytPlayer.pauseVideo();
     }
 }
 
 // ==========================================================
-// 4. HTML5 Local Video Player Controller
+// 4. Screen Share Controller (System Audio Live)
+// ==========================================================
+function syncScreenShareRemoteState(data) {
+    if (wtYTContainer) wtYTContainer.classList.add("hidden");
+    if (wtScreenContainer) wtScreenContainer.classList.remove("hidden");
+    if (wtLocalContainer) wtLocalContainer.classList.add("hidden");
+    if (wtVideoControls) wtVideoControls.classList.add("hidden");
+
+    if (syncedScreenVideo) {
+        // As viewer, attach incoming remote WebRTC stream containing shared screen & mixed system audio
+        if (activeRemoteStream && syncedScreenVideo.srcObject !== activeRemoteStream) {
+            syncedScreenVideo.srcObject = activeRemoteStream;
+        }
+        syncedScreenVideo.muted = false; // Viewer must hear the audio!
+        syncedScreenVideo.play().catch(console.warn);
+    }
+
+    if (wtScreenAudioBadge) {
+        wtScreenAudioBadge.classList.remove("hidden");
+        if (wtScreenAudioText) {
+            wtScreenAudioText.textContent = data.hasSystemAudio ? "System Audio Live 🔊" : "Screen Sharing Active";
+        }
+    }
+}
+
+// ==========================================================
+// 5. HTML5 Local Video Player Controller
 // ==========================================================
 function setupLocalVideoPlayer(src) {
     if (wtYTContainer) wtYTContainer.classList.add("hidden");
+    if (wtScreenContainer) wtScreenContainer.classList.add("hidden");
     if (wtLocalContainer) wtLocalContainer.classList.remove("hidden");
     if (wtVideoControls) wtVideoControls.classList.remove("hidden");
 
@@ -330,15 +514,16 @@ function setupLocalVideoPlayer(src) {
 function syncLocalVideoRemoteState(data) {
     if (!syncedLocalVideo) return;
 
-    // Only set remote src directly if it is a public URL or network stream (not a device-local blob)
     if (data.src && !data.src.startsWith("blob:") && syncedLocalVideo.src !== data.src && !syncedLocalVideo.src.includes(data.src)) {
         syncedLocalVideo.src = data.src;
     } else if (data.mode === "local" && !localVideoUrl && !syncedLocalVideo.src) {
-        if (showToastFn) showToastFn("Partner started a local video. Select the same video file to sync! 🎬", "info", 4000);
+        if (showToastFn) {
+            showToastFn("Partner started a local video. (Tip: Use Screen Share to stream with audio without needing the file!) 🎬", "info", 5000);
+        }
     }
 
-    // Time Seek Sync (threshold > 1.5s)
-    if (typeof data.currentTime === "number" && Math.abs(syncedLocalVideo.currentTime - data.currentTime) > 1.5) {
+    // Time Seek Sync (threshold > 1.8s)
+    if (typeof data.currentTime === "number" && Math.abs(syncedLocalVideo.currentTime - data.currentTime) > 1.8) {
         syncedLocalVideo.currentTime = data.currentTime;
     }
 
@@ -357,13 +542,19 @@ function syncLocalVideoRemoteState(data) {
 }
 
 // ==========================================================
-// 5. Theater Mode Layout Coordinator
+// 6. Theater Mode Layout Coordinator
 // ==========================================================
-function enterTheaterMode(mode, title = "Watching Together ❤️") {
+export function enterTheaterMode(mode, title = "Watching Together ❤️") {
     isTheaterActive = true;
     currentMode = mode;
 
     if (wtStageTitle) wtStageTitle.textContent = title;
+    if (wtStageIcon) {
+        if (mode === "youtube") wtStageIcon.textContent = "smart_display";
+        else if (mode === "screenshare") wtStageIcon.textContent = "screen_share";
+        else wtStageIcon.textContent = "movie";
+    }
+
     if (watchTogetherStage) {
         watchTogetherStage.classList.remove("hidden");
         watchTogetherStage.classList.add("flex");
@@ -371,15 +562,38 @@ function enterTheaterMode(mode, title = "Watching Together ❤️") {
 
     // Activate Dual Floating PIP Webcams
     if (remoteVideoPipContainer) remoteVideoPipContainer.classList.remove("hidden");
-    if (remoteVideoStandard) remoteVideoStandard.classList.add("hidden");
+    
+    // Instead of hiding remoteVideoStandard completely, ensure it remains in DOM for uninterrupted audio
+    if (remoteVideoStandard) {
+        remoteVideoStandard.classList.add("opacity-0", "pointer-events-none");
+    }
     if (localVideoContainer) {
         localVideoContainer.classList.add("scale-90");
     }
 
-    if (showToastFn) showToastFn(`Theater Mode Active: ${title}`, "info", 3000);
+    // Stage Mode Switching
+    if (mode === "youtube") {
+        if (wtYTContainer) wtYTContainer.classList.remove("hidden");
+        if (wtScreenContainer) wtScreenContainer.classList.add("hidden");
+        if (wtLocalContainer) wtLocalContainer.classList.add("hidden");
+        if (wtVideoControls) wtVideoControls.classList.add("hidden");
+    } else if (mode === "screenshare") {
+        if (wtYTContainer) wtYTContainer.classList.add("hidden");
+        if (wtScreenContainer) wtScreenContainer.classList.remove("hidden");
+        if (wtLocalContainer) wtLocalContainer.classList.add("hidden");
+        if (wtVideoControls) wtVideoControls.classList.add("hidden");
+    } else if (mode === "local") {
+        if (wtYTContainer) wtYTContainer.classList.add("hidden");
+        if (wtScreenContainer) wtScreenContainer.classList.add("hidden");
+        if (wtLocalContainer) wtLocalContainer.classList.remove("hidden");
+        if (wtVideoControls) wtVideoControls.classList.remove("hidden");
+    }
+
+    if (showToastFn) showToastFn(`Theater Mode: ${title}`, "info", 2500);
 }
 
-function exitTheaterMode(broadcast = true) {
+export function exitTheaterMode(broadcast = true) {
+    const previousMode = currentMode;
     isTheaterActive = false;
 
     if (watchTogetherStage) {
@@ -387,14 +601,34 @@ function exitTheaterMode(broadcast = true) {
         watchTogetherStage.classList.remove("flex");
     }
 
+    // Stop Screen Sharing if user was sharing
+    if (previousMode === "screenshare" && isLocalSharer) {
+        const bridge = screenShareBridge || window.webrtcScreenShare;
+        if (bridge && typeof bridge.stopScreenShare === "function") {
+            bridge.stopScreenShare(false);
+        }
+    }
+    isLocalSharer = false;
+
     // Pause any playing media
-    if (ytPlayer && ytPlayer.pauseVideo) ytPlayer.pauseVideo();
-    if (syncedLocalVideo) syncedLocalVideo.pause();
+    if (ytPlayer && ytPlayer.pauseVideo) {
+        try { ytPlayer.pauseVideo(); } catch (e) {}
+    }
+    if (syncedLocalVideo) {
+        syncedLocalVideo.pause();
+    }
+    if (syncedScreenVideo) {
+        syncedScreenVideo.srcObject = null;
+    }
 
     // Restore Standard Fullscreen Remote Video
     if (remoteVideoPipContainer) remoteVideoPipContainer.classList.add("hidden");
-    if (remoteVideoStandard) remoteVideoStandard.classList.remove("hidden");
-    if (localVideoContainer) localVideoContainer.classList.remove("scale-90");
+    if (remoteVideoStandard) {
+        remoteVideoStandard.classList.remove("opacity-0", "pointer-events-none");
+    }
+    if (localVideoContainer) {
+        localVideoContainer.classList.remove("scale-90");
+    }
 
     if (broadcast) {
         broadcastSyncState({ active: false });
@@ -402,7 +636,7 @@ function exitTheaterMode(broadcast = true) {
 }
 
 // ==========================================================
-// 6. UI Events & Modal Setup
+// 7. UI Events & Modal Setup
 // ==========================================================
 function setupModalEvents() {
     // Toolbar Trigger Button in Active Call
@@ -432,22 +666,46 @@ function setupModalEvents() {
         });
     }
 
-    // Tabs
-    if (wtTabYT && wtTabLocal) {
-        wtTabYT.addEventListener("click", () => {
-            currentMode = "youtube";
-            wtTabYT.className = "flex-1 py-2 rounded-xl text-xs font-quicksand font-bold bg-white text-primary shadow-xs transition-all flex items-center justify-center gap-1";
-            wtTabLocal.className = "flex-1 py-2 rounded-xl text-xs font-quicksand font-bold text-gray-600 hover:text-primary transition-all flex items-center justify-center gap-1";
-            if (wtPanelYT) wtPanelYT.classList.remove("hidden");
-            if (wtPanelLocal) wtPanelLocal.classList.add("hidden");
+    // Tab Switching
+    function setTabActive(activeTab, activePanel) {
+        const tabs = [wtTabYT, wtTabScreen, wtTabLocal];
+        const panels = [wtPanelYT, wtPanelScreen, wtPanelLocal];
+
+        tabs.forEach((tab) => {
+            if (tab === activeTab) {
+                tab.className = "flex-1 py-2 rounded-xl text-xs font-quicksand font-bold bg-white text-primary shadow-xs transition-all flex items-center justify-center gap-1";
+            } else if (tab) {
+                tab.className = "flex-1 py-2 rounded-xl text-xs font-quicksand font-bold text-gray-600 hover:text-primary transition-all flex items-center justify-center gap-1";
+            }
         });
 
+        panels.forEach((panel) => {
+            if (panel === activePanel) {
+                panel.classList.remove("hidden");
+            } else if (panel) {
+                panel.classList.add("hidden");
+            }
+        });
+    }
+
+    if (wtTabYT) {
+        wtTabYT.addEventListener("click", () => {
+            currentMode = "youtube";
+            setTabActive(wtTabYT, wtPanelYT);
+        });
+    }
+
+    if (wtTabScreen) {
+        wtTabScreen.addEventListener("click", () => {
+            currentMode = "screenshare";
+            setTabActive(wtTabScreen, wtPanelScreen);
+        });
+    }
+
+    if (wtTabLocal) {
         wtTabLocal.addEventListener("click", () => {
             currentMode = "local";
-            wtTabLocal.className = "flex-1 py-2 rounded-xl text-xs font-quicksand font-bold bg-white text-primary shadow-xs transition-all flex items-center justify-center gap-1";
-            wtTabYT.className = "flex-1 py-2 rounded-xl text-xs font-quicksand font-bold text-gray-600 hover:text-primary transition-all flex items-center justify-center gap-1";
-            if (wtPanelLocal) wtPanelLocal.classList.remove("hidden");
-            if (wtPanelYT) wtPanelYT.classList.add("hidden");
+            setTabActive(wtTabLocal, wtPanelLocal);
         });
     }
 
@@ -461,6 +719,49 @@ function setupModalEvents() {
         });
     });
 
+    // Start YouTube Sync Button
+    if (wtStartYtBtn) {
+        wtStartYtBtn.addEventListener("click", () => {
+            if (watchTogetherModal) {
+                watchTogetherModal.classList.add("hidden");
+                watchTogetherModal.classList.remove("flex");
+            }
+
+            const rawInput = (wtYTUrlInput ? wtYTUrlInput.value : "").trim();
+            const videoId = extractYouTubeID(rawInput) || "jfKfPfyJRdk"; // Default romantic lofi
+
+            enterTheaterMode("youtube", "YouTube Video ❤️");
+            createOrLoadYouTubePlayer(videoId, true);
+
+            broadcastSyncState({
+                active: true,
+                mode: "youtube",
+                src: videoId,
+                title: "YouTube Video ❤️",
+                state: "playing",
+                currentTime: 0,
+                playbackRate: 1.0
+            });
+        });
+    }
+
+    // Start Screen Share with System Audio Button
+    if (wtStartScreenBtn) {
+        wtStartScreenBtn.addEventListener("click", async () => {
+            if (watchTogetherModal) {
+                watchTogetherModal.classList.add("hidden");
+                watchTogetherModal.classList.remove("flex");
+            }
+
+            const bridge = screenShareBridge || window.webrtcScreenShare;
+            if (bridge && typeof bridge.startScreenShare === "function") {
+                await bridge.startScreenShare();
+            } else {
+                if (showToastFn) showToastFn("Screen sharing requires an active call session.", "info", 3000);
+            }
+        });
+    }
+
     // Local Video File Input
     if (wtLocalFileInput) {
         wtLocalFileInput.addEventListener("change", (e) => {
@@ -473,49 +774,31 @@ function setupModalEvents() {
         });
     }
 
-    // Start Watching Button
-    if (wtStartBtn) {
-        wtStartBtn.addEventListener("click", () => {
+    // Start Local Video Sync Button
+    if (wtStartLocalBtn) {
+        wtStartLocalBtn.addEventListener("click", () => {
+            if (!localVideoUrl) {
+                if (showToastFn) showToastFn("Please pick a video file first.", "info");
+                return;
+            }
+
             if (watchTogetherModal) {
                 watchTogetherModal.classList.add("hidden");
                 watchTogetherModal.classList.remove("flex");
             }
 
-            if (currentMode === "youtube") {
-                const rawInput = (wtYTUrlInput ? wtYTUrlInput.value : "").trim();
-                const videoId = extractYouTubeID(rawInput) || "jfKfPfyJRdk"; // Default romantic lofi
-                
-                enterTheaterMode("youtube", "YouTube Video ❤️");
-                createOrLoadYouTubePlayer(videoId, true);
+            enterTheaterMode("local", "Local Movie ❤️");
+            setupLocalVideoPlayer(localVideoUrl);
 
-                broadcastSyncState({
-                    active: true,
-                    mode: "youtube",
-                    src: videoId,
-                    title: "YouTube Video ❤️",
-                    state: "playing",
-                    currentTime: 0,
-                    playbackRate: 1.0
-                });
-            } else {
-                if (!localVideoUrl) {
-                    if (showToastFn) showToastFn("Please pick a video file first.", "info");
-                    return;
-                }
-
-                enterTheaterMode("local", "Local Movie ❤️");
-                setupLocalVideoPlayer(localVideoUrl);
-
-                broadcastSyncState({
-                    active: true,
-                    mode: "local",
-                    src: localVideoUrl,
-                    title: "Local Movie ❤️",
-                    state: "playing",
-                    currentTime: 0,
-                    playbackRate: 1.0
-                });
-            }
+            broadcastSyncState({
+                active: true,
+                mode: "local",
+                src: localVideoUrl,
+                title: "Local Movie ❤️",
+                state: "playing",
+                currentTime: 0,
+                playbackRate: 1.0
+            });
         });
     }
 }
@@ -597,16 +880,29 @@ function setupTheaterControls() {
 }
 
 // ==========================================================
-// 7. Helpers
+// 8. Robust YouTube URL & ID Parser
 // ==========================================================
-function extractYouTubeID(url) {
+export function extractYouTubeID(url) {
     if (!url) return null;
-    // Direct ID check (11 chars)
+    url = url.trim();
+
+    // Direct 11-char ID check
     if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
-    
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : null;
+
+    // Supports shorts, watch?v=, youtu.be/, embed/, live/
+    const patterns = [
+        /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|shorts\/|live\/|watch\?v=|watch\?.+&v=))([\w-]{11})/,
+        /youtube\.com\/.*[?&]v=([\w-]{11})/,
+        /youtube\.com\/shorts\/([\w-]{11})/
+    ];
+
+    for (const regex of patterns) {
+        const match = url.match(regex);
+        if (match && match[1] && match[1].length === 11) {
+            return match[1];
+        }
+    }
+    return null;
 }
 
 function formatDuration(sec) {

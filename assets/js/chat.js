@@ -69,6 +69,7 @@ const micBtn = document.getElementById("mic-btn");
 const pollBtn = document.getElementById("poll-btn");
 const audioCallBtn = document.getElementById("audio-call-btn");
 const videoCallBtn = document.getElementById("video-call-btn");
+const headerWatchTogetherBtn = document.getElementById("header-watch-together-btn");
 const mediaUploadInput = document.getElementById("media-upload-input");
 const uploadProgressContainer = document.getElementById("upload-progress-container");
 const uploadProgressText = document.getElementById("upload-progress-text");
@@ -213,6 +214,29 @@ if (audioCallBtn) {
 }
 if (videoCallBtn) {
     videoCallBtn.addEventListener("click", () => safeStartCall("video"));
+}
+if (headerWatchTogetherBtn) {
+    headerWatchTogetherBtn.addEventListener("click", () => {
+        const wtModal = document.getElementById("watch-together-modal");
+        const activeCallModal = document.getElementById("active-call-modal");
+        const isCallActive = activeCallModal && !activeCallModal.classList.contains("hidden");
+
+        if (isCallActive) {
+            if (wtModal) {
+                wtModal.classList.remove("hidden");
+                wtModal.classList.add("flex");
+            }
+        } else {
+            showToast("Starting a video call for Watch Together & Screen Share ❤️", "info", 3000);
+            safeStartCall("video");
+            setTimeout(() => {
+                if (wtModal) {
+                    wtModal.classList.remove("hidden");
+                    wtModal.classList.add("flex");
+                }
+            }, 1000);
+        }
+    });
 }
 
 // Hook Sign Out
