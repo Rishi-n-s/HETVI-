@@ -442,14 +442,32 @@
       object-position: 50% 15% !important;
     }
 
-    /* Safe area and dynamic viewport height support for mobile browsers */
+    /* Edge-to-edge true fullscreen video call experience */
     #active-call-modal {
       height: 100vh;
       height: 100dvh;
-      padding-top: max(12px, env(safe-area-inset-top));
-      padding-bottom: max(16px, env(safe-area-inset-bottom));
-      padding-left: max(12px, env(safe-area-inset-left));
-      padding-right: max(12px, env(safe-area-inset-right));
+      width: 100vw;
+      width: 100dvw;
+      padding: 0 !important;
+      margin: 0 !important;
+      background: #000 !important;
+    }
+
+    /* Video fit & fill orientation styles */
+    #remote-video.fit-contain {
+      object-fit: contain !important;
+      background: #000;
+    }
+    #remote-video.fit-cover {
+      object-fit: cover !important;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
 
     /* Subtle backdrop blur gradient for calling controls */
@@ -953,7 +971,7 @@
 
   <!-- Watch Together Source Selection Modal -->
   <div id="watch-together-modal"
-    class="fixed inset-0 z-[125] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    class="fixed inset-0 z-[160] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
     <div
       class="bg-white/95 rounded-3xl max-w-md w-full p-6 shadow-2xl border border-pink-100 flex flex-col animate-bounce-short">
       
@@ -1094,10 +1112,10 @@
 
   <!-- Active / Outgoing WebRTC Call Screen Overlay -->
   <div id="active-call-modal"
-    class="fixed inset-0 z-[125] bg-gray-950 text-white hidden flex-col justify-between overflow-hidden">
+    class="fixed inset-0 z-[125] bg-black text-white hidden overflow-hidden select-none">
 
     <!-- 1. Dedicated WhatsApp-Style Outgoing Call Stage (Shown while CALLING or RINGING) -->
-    <div id="outgoing-call-stage" class="absolute inset-0 z-30 bg-gradient-to-b from-gray-950 via-gray-900 to-black flex flex-col justify-between items-center py-12 px-6">
+    <div id="outgoing-call-stage" class="absolute inset-0 z-40 bg-gradient-to-b from-gray-950 via-gray-900 to-black flex flex-col justify-between items-center py-12 px-6">
       <!-- Top info -->
       <div class="flex flex-col items-center gap-2">
         <span id="outgoing-call-type-badge" class="px-3 py-1 bg-white/10 rounded-full text-xs font-quicksand font-semibold text-pink-200 border border-white/10 flex items-center gap-1.5">
@@ -1130,60 +1148,20 @@
       </div>
     </div>
 
-    <!-- 2. Connected Call Stage (Revealed when CONNECTED) -->
-    <!-- Top Call Bar -->
-    <div
-      class="flex items-center justify-between z-20 bg-black/50 backdrop-blur-xl px-4 py-2.5 rounded-2xl border border-white/10 shadow-lg mx-2 sm:mx-4 mt-2">
-      <div class="flex items-center gap-3 min-w-0">
-        <div class="w-9 h-9 rounded-full overflow-hidden border border-pink-400/50 flex-shrink-0">
-          <img id="active-call-avatar" src="assets/images/main.jpeg"
-            onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80'"
-            class="w-full h-full object-cover" alt="Partner" />
-        </div>
-        <div class="min-w-0">
-          <h4 id="active-call-partner-name" class="font-quicksand font-bold text-sm leading-tight text-pink-100 truncate">Bakudi ❤️</h4>
-          <span id="active-call-status-label" class="text-xs text-emerald-400 font-sans flex items-center gap-1.5">
-            <span id="active-call-status-dot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span id="active-call-timer">Connected</span>
-          </span>
-        </div>
-      </div>
-
-      <div class="flex items-center gap-2 flex-shrink-0">
-        <!-- Quality Indicator Pill -->
-        <div id="call-quality-indicator" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 bg-white/10 rounded-full text-[11px] font-sans border border-white/10" title="Network Connection Quality">
-          <span id="call-quality-dot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
-          <span id="call-quality-text" class="text-gray-300">Good</span>
-        </div>
-
-        <!-- Call Type Badge -->
-        <span id="active-call-type-badge"
-          class="px-2.5 py-1 bg-white/10 rounded-full text-[11px] font-quicksand font-semibold text-pink-200 border border-white/10 flex items-center gap-1">
-          <span class="material-symbols-outlined text-sm">videocam</span> Video Call
-        </span>
-
-        <!-- Dev Diagnostics Toggle Button -->
-        <button id="call-debug-toggle-btn" type="button" class="hidden sm:inline-flex px-2 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-[10px] text-gray-300 hover:text-white transition-all" title="Toggle WebRTC Diagnostics (Ctrl+Shift+D)">
-          Stats
-        </button>
-      </div>
-    </div>
-
-    <!-- Center Stage: Standard Video vs Shared Theater Stage -->
-    <div
-      class="relative flex-1 my-2 sm:my-3 mx-2 sm:mx-4 flex items-center justify-center overflow-hidden rounded-3xl bg-gray-900 border border-white/10 shadow-2xl">
+    <!-- 2. Full-Bleed Video Call Stage (Remote Video + Floating Overlays) -->
+    <div id="center-call-stage" class="absolute inset-0 w-full h-full bg-black overflow-hidden flex items-center justify-center">
 
       <!-- Reconnecting Alert Banner -->
-      <div id="call-reconnecting-banner" class="absolute top-4 inset-x-4 max-w-sm mx-auto bg-amber-500/90 text-white px-4 py-2 rounded-xl backdrop-blur-md hidden z-40 text-xs font-semibold items-center justify-center gap-2 shadow-lg border border-amber-400/40 animate-pulse">
+      <div id="call-reconnecting-banner" class="absolute top-20 inset-x-4 max-w-sm mx-auto bg-amber-500/90 text-white px-4 py-2 rounded-xl backdrop-blur-md hidden z-[40] text-xs font-semibold items-center justify-center gap-2 shadow-lg border border-amber-400/40 animate-pulse">
         <span class="material-symbols-outlined text-base">wifi_off</span>
         <span>Reconnecting... Please wait</span>
       </div>
 
       <!-- 1. Remote Video Stream (Standard Call Mode) -->
-      <video id="remote-video" autoplay playsinline class="w-full h-full object-cover rounded-3xl"></video>
+      <video id="remote-video" autoplay playsinline class="w-full h-full object-cover transition-all duration-300 select-none cursor-pointer"></video>
 
       <!-- Remote Camera Off Placeholder (Smooth fallback when remote camera is disabled) -->
-      <div id="remote-cam-off-placeholder" class="absolute inset-0 bg-gray-900/95 flex flex-col items-center justify-center p-6 text-center z-10 hidden">
+      <div id="remote-cam-off-placeholder" class="absolute inset-0 bg-gray-950/95 flex flex-col items-center justify-center p-6 text-center z-10 hidden">
         <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-pink-400/50 shadow-2xl mb-4 call-gentle-float">
           <img id="remote-cam-off-avatar" src="assets/images/main.jpeg"
             onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=250&auto=format&fit=crop&q=80'"
@@ -1196,7 +1174,7 @@
       </div>
 
       <!-- 2. Audio Call Placeholder Stage (Hidden during video calls) -->
-      <div id="audio-call-stage" class="hidden flex-col items-center justify-center p-6 text-center z-10">
+      <div id="audio-call-stage" class="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900 to-black hidden flex-col items-center justify-center p-6 text-center z-10">
         <div
           class="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-pink-400/60 shadow-2xl call-avatar-pulse mb-4">
           <img id="audio-stage-avatar" src="assets/images/main.jpeg"
@@ -1216,12 +1194,12 @@
       <div id="watch-together-stage" class="absolute inset-0 bg-black z-[20] hidden flex-col justify-between overflow-hidden">
         
         <!-- Theater Header Bar -->
-        <div class="flex items-center justify-between p-3 bg-gradient-to-b from-black/80 to-transparent z-30">
+        <div class="flex items-center justify-between p-3 pt-[max(12px,env(safe-area-inset-top))] bg-gradient-to-b from-black/90 to-transparent z-30">
           <div class="flex items-center gap-2 text-pink-200">
             <span class="material-symbols-outlined text-primary text-xl animate-pulse" id="wt-stage-icon">movie</span>
             <span id="wt-stage-title" class="font-quicksand font-bold text-xs sm:text-sm truncate max-w-[200px] sm:max-w-xs">Watching Together ❤️</span>
           </div>
-          <button id="wt-stage-exit-btn" type="button" class="px-3 py-1 bg-white/20 hover:bg-rose-500/80 rounded-full text-xs font-quicksand font-semibold text-white backdrop-blur-md transition-all flex items-center gap-1">
+          <button id="wt-stage-exit-btn" type="button" class="px-3 py-1 bg-white/20 hover:bg-rose-500/80 rounded-full text-xs font-quicksand font-semibold text-white backdrop-blur-md transition-all flex items-center gap-1 shadow-md">
             <span class="material-symbols-outlined text-sm">close</span> Exit Theater
           </button>
         </div>
@@ -1249,7 +1227,7 @@
         </div>
 
         <!-- Synced HTML5 Video Controls Overlay -->
-        <div id="wt-video-controls" class="flex items-center gap-2 sm:gap-3 p-3 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-30 w-full">
+        <div id="wt-video-controls" class="flex items-center gap-2 sm:gap-3 p-3 pb-[max(16px,env(safe-area-inset-bottom))] bg-gradient-to-t from-black/90 via-black/50 to-transparent z-30 w-full">
           <button id="wt-ctrl-play-btn" type="button" class="w-9 h-9 flex-shrink-0 rounded-full bg-primary hover:bg-primary-dark active:scale-95 text-white flex items-center justify-center shadow-md">
             <span id="wt-ctrl-play-icon" class="material-symbols-outlined text-xl">play_arrow</span>
           </button>
@@ -1272,7 +1250,7 @@
 
       <!-- 4. Floating Remote Partner PIP (Active during Watch Together) -->
       <div id="remote-video-pip-container"
-        class="absolute top-4 left-4 w-28 h-36 sm:w-36 sm:h-44 rounded-2xl overflow-hidden border-2 border-primary/80 shadow-2xl z-[35] bg-gray-950 hidden">
+        class="absolute top-20 left-3 sm:left-6 w-24 h-32 sm:w-32 sm:h-44 rounded-2xl overflow-hidden border-2 border-primary/80 shadow-2xl z-[35] bg-gray-950 hidden">
         <video id="remote-pip-video" autoplay playsinline class="w-full h-full object-cover"></video>
         <div class="absolute bottom-1 left-1.5 px-1.5 py-0.5 bg-black/70 rounded text-[9px] font-sans text-pink-200">
           Partner ❤️</div>
@@ -1280,7 +1258,7 @@
 
       <!-- 5. Floating Local Video PIP Stream (Draggable & Corner-snapping) -->
       <div id="local-video-container"
-        class="absolute top-4 right-4 w-28 h-40 sm:w-36 sm:h-48 rounded-2xl overflow-hidden border-2 border-pink-400/60 shadow-2xl z-[35] bg-gray-950 cursor-grab transition-all group">
+        class="absolute top-20 right-3 sm:right-6 w-24 h-34 sm:w-32 sm:h-46 rounded-2xl overflow-hidden border-2 border-pink-400/60 shadow-2xl z-[35] bg-gray-950 cursor-grab transition-all group">
         <video id="local-video" autoplay playsinline muted class="w-full h-full object-cover"></video>
 
         <!-- Local Camera Off Placeholder -->
@@ -1313,7 +1291,7 @@
       </div>
 
       <!-- 6. WebRTC Dev Diagnostics HUD (Toggle via Stats button or Ctrl+Shift+D) -->
-      <div id="webrtc-debug-hud" class="absolute bottom-4 left-4 z-40 bg-black/85 backdrop-blur-md p-3 rounded-2xl border border-white/20 text-[11px] font-mono text-gray-200 hidden max-w-xs shadow-2xl">
+      <div id="webrtc-debug-hud" class="absolute bottom-24 left-4 z-[45] bg-black/85 backdrop-blur-md p-3 rounded-2xl border border-white/20 text-[11px] font-mono text-gray-200 hidden max-w-xs shadow-2xl">
         <div class="flex items-center justify-between pb-1 mb-1 border-b border-white/10">
           <span class="font-bold text-pink-400">WebRTC Stats</span>
           <button id="webrtc-debug-close-btn" type="button" class="text-gray-400 hover:text-white">✕</button>
@@ -1330,56 +1308,111 @@
       </div>
     </div>
 
-    <!-- Bottom Controls Toolbar (WhatsApp-Style Ergonomics & Minimum 48px touch targets) -->
-    <div class="call-dock-glass rounded-full z-30 py-2.5 px-4 sm:px-6 w-auto max-w-fit mx-auto mb-2 flex items-center justify-center gap-3 sm:gap-5 border border-white/15">
-      <!-- Watch Together Trigger -->
-      <button id="call-watch-together-btn" type="button" aria-label="Watch Together"
-        class="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 rounded-full bg-gradient-to-tr from-pink-600 to-rose-500 hover:scale-105 active:scale-95 text-white flex items-center justify-center shadow-lg transition-all focus:outline-none"
-        title="Watch Movie / YouTube Together ❤️">
-        <span class="material-symbols-outlined text-xl sm:text-2xl">movie</span>
-      </button>
+    <!-- 3. Floating Top Call Bar (Overlay) -->
+    <div id="active-call-top-bar"
+      class="absolute top-0 inset-x-0 z-30 pt-[max(12px,env(safe-area-inset-top))] pb-8 px-3 sm:px-6 bg-gradient-to-b from-black/85 via-black/40 to-transparent flex items-center justify-between pointer-events-auto transition-opacity duration-300">
+      <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-pink-400/60 shadow-md flex-shrink-0">
+          <img id="active-call-avatar" src="assets/images/main.jpeg"
+            onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80'"
+            class="w-full h-full object-cover" alt="Partner" />
+        </div>
+        <div class="min-w-0">
+          <h4 id="active-call-partner-name" class="font-quicksand font-bold text-sm sm:text-base leading-tight text-pink-100 truncate">Bakudi ❤️</h4>
+          <span id="active-call-status-label" class="text-xs text-emerald-400 font-sans flex items-center gap-1.5">
+            <span id="active-call-status-dot" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="active-call-timer">Connected</span>
+          </span>
+        </div>
+      </div>
 
-      <!-- Screen Share with System Audio Trigger -->
-      <button id="call-screen-share-btn" type="button" aria-label="Share Screen"
-        class="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 rounded-full bg-white/15 hover:bg-white/25 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all focus:outline-none"
-        title="Share Screen with System Audio 🖥️">
-        <span id="call-screen-share-icon" class="material-symbols-outlined text-xl sm:text-2xl">screen_share</span>
-      </button>
+      <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+        <!-- Quality Indicator Pill -->
+        <div id="call-quality-indicator" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 bg-white/10 backdrop-blur-md rounded-full text-[11px] font-sans border border-white/10" title="Network Connection Quality">
+          <span id="call-quality-dot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span id="call-quality-text" class="text-gray-300">Good</span>
+        </div>
 
-      <!-- Toggle Microphone -->
-      <button id="call-toggle-mic-btn" type="button" aria-label="Toggle Microphone"
-        class="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 rounded-full bg-white/15 hover:bg-white/25 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all focus:outline-none"
-        title="Mute / Unmute Mic">
-        <span id="call-toggle-mic-icon" class="material-symbols-outlined text-xl sm:text-2xl">mic</span>
-      </button>
+        <!-- Fit / Fill Screen Toggle Button (Aspect Ratio Mode) -->
+        <button id="call-fit-toggle-btn" type="button"
+          class="p-1.5 sm:p-2 bg-white/15 hover:bg-white/25 active:scale-95 rounded-xl text-white backdrop-blur-md transition-all flex items-center justify-center shadow-md"
+          title="Toggle Fit to Screen / Fill Screen (Double-tap video)">
+          <span id="call-fit-toggle-icon" class="material-symbols-outlined text-base sm:text-lg">fit_screen</span>
+        </button>
 
-      <!-- Toggle Camera -->
-      <button id="call-toggle-cam-btn" type="button" aria-label="Toggle Camera"
-        class="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 rounded-full bg-white/15 hover:bg-white/25 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all focus:outline-none"
-        title="Turn Camera Off / On">
-        <span id="call-toggle-cam-icon" class="material-symbols-outlined text-xl sm:text-2xl">videocam</span>
-      </button>
+        <!-- Fullscreen API Toggle Button -->
+        <button id="call-fullscreen-btn" type="button"
+          class="p-1.5 sm:p-2 bg-white/15 hover:bg-white/25 active:scale-95 rounded-xl text-white backdrop-blur-md transition-all flex items-center justify-center shadow-md"
+          title="Toggle Fullscreen Mode">
+          <span id="call-fullscreen-icon" class="material-symbols-outlined text-base sm:text-lg">fullscreen</span>
+        </button>
 
-      <!-- Toggle Mirror View -->
-      <button id="call-toggle-mirror-btn" type="button" aria-label="Toggle Mirror View"
-        class="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 rounded-full bg-white/15 hover:bg-white/25 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all focus:outline-none"
-        title="Toggle Mirror View (Flip Horizontal)">
-        <span id="call-toggle-mirror-icon" class="material-symbols-outlined text-xl sm:text-2xl">swap_horiz</span>
-      </button>
+        <!-- Call Type Badge -->
+        <span id="active-call-type-badge"
+          class="hidden xs:flex px-2 sm:px-2.5 py-1 bg-white/10 backdrop-blur-md rounded-full text-[10px] sm:text-[11px] font-quicksand font-semibold text-pink-200 border border-white/10 items-center gap-1">
+          <span class="material-symbols-outlined text-xs sm:text-sm">videocam</span> Video Call
+        </span>
 
-      <!-- Switch Camera (Mobile) -->
-      <button id="call-switch-cam-btn" type="button" aria-label="Flip Camera"
-        class="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 rounded-full bg-white/15 hover:bg-white/25 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all focus:outline-none"
-        title="Flip Camera (Front / Back)">
-        <span class="material-symbols-outlined text-xl sm:text-2xl">flip_camera_ios</span>
-      </button>
+        <!-- Dev Diagnostics Toggle Button -->
+        <button id="call-debug-toggle-btn" type="button" class="hidden md:inline-flex px-2 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-[10px] text-gray-300 hover:text-white transition-all" title="Toggle WebRTC Diagnostics (Ctrl+Shift+D)">
+          Stats
+        </button>
+      </div>
+    </div>
 
-      <!-- End Call / Hangup (Visually Distinct & Prominent Red) -->
-      <button id="call-hangup-btn" type="button" aria-label="End Call"
-        class="w-13 h-13 sm:w-16 sm:h-16 flex-shrink-0 rounded-full bg-rose-600 hover:bg-rose-700 active:scale-95 text-white flex items-center justify-center shadow-2xl hover:scale-105 transition-all focus:outline-none focus:ring-4 focus:ring-rose-500/40"
-        title="End Call">
-        <span class="material-symbols-outlined text-2xl sm:text-3xl">call_end</span>
-      </button>
+    <!-- 4. Floating Bottom Controls Toolbar (Overlay) -->
+    <div id="active-call-bottom-bar"
+      class="absolute bottom-0 inset-x-0 z-30 pb-[max(16px,env(safe-area-inset-bottom))] pt-8 px-2 sm:px-4 bg-gradient-to-t from-black/85 via-black/40 to-transparent flex items-center justify-center pointer-events-auto transition-opacity duration-300">
+      <div class="call-dock-glass rounded-full py-2 sm:py-2.5 px-3 sm:px-5 flex items-center justify-center gap-2 sm:gap-3.5 border border-white/15 shadow-2xl max-w-[96vw] overflow-x-auto no-scrollbar sm:overflow-visible">
+        <!-- Watch Together Trigger -->
+        <button id="call-watch-together-btn" type="button" aria-label="Watch Together"
+          class="w-11 h-11 sm:w-13 sm:h-13 flex-shrink-0 rounded-full bg-gradient-to-tr from-pink-600 to-rose-500 hover:scale-105 active:scale-95 text-white flex items-center justify-center shadow-lg transition-all focus:outline-none"
+          title="Watch Movie / YouTube Together ❤️">
+          <span class="material-symbols-outlined text-lg sm:text-xl">movie</span>
+        </button>
+
+        <!-- Screen Share with System Audio Trigger -->
+        <button id="call-screen-share-btn" type="button" aria-label="Share Screen"
+          class="w-11 h-11 sm:w-13 sm:h-13 flex-shrink-0 rounded-full bg-white/15 hover:bg-white/25 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all focus:outline-none"
+          title="Share Screen with System Audio 🖥️">
+          <span id="call-screen-share-icon" class="material-symbols-outlined text-lg sm:text-xl">screen_share</span>
+        </button>
+
+        <!-- Toggle Microphone -->
+        <button id="call-toggle-mic-btn" type="button" aria-label="Toggle Microphone"
+          class="w-11 h-11 sm:w-13 sm:h-13 flex-shrink-0 rounded-full bg-white/15 hover:bg-white/25 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all focus:outline-none"
+          title="Mute / Unmute Mic">
+          <span id="call-toggle-mic-icon" class="material-symbols-outlined text-lg sm:text-xl">mic</span>
+        </button>
+
+        <!-- Toggle Camera -->
+        <button id="call-toggle-cam-btn" type="button" aria-label="Toggle Camera"
+          class="w-11 h-11 sm:w-13 sm:h-13 flex-shrink-0 rounded-full bg-white/15 hover:bg-white/25 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all focus:outline-none"
+          title="Turn Camera Off / On">
+          <span id="call-toggle-cam-icon" class="material-symbols-outlined text-lg sm:text-xl">videocam</span>
+        </button>
+
+        <!-- Toggle Mirror View -->
+        <button id="call-toggle-mirror-btn" type="button" aria-label="Toggle Mirror View"
+          class="w-11 h-11 sm:w-13 sm:h-13 flex-shrink-0 rounded-full bg-white/15 hover:bg-white/25 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all focus:outline-none"
+          title="Toggle Mirror View (Flip Horizontal)">
+          <span id="call-toggle-mirror-icon" class="material-symbols-outlined text-lg sm:text-xl">swap_horiz</span>
+        </button>
+
+        <!-- Switch Camera (Mobile) -->
+        <button id="call-switch-cam-btn" type="button" aria-label="Flip Camera"
+          class="w-11 h-11 sm:w-13 sm:h-13 flex-shrink-0 rounded-full bg-white/15 hover:bg-white/25 active:scale-95 text-white flex items-center justify-center backdrop-blur-md shadow-lg transition-all focus:outline-none"
+          title="Flip Camera (Front / Back)">
+          <span class="material-symbols-outlined text-lg sm:text-xl">flip_camera_ios</span>
+        </button>
+
+        <!-- End Call / Hangup (Visually Distinct & Prominent Red) -->
+        <button id="call-hangup-btn" type="button" aria-label="End Call"
+          class="w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 rounded-full bg-rose-600 hover:bg-rose-700 active:scale-95 text-white flex items-center justify-center shadow-2xl hover:scale-105 transition-all focus:outline-none focus:ring-4 focus:ring-rose-500/40"
+          title="End Call">
+          <span class="material-symbols-outlined text-xl sm:text-2xl">call_end</span>
+        </button>
+      </div>
     </div>
 
   </div>

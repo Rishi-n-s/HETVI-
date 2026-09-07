@@ -218,23 +218,9 @@ if (videoCallBtn) {
 if (headerWatchTogetherBtn) {
     headerWatchTogetherBtn.addEventListener("click", () => {
         const wtModal = document.getElementById("watch-together-modal");
-        const activeCallModal = document.getElementById("active-call-modal");
-        const isCallActive = activeCallModal && !activeCallModal.classList.contains("hidden");
-
-        if (isCallActive) {
-            if (wtModal) {
-                wtModal.classList.remove("hidden");
-                wtModal.classList.add("flex");
-            }
-        } else {
-            showToast("Starting a video call for Watch Together & Screen Share ❤️", "info", 3000);
-            safeStartCall("video");
-            setTimeout(() => {
-                if (wtModal) {
-                    wtModal.classList.remove("hidden");
-                    wtModal.classList.add("flex");
-                }
-            }, 1000);
+        if (wtModal) {
+            wtModal.classList.remove("hidden");
+            wtModal.classList.add("flex");
         }
     });
 }

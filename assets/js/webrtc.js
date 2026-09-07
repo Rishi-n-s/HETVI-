@@ -206,6 +206,13 @@ let callSwitchCamBtn = null;
 let localSwitchCamBtn = null;
 let callHangupBtn = null;
 
+// Screen Fit & Fullscreen Elements
+let callFitToggleBtn = null;
+let callFitToggleIcon = null;
+let callFullscreenBtn = null;
+let callFullscreenIcon = null;
+let isFitContain = localStorage.getItem("webrtc_fit_contain") === "true";
+
 // Diagnostics Elements
 let callDebugToggleBtn = null;
 let webrtcDebugHud = null;
@@ -231,13 +238,22 @@ export function initWebRTC(user, profile, firestoreDb, showToast) {
     bindEventHandlers();
     setupDraggablePIP();
     applyMirrorStyles();
+    applyVideoFitMode();
     listenForIncomingCalls();
+
+    // Export helpers on window for Watch Together and UI integration
+    window.webrtcStartCall = startCall;
+    window.isCallActive = () => !!currentCallId;
+    window.getCurrentCallId = () => currentCallId;
 
     // Initialize Watch Together Engine
     initWatchTogether(currentUser, currentProfile, db, showToastFn, {
         startScreenShare,
         stopScreenShare,
-        isSharingScreen: () => isScreenSharing
+        isSharingScreen: () => isScreenSharing,
+        startCall: () => startCall("video"),
+        isCallActive: () => !!currentCallId,
+        getCurrentCallId: () => currentCallId
     });
     window.webrtcScreenShare = {
         startScreenShare,
@@ -322,6 +338,11 @@ function bindDOMElements() {
     localSwitchCamBtn = document.getElementById("local-switch-cam-btn");
     callHangupBtn = document.getElementById("call-hangup-btn");
 
+    callFitToggleBtn = document.getElementById("call-fit-toggle-btn");
+    callFitToggleIcon = document.getElementById("call-fit-toggle-icon");
+    callFullscreenBtn = document.getElementById("call-fullscreen-btn");
+    callFullscreenIcon = document.getElementById("call-fullscreen-icon");
+
     callScreenShareBtn = document.getElementById("call-screen-share-btn");
     callScreenShareIcon = document.getElementById("call-screen-share-icon");
     remoteAudioReceiver = document.getElementById("remote-audio-receiver");
@@ -337,6 +358,22 @@ function bindDOMElements() {
     debugResolution = document.getElementById("debug-resolution");
     debugFps = document.getElementById("debug-fps");
     debugCandPair = document.getElementById("debug-cand-pair");
+}
+
+function applyVideoFitMode() {
+    if (remoteVideo) {
+        remoteVideo.classList.toggle("fit-contain", isFitContain);
+        remoteVideo.classList.toggle("fit-cover", !isFitContain);
+    }
+    if (callFitToggleIcon) {
+        callFitToggleIcon.textContent = isFitContain ? "fullscreen" : "fit_screen";
+    }
+    if (callFitToggleBtn) {
+        callFitToggleBtn.title = isFitContain 
+            ? "Switch to Fill Screen (Edge-to-Edge) — Double-tap video" 
+            : "Switch to Fit Screen (Entire Video Visible) — Double-tap video";
+    }
+    localStorage.setItem("webrtc_fit_contain", isFitContain ? "true" : "false");
 }
 
 function bindEventHandlers() {
@@ -358,6 +395,67 @@ function bindEventHandlers() {
         e.stopPropagation();
         switchCameraDevice();
     });
+
+    // Screen Fit Mode Toggle Button
+    if (callFitToggleBtn) {
+        callFitToggleBtn.addEventListener("click", () => {
+            isFitContain = !isFitContain;
+            applyVideoFitMode();
+            showToastFn(isFitContain ? "Fit Screen: Entire video visible" : "Fill Screen: Edge-to-edge view", "info", 2000);
+        });
+    }
+
+    // Fullscreen Mode Toggle Button
+    if (callFullscreenBtn) {
+        callFullscreenBtn.addEventListener("click", async () => {
+            try {
+                if (!document.fullscreenElement) {
+                    if (activeCallModal && activeCallModal.requestFullscreen) {
+                        await activeCallModal.requestFullscreen();
+                    } else if (document.documentElement.requestFullscreen) {
+                        await document.documentElement.requestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        await document.exitFullscreen();
+                    }
+                }
+            } catch (err) {
+                console.warn("[WebRTC] Fullscreen toggle notice:", err);
+            }
+        });
+
+        document.addEventListener("fullscreenchange", () => {
+            const isFS = !!document.fullscreenElement;
+            if (callFullscreenIcon) {
+                callFullscreenIcon.textContent = isFS ? "fullscreen_exit" : "fullscreen";
+            }
+            if (callFullscreenBtn) {
+                callFullscreenBtn.title = isFS ? "Exit Fullscreen" : "Enter Fullscreen";
+            }
+        });
+    }
+
+    // Double-click or double-tap on remote video to toggle fit/fill
+    if (remoteVideo) {
+        let lastTapTime = 0;
+        remoteVideo.addEventListener("touchend", (e) => {
+            const now = Date.now();
+            if (now - lastTapTime < 350) {
+                e.preventDefault();
+                isFitContain = !isFitContain;
+                applyVideoFitMode();
+                showToastFn(isFitContain ? "Fit Screen: Entire video visible" : "Fill Screen: Edge-to-edge view", "info", 2000);
+            }
+            lastTapTime = now;
+        });
+
+        remoteVideo.addEventListener("dblclick", () => {
+            isFitContain = !isFitContain;
+            applyVideoFitMode();
+            showToastFn(isFitContain ? "Fit Screen: Entire video visible" : "Fill Screen: Edge-to-edge view", "info", 2000);
+        });
+    }
 
     if (callDebugToggleBtn) callDebugToggleBtn.addEventListener("click", toggleDebugHud);
     if (webrtcDebugCloseBtn) webrtcDebugCloseBtn.addEventListener("click", toggleDebugHud);

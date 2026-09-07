@@ -185,6 +185,39 @@ export function connectWatchTogetherToCall(callId, remoteStream) {
         remotePipVideo.srcObject = remoteStream;
     }
     listenToWatchTogetherState();
+
+    // If caller picked a session before the call connected, launch it automatically
+    if (window.pendingWatchTogetherSession) {
+        const pending = window.pendingWatchTogetherSession;
+        window.pendingWatchTogetherSession = null;
+        setTimeout(() => {
+            if (pending.mode === "youtube") {
+                enterTheaterMode("youtube", pending.title || "YouTube Video ❤️");
+                createOrLoadYouTubePlayer(pending.src, true);
+                broadcastSyncState({
+                    active: true,
+                    mode: "youtube",
+                    src: pending.src,
+                    title: pending.title || "YouTube Video ❤️",
+                    state: "playing",
+                    currentTime: 0,
+                    playbackRate: 1.0
+                });
+            } else if (pending.mode === "local") {
+                enterTheaterMode("local", pending.title || "Local Movie ❤️");
+                setupLocalVideoPlayer(pending.src);
+                broadcastSyncState({
+                    active: true,
+                    mode: "local",
+                    src: pending.src,
+                    title: pending.title || "Local Movie ❤️",
+                    state: "playing",
+                    currentTime: 0,
+                    playbackRate: 1.0
+                });
+            }
+        }, 800);
+    }
 }
 
 /**
@@ -659,6 +692,16 @@ function setupModalEvents() {
         });
     }
 
+    // Backdrop Click Dismiss
+    if (watchTogetherModal) {
+        watchTogetherModal.addEventListener("click", (e) => {
+            if (e.target === watchTogetherModal) {
+                watchTogetherModal.classList.add("hidden");
+                watchTogetherModal.classList.remove("flex");
+            }
+        });
+    }
+
     // Exit Theater Stage Button
     if (wtStageExitBtn) {
         wtStageExitBtn.addEventListener("click", () => {
@@ -719,9 +762,23 @@ function setupModalEvents() {
         });
     });
 
+    // Helper to check if call is active
+    const isSessionCallActive = () => {
+        return !!currentCallId || (screenShareBridge && typeof screenShareBridge.isCallActive === "function" && screenShareBridge.isCallActive()) || (window.isCallActive && window.isCallActive());
+    };
+
+    // Helper to start call if needed
+    const ensureCallStarted = async () => {
+        if (screenShareBridge && typeof screenShareBridge.startCall === "function") {
+            await screenShareBridge.startCall();
+        } else if (window.webrtcStartCall) {
+            await window.webrtcStartCall("video");
+        }
+    };
+
     // Start YouTube Sync Button
     if (wtStartYtBtn) {
-        wtStartYtBtn.addEventListener("click", () => {
+        wtStartYtBtn.addEventListener("click", async () => {
             if (watchTogetherModal) {
                 watchTogetherModal.classList.add("hidden");
                 watchTogetherModal.classList.remove("flex");
@@ -730,18 +787,28 @@ function setupModalEvents() {
             const rawInput = (wtYTUrlInput ? wtYTUrlInput.value : "").trim();
             const videoId = extractYouTubeID(rawInput) || "jfKfPfyJRdk"; // Default romantic lofi
 
-            enterTheaterMode("youtube", "YouTube Video ❤️");
-            createOrLoadYouTubePlayer(videoId, true);
+            if (!isSessionCallActive()) {
+                window.pendingWatchTogetherSession = {
+                    mode: "youtube",
+                    src: videoId,
+                    title: "YouTube Video ❤️"
+                };
+                if (showToastFn) showToastFn("Starting video call for Watch Together ❤️", "info", 3000);
+                await ensureCallStarted();
+            } else {
+                enterTheaterMode("youtube", "YouTube Video ❤️");
+                createOrLoadYouTubePlayer(videoId, true);
 
-            broadcastSyncState({
-                active: true,
-                mode: "youtube",
-                src: videoId,
-                title: "YouTube Video ❤️",
-                state: "playing",
-                currentTime: 0,
-                playbackRate: 1.0
-            });
+                broadcastSyncState({
+                    active: true,
+                    mode: "youtube",
+                    src: videoId,
+                    title: "YouTube Video ❤️",
+                    state: "playing",
+                    currentTime: 0,
+                    playbackRate: 1.0
+                });
+            }
         });
     }
 
@@ -754,10 +821,20 @@ function setupModalEvents() {
             }
 
             const bridge = screenShareBridge || window.webrtcScreenShare;
-            if (bridge && typeof bridge.startScreenShare === "function") {
-                await bridge.startScreenShare();
+            if (!isSessionCallActive()) {
+                if (showToastFn) showToastFn("Starting video call for Screen Share ❤️", "info", 3000);
+                await ensureCallStarted();
+                setTimeout(async () => {
+                    if (bridge && typeof bridge.startScreenShare === "function") {
+                        await bridge.startScreenShare();
+                    }
+                }, 1500);
             } else {
-                if (showToastFn) showToastFn("Screen sharing requires an active call session.", "info", 3000);
+                if (bridge && typeof bridge.startScreenShare === "function") {
+                    await bridge.startScreenShare();
+                } else {
+                    if (showToastFn) showToastFn("Screen sharing requires an active call session.", "info", 3000);
+                }
             }
         });
     }
@@ -776,7 +853,7 @@ function setupModalEvents() {
 
     // Start Local Video Sync Button
     if (wtStartLocalBtn) {
-        wtStartLocalBtn.addEventListener("click", () => {
+        wtStartLocalBtn.addEventListener("click", async () => {
             if (!localVideoUrl) {
                 if (showToastFn) showToastFn("Please pick a video file first.", "info");
                 return;
@@ -787,18 +864,28 @@ function setupModalEvents() {
                 watchTogetherModal.classList.remove("flex");
             }
 
-            enterTheaterMode("local", "Local Movie ❤️");
-            setupLocalVideoPlayer(localVideoUrl);
+            if (!isSessionCallActive()) {
+                window.pendingWatchTogetherSession = {
+                    mode: "local",
+                    src: localVideoUrl,
+                    title: "Local Movie ❤️"
+                };
+                if (showToastFn) showToastFn("Starting video call for Movie Night ❤️", "info", 3000);
+                await ensureCallStarted();
+            } else {
+                enterTheaterMode("local", "Local Movie ❤️");
+                setupLocalVideoPlayer(localVideoUrl);
 
-            broadcastSyncState({
-                active: true,
-                mode: "local",
-                src: localVideoUrl,
-                title: "Local Movie ❤️",
-                state: "playing",
-                currentTime: 0,
-                playbackRate: 1.0
-            });
+                broadcastSyncState({
+                    active: true,
+                    mode: "local",
+                    src: localVideoUrl,
+                    title: "Local Movie ❤️",
+                    state: "playing",
+                    currentTime: 0,
+                    playbackRate: 1.0
+                });
+            }
         });
     }
 }
