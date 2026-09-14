@@ -14,6 +14,7 @@
     { href: 'playful.html', icon: 'celebration', label: '4. Flowers', bg: '#7be07d', fill: true },
     { href: 'final.html', icon: 'wb_twilight', label: '5. Finale', bg: '#ffb7c5', fill: true },
     { href: 'letters.html', icon: 'mail', label: 'Letters', bg: '#ffd9df', fill: true },
+    { href: 'anniversary.html', icon: 'cake', label: '2 Months ❤️', bg: '#ff758c', fill: true },
     { href: 'chat.html', icon: 'chat', label: 'Chat', bg: '#ffb7c5', fill: true },
     { href: 'music.html', icon: 'music_note', label: 'Music', bg: '#9ae1ff', fill: true },
     { href: 'dreams.html', icon: 'star', label: 'Dreams', bg: '#ffd9df', fill: true },
